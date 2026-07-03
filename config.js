@@ -7,4 +7,4 @@
 //    Execute as: Me, Who has access: Anyone
 // 4. Copy the URL below
 // ============================================================
-var API_URL = 'https://script.google.com/a/macros/mmgb.ca/s/AKfycbzwd1dOF6Fmff1J7DXNMWN3E0xFmZVntv7_YnnIJ_UDyeDico8lzwB_dfARsa7-xcBxvA/exec';
+var API_URL = 'https://documentation-order-rica-carbon.trycloudflare.com/api';
