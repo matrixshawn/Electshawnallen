@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Canvasser Portal">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>Canvasser Portal — Ward 25 Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#dc2626;--red-dark:#b91c1c;--blue:#1e3a5f;--blue-light:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900)}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.login-box{background:white;border-radius:16px;padding:40px 30px;margin:80px auto;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--gray-200);text-align:center}
+.login-box h1{font-size:1.4em;margin-bottom:4px;color:var(--blue)}
+.login-box .sub{font-size:0.85em;color:var(--gray-400);margin-bottom:24px}
+.login-box input{width:100%;padding:12px 14px;margin-bottom:12px;border:1px solid var(--gray-200);border-radius:10px;font-size:1em;text-align:center;font-family:inherit}
+.login-box input:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.login-box button{width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:1em;font-weight:700;cursor:pointer;transition:background 0.15s}
+.login-box button:hover{background:var(--red-dark)}
+.login-box button:disabled{opacity:0.5}
+.api-error{display:none;background:#fef2f2;border:2px solid #fecaca;padding:16px;margin:20px;border-radius:10px;text-align:center;color:#991b1b;max-width:500px;margin-left:auto;margin-right:auto}
+.dashboard{display:none}
+.dashboard .header{background:var(--blue);color:white;padding:30px 20px;text-align:center}
+.dashboard .header h1{font-size:1.3em;font-weight:700}
+.dashboard .header .name{opacity:0.7;font-size:0.9em;margin-top:4px}
+.header .logout{position:absolute;top:16px;right:20px;background:rgba(255,255,255,0.15);border:none;color:white;padding:6px 14px;border-radius:8px;cursor:pointer;font-size:0.8em}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px;max-width:500px;margin:0 auto}
+.stat-card{background:white;border-radius:12px;padding:16px;text-align:center;border:1px solid var(--gray-200)}
+.stat-card .num{font-size:1.8em;font-weight:800}
+.stat-card .lbl{font-size:0.75em;color:var(--gray-500);margin-top:2px}
+.stat-card.red .num{color:var(--red)}
+.stat-card.blue .num{color:var(--blue)}
+.stat-card.green .num{color:#16a34a}
+.stat-card.purple .num{color:#7c3aed}
+.section{max-width:500px;margin:0 auto;padding:0 20px 20px}
+.section h2{font-size:1em;font-weight:700;margin-bottom:10px;color:var(--gray-700)}
+.leaderboard{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden}
+.lb-row{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--gray-100);font-size:0.85em}
+.lb-row:last-child{border-bottom:none}
+.lb-row .rank{color:var(--gray-400);font-weight:600;margin-right:8px}
+.lb-row .name{flex:1;font-weight:500}
+.lb-row .count{color:var(--red);font-weight:700}
+.lb-row.me{background:#fff5f5}
+.recent-list{display:flex;flex-direction:column;gap:8px}
+.recent-item{background:white;border-radius:10px;padding:12px 14px;border:1px solid var(--gray-200);font-size:0.82em}
+.recent-item .rname{font-weight:600}
+.recent-item .raddr{color:var(--gray-500);font-size:0.9em}
+.recent-item .rsupport{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:4px;font-size:0.8em;font-weight:600}
+.rsupport-yes{background:#dcfce7;color:#166534}
+.rsupport-no{background:#fee2e2;color:#991b1b}
+.rsupport-lean{background:#fef3c7;color:#92400e}
+.survey-link{max-width:500px;margin:0 auto;padding:0 20px 20px}
+.survey-link a{display:block;text-align:center;background:var(--red);color:white;padding:12px;border-radius:10px;font-weight:700;text-decoration:none;font-size:0.95em}
+.survey-link a:hover{background:var(--red-dark)}
+@media(max-width:400px){.stats-grid{grid-template-columns:1fr 1fr;gap:8px;padding:12px}.login-box{margin:40px 12px;padding:30px 20px}}
+</style>
+</head>
+<body>
+
+<div class="login-box" id="loginBox">
+  <h1>🔐 Canvasser Portal</h1>
+  <p class="sub">Enter your PIN to log in or register</p>
+  <input type="text" id="nameInput" placeholder="Your name (first time only)" autocomplete="name">
+  <input type="password" id="pinInput" placeholder="Enter your PIN" autocomplete="off" inputmode="numeric" style="font-size:1.5em;letter-spacing:8px">
+  <button id="loginBtn" onclick="login()">Log In</button>
+  <p style="font-size:0.75em;color:var(--gray-400);margin-top:12px">First time? Enter your name + any PIN to register</p>
+  <p style="font-size:0.75em;color:var(--gray-400);margin-top:4px">Returning? Just enter your PIN</p>
+</div>
+
+<div class="api-error" id="apiError">
+  ⚠️ <strong>Backend not configured!</strong><br>
+  Open <code>config.js</code> and set your Google Apps Script URL.
+</div>
+
+<div class="dashboard" id="dashboard">
+  <div class="header" style="position:relative">
+    <h1>📊 Canvasser Dashboard</h1>
+    <p class="name" id="dashName"></p>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+  <div class="survey-link" style="padding-top:16px">
+    <a href="/" target="_blank">📋 Open Survey Form →</a>
+  </div>
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card red"><div class="num" id="statTotal">0</div><div class="lbl">Surveys Done</div></div>
+    <div class="stat-card blue"><div class="num" id="statVoters">0</div><div class="lbl">Voters Reached</div></div>
+    <div class="stat-card green"><div class="num" id="statSigned">0</div><div class="lbl">Support Shawn</div></div>
+    <div class="stat-card purple"><div class="num" id="statVolunteers">0</div><div class="lbl">Volunteers</div></div>
+  </div>
+  <div class="section">
+    <h2>🏆 Leaderboard</h2>
+    <div class="leaderboard" id="leaderboard"></div>
+  </div>
+  <div class="section" style="margin-top:8px">
+    <h2>📋 Your Recent Surveys</h2>
+    <div class="recent-list" id="recentList"></div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+var tokenKey = 'ward25_token';
+var nameKey = 'ward25_name';
+
+function api(action, data) {
+  if (!API_URL || API_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    document.getElementById('apiError').style.display = 'block';
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+    return Promise.reject(new Error('API not configured'));
+  }
+  var token = localStorage.getItem(tokenKey);
+  var params = new URLSearchParams();
+  params.append('action', action);
+  if (token) params.append('token', token);
+  for (var k in data) {
+    if (Array.isArray(data[k])) {
+      data[k].forEach(function(v) { params.append(k, v); });
+    } else { params.append(k, data[k] || ''); }
+  }
+  return fetch(API_URL, { method: 'POST', body: params }).then(function(r) { return r.json(); });
+}
+
+async function login() {
+  var name = document.getElementById('nameInput').value.trim();
+  var pin = document.getElementById('pinInput').value.trim();
+  if (!pin) { alert('Enter your PIN'); return; }
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Logging in...';
+  try {
+    var r = await api('login', { name: name || 'Canvasser', pin: pin });
+    if (r.ok) {
+      localStorage.setItem(tokenKey, r.token);
+      localStorage.setItem(nameKey, r.name);
+      showDashboard(r.name);
+    } else { alert('Error: ' + (r.error||'Unknown')); }
+  } catch(e) { alert('Network error: ' + e.message); }
+  btn.disabled = false; btn.textContent = 'Log In';
+}
+
+function logout() {
+  localStorage.removeItem(tokenKey);
+  localStorage.removeItem(nameKey);
+  document.getElementById('loginBox').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+function showDashboard(name) {
+  document.getElementById('loginBox').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('dashName').textContent = 'Welcome, ' + name;
+  loadDashboard();
+}
+
+async function loadDashboard() {
+  try {
+    var d = await api('dashboard', {});
+    if (d.error) { logout(); return; }
+    document.getElementById('statTotal').textContent = d.total;
+    document.getElementById('statVoters').textContent = d.voters;
+    document.getElementById('statSigned').textContent = d.signed;
+    document.getElementById('statVolunteers').textContent = d.volunteers;
+    var lbHtml = d.leaderboard.map(function(row,i) {
+      var isMe = row.name === localStorage.getItem(nameKey);
+      return '<div class="lb-row'+(isMe?' me':'')+'"><span><span class="rank">#'+(i+1)+'</span><span class="name">'+row.name+'</span></span><span class="count">'+row.total+' surveys · '+row.voters+' voters</span></div>';
+    }).join('');
+    document.getElementById('leaderboard').innerHTML = lbHtml || '<div class="lb-row" style="color:var(--gray-400);text-align:center">No data yet</div>';
+    var recentHtml = d.recent.map(function(s) {
+      var supportClass = s.decided_support && s.decided_support.indexOf('Shawn')>-1?'rsupport-yes':(s.decided_support&&s.decided_support.indexOf('someone else')>-1?'rsupport-no':'rsupport-lean');
+      return '<div class="recent-item"><div class="rname">'+(s.voter_name||'Anonymous')+'</div><div class="raddr">'+(s.address||'')+'</div><span class="rsupport '+supportClass+'">'+(s.decided_support||'Not asked')+'</span></div>';
+    }).join('');
+    document.getElementById('recentList').innerHTML = recentHtml || '<div style="text-align:center;color:var(--gray-400);padding:20px">No surveys yet. Start knocking!</div>';
+  } catch(e) {}
+}
+
+window.onload = function() {
+  var savedName = localStorage.getItem(nameKey);
+  var savedToken = localStorage.getItem(tokenKey);
+  if (savedToken && savedName) { showDashboard(savedName); }
+};
+</script>
+</body>
+</html>

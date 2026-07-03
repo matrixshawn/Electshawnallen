@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ward25 Survey">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>Ward 25 Resident Survey — Shawn Allen for Councillor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {--red:#dc2626;--red-dark:#b91c1c;--blue:#1e3a5f;--blue-light:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.6}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.hero{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:40px 0 30px;text-align:center}
+.hero h1{font-size:1.8em;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em}
+.hero .subtitle{font-size:1em;opacity:0.8;font-weight:500;margin-bottom:4px}
+.hero .ward-badge{display:inline-block;background:rgba(255,255,255,0.15);padding:4px 14px;border-radius:20px;font-size:0.8em;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.counter-bar{background:white;border-bottom:2px solid var(--red);padding:16px 0;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.counter-bar .big-num{font-size:2.2em;font-weight:800;color:var(--red);display:inline-block;margin-right:8px}
+.counter-bar .label{font-size:0.9em;color:var(--gray-500)}
+.survey-form{background:white;border-radius:16px;padding:30px;margin:24px auto;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--gray-200)}
+.survey-form h2{font-size:1.2em;font-weight:700;margin-bottom:4px}
+.survey-form .instruction{font-size:0.85em;color:var(--gray-500);margin-bottom:20px}
+.form-group{margin-bottom:18px}
+.form-group label,.ev-row label{display:block;font-weight:600;font-size:0.9em;margin-bottom:6px;color:var(--gray-700)}
+.form-group label .q-num{color:var(--red);font-weight:700;margin-right:4px}
+.form-group input[type="text"],.form-group input[type="tel"],.form-group input[type="email"],.form-group input[type="number"],.form-group textarea,.form-group select{width:100%;padding:10px 14px;border:1px solid var(--gray-200);border-radius:8px;font-size:0.9em;font-family:inherit;transition:border-color 0.15s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+.option-group{display:flex;flex-direction:column;gap:6px}
+.option-group label.opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--gray-200);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.88em}
+.option-group label.opt:hover{border-color:var(--blue-light);background:#f0f7ff}
+.option-group label.opt input[type="radio"],.option-group label.opt input[type="checkbox"]{accent-color:var(--red);width:16px;height:16px}
+.option-group label.opt.selected{border-color:var(--red);background:#fff5f5}
+.address-lookup{position:relative}
+.address-lookup .suggestions{position:absolute;top:100%;left:0;right:0;background:white;border:1px solid var(--gray-200);border-top:none;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:none}
+.address-lookup .suggestions.show{display:block}
+.address-lookup .suggestions div{padding:10px 14px;cursor:pointer;font-size:0.88em;border-bottom:1px solid var(--gray-100)}
+.address-lookup .suggestions div:hover{background:var(--gray-50);color:var(--red)}
+.address-lookup .spinner{display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+.ev-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding:14px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-200)}
+.ev-row input[type="number"]{width:70px;text-align:center;font-size:1.1em;font-weight:700;padding:8px;border:1px solid var(--gray-200);border-radius:8px}
+.ev-row .hint{font-size:0.8em;color:var(--gray-400)}
+.btn-submit{display:block;width:100%;padding:14px;background:var(--red);color:white;border:none;border-radius:10px;font-size:1.05em;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:10px}
+.btn-submit:hover{background:var(--red-dark)}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed}
+.success-msg{display:none;text-align:center;padding:40px 20px}
+.success-msg .check{font-size:3em;margin-bottom:10px}
+.success-msg h2{color:var(--blue);margin-bottom:8px}
+.success-msg p{color:var(--gray-500)}
+.api-error{display:none;background:#fef2f2;border:2px solid #fecaca;padding:16px;margin-bottom:20px;border-radius:10px;text-align:center;color:#991b1b}
+@media(max-width:600px){.container{padding:12px}.survey-form{padding:18px;border-radius:12px}.hero h1{font-size:1.4em}.counter-bar .big-num{font-size:1.6em}.form-row{flex-direction:column;gap:0}.ev-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="container">
+    <div class="ward-badge">WARD 25 · SCARBOROUGH–ROUGE PARK</div>
+    <h1>Resident Survey</h1>
+    <p class="subtitle">Shawn Allen for City Councillor — 2026</p>
+    <p style="font-size:0.8em;opacity:0.6;margin-top:8px">Keep it under 3 minutes. Read naturally, don't rush.</p>
+  </div>
+</div>
+
+<div class="counter-bar" id="counterBar">
+  <div class="container">
+    <span class="big-num" id="voterCount">0</span>
+    <span class="label">eligible voters reached — total across all surveys</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="api-error" id="apiError">
+    ⚠️ <strong>Backend not configured!</strong><br>
+    <span id="apiErrorMsg"></span><br>
+    Open <code>config.js</code> and set your Google Apps Script URL.
+  </div>
+
+  <div class="survey-form" id="surveyForm">
+    <h2>📋 Ward 25 Survey</h2>
+    <p class="instruction">Canvasser: Fill this out on the spot as you speak with the resident.</p>
+    <p style="font-size:0.8em;color:var(--gray-400);margin-bottom:14px;text-align:center">🔗 Track your progress on the <a href="/dashboard.html" style="color:var(--red)">Canvasser Dashboard</a><span id="loggedInAs" style="display:none"> · Logged in as: <strong id="loggedName"></strong></span></p>
+
+    <form id="form" onsubmit="return submitSurvey(event)">
+      <div class="ev-row">
+        <label for="eligibleVoters">👥 Eligible voters in this household (18+):</label>
+        <input type="number" id="eligibleVoters" name="eligible_voters" placeholder="—" min="0" max="20" value="">
+        <span class="hint">Leave blank if unknown</span>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:18px">
+        <button type="button" onclick="quickSubmit('not_home')" style="flex:1;padding:12px;background:#f3f4f6;border:2px solid #d1d5db;border-radius:10px;font-weight:600;font-size:0.88em;cursor:pointer;transition:all 0.15s;color:#374151" onmouseover="this.style.borderColor='#f59e0b';this.style.background='#fffbeb'" onmouseout="this.style.borderColor='#d1d5db';this.style.background='#f3f4f6'">🚪 Not Home</button>
+        <button type="button" onclick="quickSubmit('refused')" style="flex:1;padding:12px;background:#f3f4f6;border:2px solid #d1d5db;border-radius:10px;font-weight:600;font-size:0.88em;cursor:pointer;transition:all 0.15s;color:#374151" onmouseover="this.style.borderColor='#ef4444';this.style.background='#fef2f2'" onmouseout="this.style.borderColor='#d1d5db';this.style.background='#f3f4f6'">✋ Refused</button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="flex:1.5">
+          <label>Voter Name <span style="font-weight:400;color:var(--gray-400)">(optional)</span></label>
+          <input type="text" id="voterName" placeholder="Full name">
+        </div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="voterPhone" placeholder="647-555-XXXX"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="voterEmail" placeholder="name@email.com"></div>
+      </div>
+
+      <div class="form-group address-lookup">
+        <label>Address <span style="color:var(--red)">*</span></label>
+        <div style="position:relative">
+          <input type="text" id="address" required autocomplete="shipping street-address" placeholder="Start typing your address...">
+          <div class="spinner" id="addrSpinner"></div>
+        </div>
+        <div class="suggestions" id="addrSuggestions"></div>
+        <div style="font-size:0.75em;color:var(--gray-400);margin-top:4px">Powered by Canada Post — type your street address to auto-fill</div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">1</span>How long have you lived in Ward 25?</label>
+        <div class="option-group" data-name="years_in_ward">
+          <label class="opt"><input type="radio" name="years_in_ward" value="Less than 2 years"> Less than 2 years</label>
+          <label class="opt"><input type="radio" name="years_in_ward" value="2–5 years"> 2–5 years</label>
+          <label class="opt"><input type="radio" name="years_in_ward" value="5–10 years"> 5–10 years</label>
+          <label class="opt"><input type="radio" name="years_in_ward" value="10+ years"> 10+ years</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">2</span>What issues affect your household right now? (Check all that apply)</label>
+        <div class="option-group" data-name="top_issue" data-multiple="true">
+          <label class="opt"><input type="checkbox" name="top_issue" value="Housing affordability"> Housing affordability</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Cost of living / taxes"> Cost of living / taxes</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Traffic &amp; transit / infrastructure"> Traffic &amp; transit / infrastructure</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Public safety"> Public safety</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Development / overbuilding"> Development / overbuilding</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Parks &amp; community spaces"> Parks &amp; community spaces</label>
+          <label class="opt"><input type="checkbox" name="top_issue" value="Other"> Other: <input type="text" id="topIssueOther" style="width:auto;display:inline;margin-left:6px;padding:4px 8px;font-size:0.85em;border:1px solid #ccc;border-radius:4px" placeholder="Specify..."></label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">3</span>If you could downsize your home but stay in this community, would you?</label>
+        <div class="option-group" data-name="downsize_home">
+          <label class="opt"><input type="radio" name="downsize_home" value="Yes, definitely"> Yes, definitely</label>
+          <label class="opt"><input type="radio" name="downsize_home" value="Yes, if the right option existed"> Yes, if the right option existed</label>
+          <label class="opt"><input type="radio" name="downsize_home" value="No, I'm happy where I am"> No, I'm happy where I am</label>
+          <label class="opt"><input type="radio" name="downsize_home" value="Not applicable / already downsized"> Not applicable / already downsized</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">4</span>How would you rate Mayor Olivia Chow's overall performance?</label>
+        <div class="option-group" data-name="chow_rating">
+          <label class="opt"><input type="radio" name="chow_rating" value="Very poor"> Very poor</label>
+          <label class="opt"><input type="radio" name="chow_rating" value="Poor"> Poor</label>
+          <label class="opt"><input type="radio" name="chow_rating" value="Okay"> Okay</label>
+          <label class="opt"><input type="radio" name="chow_rating" value="Good"> Good</label>
+          <label class="opt"><input type="radio" name="chow_rating" value="Very good"> Very good</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">5</span>Do you feel Ward 25 gets its fair share of attention from City Hall?</label>
+        <div class="option-group" data-name="fair_share">
+          <label class="opt"><input type="radio" name="fair_share" value="Yes"> Yes</label>
+          <label class="opt"><input type="radio" name="fair_share" value="No"> No</label>
+          <label class="opt"><input type="radio" name="fair_share" value="Not sure"> Not sure</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">6</span>How important is it that the councillor actually lives in the ward?</label>
+        <div class="option-group" data-name="lives_in_ward">
+          <label class="opt"><input type="radio" name="lives_in_ward" value="Very important"> Very important</label>
+          <label class="opt"><input type="radio" name="lives_in_ward" value="Somewhat important"> Somewhat important</label>
+          <label class="opt"><input type="radio" name="lives_in_ward" value="Not very important"> Not very important</label>
+          <label class="opt"><input type="radio" name="lives_in_ward" value="Doesn't matter to me"> Doesn't matter to me</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">7</span>Have you heard of Shawn Allen, running for Ward 25 Councillor?</label>
+        <div class="option-group" data-name="heard_of_shawn">
+          <label class="opt"><input type="radio" name="heard_of_shawn" value="Yes"> Yes</label>
+          <label class="opt"><input type="radio" name="heard_of_shawn" value="No"> No</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">8</span>Are you planning to vote in the October 2026 municipal election?</label>
+        <div class="option-group" data-name="voting_plan">
+          <label class="opt"><input type="radio" name="voting_plan" value="Definitely voting"> Definitely voting</label>
+          <label class="opt"><input type="radio" name="voting_plan" value="Likely voting"> Likely voting</label>
+          <label class="opt"><input type="radio" name="voting_plan" value="Undecided"> Undecided</label>
+          <label class="opt"><input type="radio" name="voting_plan" value="Not planning to vote"> Not planning to vote</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">9</span>Have you decided who you'll support for Ward 25 Councillor?</label>
+        <div class="option-group" data-name="decided_support">
+          <label class="opt"><input type="radio" name="decided_support" value="Yes — Shawn Allen"> Yes — Shawn Allen</label>
+          <label class="opt"><input type="radio" name="decided_support" value="Yes — someone else"> Yes — someone else</label>
+          <label class="opt"><input type="radio" name="decided_support" value="Leaning toward someone"> Leaning toward someone</label>
+          <label class="opt"><input type="radio" name="decided_support" value="Undecided / Prefer not to say"> Undecided / Prefer not to say</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">10</span>How would you like to get involved? (Check all that apply)</label>
+        <div class="option-group" data-name="involvement" data-multiple="true">
+          <label class="opt"><input type="checkbox" name="involvement" value="Lawn sign"> Lawn sign</label>
+          <label class="opt"><input type="checkbox" name="involvement" value="Volunteer"> Volunteer</label>
+          <label class="opt"><input type="checkbox" name="involvement" value="Donate"> Donate</label>
+          <label class="opt"><input type="checkbox" name="involvement" value="Just keep me updated"> Just keep me updated</label>
+          <label class="opt"><input type="checkbox" name="involvement" value="Not interested"> Not interested</label>
+        </div>
+      </div>
+
+      <div class="form-group"><label><span class="q-num">11</span>Any specific concern about your street/block we should know about?</label>
+        <textarea id="streetConcern" rows="2" placeholder="Canvasser notes on specific concerns..."></textarea></div>
+      <div class="form-group"><label>Canvasser notes</label><textarea id="canvasserNotes" rows="2" placeholder="Follow-up notes, observations..."></textarea></div>
+      <div class="form-group"><label>Follow-up needed?</label>
+        <select id="followupNeeded"><option value="">— Select —</option><option value="Yes">Yes</option><option value="No">No</option></select>
+      </div>
+      <button type="submit" class="btn-submit" id="submitBtn">📤 Submit Survey</button>
+    </form>
+  </div>
+
+  <div class="success-msg" id="successMsg">
+    <div class="check">✅</div>
+    <h2>Survey Submitted!</h2>
+    <p>Response saved. Total eligible voters updated.</p>
+    <p style="margin-top:16px"><a href="#" onclick="resetForm();return false" style="color:var(--red);font-weight:600">Submit another →</a></p>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+// ─── API helper ───
+function api(action, data) {
+  if (!API_URL || API_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    document.getElementById('apiError').style.display = 'block';
+    document.getElementById('apiErrorMsg').textContent = 'Please set your Google Apps Script URL in config.js';
+    return Promise.reject(new Error('API not configured'));
+  }
+  var token = localStorage.getItem('ward25_token');
+  var params = new URLSearchParams();
+  params.append('action', action);
+  if (token) params.append('token', token);
+  for (var k in data) {
+    if (Array.isArray(data[k])) {
+      data[k].forEach(function(v) { params.append(k, v); });
+    } else {
+      params.append(k, data[k] || '');
+    }
+  }
+  return fetch(API_URL, { method: 'POST', body: params })
+    .then(function(r) { return r.json(); });
+}
+
+// ─── Address Lookup ───
+var lookupTimer;
+var addrInput = document.getElementById('address');
+var suggestions = document.getElementById('addrSuggestions');
+var spinner = document.getElementById('addrSpinner');
+addrInput.addEventListener('input', function() {
+  clearTimeout(lookupTimer);
+  var val = this.value.trim();
+  if (val.length < 3) { suggestions.classList.remove('show'); suggestions.innerHTML = ''; return; }
+  spinner.style.display = 'block';
+  lookupTimer = setTimeout(function() {
+    fetch('https://geocoder.ca/?suggest=' + encodeURIComponent(val) + '&thoroughfare=1&geoit=json&limit=5')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        spinner.style.display = 'none';
+        if (data && data.suggestions && data.suggestions.length > 0) {
+          suggestions.innerHTML = data.suggestions.map(function(s) {
+            return '<div onclick="selectAddress(\'' + (s.streetAddress||'') + ', ' + (s.localityName||'') + ', ON ' + (s.postalCode||'') + '\')">' +
+                   (s.streetAddress||'') + ', ' + (s.localityName||'') + (s.postalCode?' <span style=\'color:var(--gray-400)\'>' + s.postalCode + '</span>':'') + '</div>';
+          }).join('');
+          suggestions.classList.add('show');
+        } else { fallbackNominatim(val); }
+      }).catch(function() { fallbackNominatim(val); });
+  }, 400);
+});
+
+function fallbackNominatim(query) {
+  fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query + ', Toronto, ON') + '&limit=5&addressdetails=1')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      spinner.style.display = 'none';
+      if (data && data.length > 0) {
+        suggestions.innerHTML = data.map(function(p) {
+          var display = p.display_name ? p.display_name.split(',').slice(0,3).join(',') : p.display_name;
+          return '<div onclick="selectAddress(\'' + (p.display_name||'').replace(/'/g,"\\'") + '\')">' + display + '</div>';
+        }).join('');
+        suggestions.classList.add('show');
+      } else { suggestions.classList.remove('show'); }
+    }).catch(function() { spinner.style.display = 'none'; });
+}
+
+function selectAddress(val) {
+  var parts = val.split(',');
+  addrInput.value = parts.slice(0,2).join(',').trim();
+  suggestions.classList.remove('show');
+  suggestions.innerHTML = '';
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.address-lookup')) { suggestions.classList.remove('show'); }
+});
+
+// ─── Highlight selected ───
+document.querySelectorAll('.option-group label.opt').forEach(function(label) {
+  var input = label.querySelector('input[type="radio"], input[type="checkbox"]');
+  if (input) {
+    input.addEventListener('change', function() {
+      if (this.type === 'radio') {
+        var group = this.closest('.option-group');
+        group.querySelectorAll('label.opt').forEach(function(l) { l.classList.remove('selected'); });
+        if (this.checked) label.classList.add('selected');
+      } else { label.classList.toggle('selected', this.checked); }
+    });
+  }
+});
+
+// ─── Eligible Voters update ───
+document.getElementById('eligibleVoters').addEventListener('input', function() {
+  var current = parseInt(document.getElementById('voterCount').textContent) || 0;
+});
+
+// ─── Quick Submit ───
+async function quickSubmit(status) {
+  var addr = document.getElementById('address').value.trim();
+  if (!addr) { alert('Please enter the address first.'); return; }
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving ' + (status==='not_home'?'🚪 Not Home':'✋ Refused') + '...';
+  try {
+    var r = await api('survey', {
+      voter_name: status==='not_home'?'[NOT HOME]':'[REFUSED]',
+      address: addr,
+      eligible_voters: '0',
+      canvasser_notes: status==='not_home'?'Not home on visit':'Resident refused survey',
+      decided_support: status==='refused'?'Refused':'',
+      followup_needed: ''
+    });
+    if (r.ok) {
+      document.getElementById('surveyForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      document.querySelector('#successMsg h2').textContent = (status==='not_home'?'🚪 Not Home':'✋ Refused') + ' — Logged';
+      document.querySelector('#successMsg p').textContent = status==='not_home'?'Address noted. Will try again next round.':'Refusal recorded. No further contact.';
+      loadStats();
+    } else { alert('Error: ' + (r.error||'Unknown')); }
+  } catch(e) { alert('Error: ' + e.message); }
+  btn.disabled = false;
+  btn.textContent = '📤 Submit Survey';
+}
+
+// ─── Submit ───
+async function submitSurvey(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+  var data = {
+    voter_name: document.getElementById('voterName').value,
+    phone: document.getElementById('voterPhone').value,
+    email: document.getElementById('voterEmail').value,
+    address: document.getElementById('address').value,
+    years_in_ward: document.querySelector('input[name="years_in_ward"]:checked')?.value || '',
+    top_issue: Array.from(document.querySelectorAll('input[name="top_issue"]:checked')).map(function(cb) { return cb.value; }),
+    top_issue_other: document.getElementById('topIssueOther')?.value || '',
+    downsize_home: document.querySelector('input[name="downsize_home"]:checked')?.value || '',
+    chow_rating: document.querySelector('input[name="chow_rating"]:checked')?.value || '',
+    fair_share: document.querySelector('input[name="fair_share"]:checked')?.value || '',
+    lives_in_ward: document.querySelector('input[name="lives_in_ward"]:checked')?.value || '',
+    heard_of_shawn: document.querySelector('input[name="heard_of_shawn"]:checked')?.value || '',
+    voting_plan: document.querySelector('input[name="voting_plan"]:checked')?.value || '',
+    decided_support: document.querySelector('input[name="decided_support"]:checked')?.value || '',
+    involvement: Array.from(document.querySelectorAll('input[name="involvement"]:checked')).map(function(cb) { return cb.value; }),
+    street_concern: document.getElementById('streetConcern').value,
+    canvasser_notes: document.getElementById('canvasserNotes').value,
+    followup_needed: document.getElementById('followupNeeded').value,
+    eligible_voters: parseInt(document.getElementById('eligibleVoters').value) || 0
+  };
+  if (!data.address) { alert('Address is required.'); btn.disabled=false; btn.textContent='📤 Submit Survey'; return; }
+  try {
+    var r = await api('survey', data);
+    if (r.ok) {
+      var voters = data.eligible_voters;
+      var countEl = document.getElementById('voterCount');
+      countEl.textContent = (parseInt(countEl.textContent)||0) + voters;
+      document.getElementById('surveyForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } else { alert('Error: ' + (r.error||'Unknown')); }
+  } catch(e) { alert('Network error: ' + e.message); }
+  btn.disabled = false;
+  btn.textContent = '📤 Submit Survey';
+}
+
+function resetForm() {
+  document.getElementById('form').reset();
+  document.querySelectorAll('.opt.selected').forEach(function(l) { l.classList.remove('selected'); });
+  document.getElementById('surveyForm').style.display = 'block';
+  document.getElementById('successMsg').style.display = 'none';
+  suggestions.classList.remove('show');
+}
+
+function loadStats() {
+  api('stats', {}).then(function(d) {
+    if (d.ok && d.total_eligible_voters) {
+      document.getElementById('voterCount').textContent = d.total_eligible_voters;
+    }
+  }).catch(function() {});
+}
+
+// Show logged-in user
+(function() {
+  var name = localStorage.getItem('ward25_name');
+  if (name) {
+    document.getElementById('loggedName').textContent = name;
+    document.getElementById('loggedInAs').style.display = 'inline';
+  }
+})();
+loadStats();
+</script>
+</body>
+</html>
