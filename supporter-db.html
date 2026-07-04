@@ -74,7 +74,13 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 /* ── Survey Form ── */
 .survey-section{display:none;margin-top:16px}
 .survey-section.active{display:block}
-.survey-form{background:white;border-radius:16px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--gray-200)}
+.survey-form{background:white;border-radius:16px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--gray-200);transition:all 0.4s}
+.survey-form.completed{background:#f0fdf4;border:2px solid var(--green);box-shadow:0 2px 12px rgba(22,163,74,0.12)}
+.survey-form.completed input,.survey-form.completed textarea,.survey-form.completed select{background:#f9fafb;color:var(--gray-500);pointer-events:none;opacity:0.7}
+.survey-form.completed .btn-submit{display:none}
+.survey-form.completed .opt{cursor:default;pointer-events:none}
+.admin-reset{display:none;text-align:center;margin-top:12px;padding:10px;background:#fef2f2;border-radius:8px}
+.survey-form.completed .admin-reset{display:block}
 .survey-form h2{font-size:1.1em;font-weight:700;margin-bottom:4px}
 .survey-form .instruction{font-size:0.8em;color:var(--gray-500);margin-bottom:16px}
 .form-group{margin-bottom:14px}
@@ -275,6 +281,11 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
         <div class="form-group"><label>Canvasser notes</label><textarea id="canvasserNotes" rows="2" placeholder="Observations, follow-up..."></textarea></div>
         <button type="submit" class="btn-submit" id="submitBtn">📤 Submit Survey</button>
       </form>
+      <!-- Admin reset (only visible when completed) -->
+      <div class="admin-reset">
+        <span style="font-size:0.8em;color:var(--gray-500)">✅ Survey completed — locked</span><br>
+        <button class="btn btn-edit" style="margin-top:6px;font-size:0.75em" onclick="adminReset()">🔓 Admin Reset</button>
+      </div>
     </div>
   </div>
 </div>
@@ -433,11 +444,13 @@ function openSurvey(id, addr) {
   document.getElementById('surveyAddress').value = addr;
   document.getElementById('surveyAddrPreview').textContent = addr;
   document.getElementById('surveySection').classList.add('active');
+  document.getElementById('surveyForm').classList.remove('completed');
   document.getElementById('surveySection').scrollIntoView({behavior:'smooth'});
 }
 function closeSurvey() {
   document.getElementById('surveySection').classList.remove('active');
   document.querySelectorAll('.supporter-card.selected').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('surveyForm').classList.remove('completed');
   selectedSupporter = null;
 }
 
@@ -538,17 +551,28 @@ async function submitSurvey(e) {
       body:params.toString()
     });
     if (r.ok) {
-      clearSurveyAnswers();
-      showToast('✅ Survey submitted! Ready for next.','success');
+      document.getElementById('surveyForm').classList.add('completed');
+      showToast('✅ Survey submitted & locked!','success');
     } else {
-      clearSurveyAnswers();
-      showToast('📋 Survey saved locally','success');
+      document.getElementById('surveyForm').classList.add('completed');
+      showToast('📋 Survey saved & locked','success');
     }
   } catch(e) {
-    clearSurveyAnswers();
-    showToast('📋 Survey saved (server unreachable)','success');
+    document.getElementById('surveyForm').classList.add('completed');
+    showToast('📋 Survey saved & locked','success');
   }
   btn.disabled=false; btn.textContent='📤 Submit Survey';
+}
+
+// ── Admin Reset ──
+function adminReset() {
+  var pin = prompt('Enter admin PIN to unlock this survey:');
+  if (pin === '2525') {
+    document.getElementById('surveyForm').classList.remove('completed');
+    showToast('🔓 Survey unlocked','success');
+  } else if (pin !== null) {
+    showToast('❌ Incorrect PIN','error');
+  }
 }
 
 // Clear only survey answers — keep name/phone/email/address for next survey
