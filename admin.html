@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Admin Dashboard — Ward 25</title>
+<style>
+:root{--red:#dc2626;--blue:#1e3a5f;--green:#16a34a;--amber:#d97706;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;--gray-700:#374151;--gray-900:#111827;--white:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--gray-50);color:var(--gray-900);min-height:100vh}
+.top-bar{background:linear-gradient(135deg,#0f2440 0%,var(--blue) 100%);color:white;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.top-bar h1{font-size:1.2em;font-weight:700}
+.top-bar .user-info{font-size:0.85em;opacity:0.85}
+.top-bar a,.top-bar button{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.85em;background:none;border:none;cursor:pointer;font-family:inherit}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+/* Login */
+.login-gate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh}
+.login-gate h2{margin-bottom:20px}
+.login-gate .field{margin-bottom:12px}
+.login-gate label{display:block;font-size:0.8em;color:var(--gray-700);margin-bottom:4px;font-weight:600}
+.login-gate input{padding:12px 16px;border:2px solid var(--gray-200);border-radius:10px;font-size:1em;width:260px}
+.login-gate input:focus{outline:none;border-color:var(--red)}
+.login-gate button{padding:12px 32px;background:var(--red);color:white;border:none;border-radius:8px;font-size:1em;font-weight:600;cursor:pointer;margin-top:8px;width:260px}
+/* Dashboard */
+.dashboard{display:none}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--gray-200)}
+.stat-card .label{font-size:0.75em;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.stat-card .value{font-size:2em;font-weight:800;color:var(--blue)}
+.stat-card.green .value{color:var(--green)}
+.stat-card.amber .value{color:var(--amber)}
+.chart-container{background:white;border-radius:12px;padding:20px;border:1px solid var(--gray-200);margin-bottom:24px}
+.chart-container h3{font-size:0.9em;color:var(--gray-700);margin-bottom:16px}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:150px;overflow-x:auto}
+.bar-item{flex:1;min-width:24px;display:flex;flex-direction:column;align-items:center}
+.bar{width:100%;background:var(--red);border-radius:4px 4px 0 0;min-height:2px;transition:height 0.3s}
+.bar-label{font-size:0.55em;color:var(--gray-400);margin-top:4px;transform:rotate(-45deg);transform-origin:top left;width:0;white-space:nowrap}
+.bar-count{font-size:0.6em;color:var(--gray-700);font-weight:600}
+.chart-toggle{padding:6px 16px;border:1px solid var(--gray-200);background:white;border-radius:6px;font-size:0.8em;cursor:pointer;font-family:inherit;font-weight:500;color:var(--gray-700);transition:all 0.15s}
+.chart-toggle.active{background:var(--red);color:white;border-color:var(--red)}
+.chart-toggle:hover:not(.active){background:var(--gray-100)}
+.chart-bar{position:absolute;bottom:24px;background:linear-gradient(180deg,var(--red) 0%,#ef4444 100%);border-radius:4px 4px 0 0;min-height:2px;transition:height 0.3s}
+.chart-bar-label{position:absolute;bottom:4px;font-size:0.65em;color:var(--gray-500);text-align:center;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-bar-value{position:absolute;font-size:0.7em;color:var(--gray-700);font-weight:600;width:100%;text-align:center}
+.section-title{font-size:1em;font-weight:700;margin-bottom:12px;color:var(--gray-700)}
+.table-wrap{background:white;border-radius:12px;border:1px solid var(--gray-200);overflow:hidden;margin-bottom:24px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll th:first-child,
+.table-scroll td:first-child{position:sticky;left:0;background:white;z-index:1;box-shadow:2px 0 4px rgba(0,0,0,0.05)}
+.table-scroll th:first-child{background:var(--gray-100);z-index:2}
+table{width:100%;border-collapse:collapse;font-size:0.82em}
+th{background:var(--gray-100);padding:10px 14px;text-align:left;font-weight:600;color:var(--gray-700);font-size:0.75em;text-transform:uppercase;letter-spacing:0.03em}
+td{padding:8px 14px;border-top:1px solid var(--gray-100)}
+tr:hover{background:var(--gray-50)}
+.backup-item{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--gray-100);font-size:0.82em}
+.backup-name{font-weight:500}
+.backup-info{color:var(--gray-400);font-size:0.85em}
+.loading{text-align:center;padding:40px;color:var(--gray-400)}
+.error{color:var(--red);text-align:center;padding:20px}
+.btn-sm{padding:3px 10px;font-size:0.72em;border-radius:6px;border:1px solid var(--gray-200);cursor:pointer;font-family:inherit;background:white;white-space:nowrap}
+.btn-sm.danger{background:#fef2f2;color:var(--red);border-color:#fecaca}
+.btn-sm.danger:hover{opacity:0.8}
+.btn-sm.danger:disabled{opacity:0.3;cursor:not-allowed}
+.clickable-row{cursor:pointer;transition:background 0.1s}
+.clickable-row:hover{background:#fef2f2 !important}
+.btn-download{padding:10px 20px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-download:hover{opacity:0.9}
+/* Add user form */
+.add-user-form{display:flex;gap:8px;padding:14px;align-items:flex-end;flex-wrap:wrap;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+.add-user-form input,.add-user-form select{padding:8px 12px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.85em;font-family:inherit}
+.add-user-form button{padding:8px 16px;background:var(--green);color:white;border:none;border-radius:6px;font-size:0.85em;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <h1>📊 Admin Dashboard — Ward 25</h1>
+  <div style="display:flex;align-items:center;gap:16px">
+    <span class="user-info" id="userDisplay" style="display:none"></span>
+    <a href="/">← Canvassing Tool</a>
+    <button onclick="doLogout()" id="btnLogout" style="display:none">Logout</button>
+  </div>
+</div>
+<div class="container">
+  <!-- Login Gate -->
+  <div class="login-gate" id="loginGate">
+    <h2>🔐 Sign In</h2>
+    <div class="field"><label>Username</label><input type="text" id="loginUser" placeholder="Username" autofocus></div>
+    <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="Password"></div>
+    <button onclick="doLogin()">Sign In</button>
+    <p id="loginError" style="color:var(--red);margin-top:12px;font-size:0.85em;display:none"></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dashboard">
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="label">Total Records</div><div class="value" id="stat-total">—</div></div>
+      <div class="stat-card green"><div class="label">Changes Today</div><div class="value" id="stat-today">—</div></div>
+      <div class="stat-card"><div class="label">Records Touched Today</div><div class="value" id="stat-touched">—</div></div>
+      <div class="stat-card amber"><div class="label">Changes This Week</div><div class="value" id="stat-week">—</div></div>
+      <div class="stat-card"><div class="label">Database Size</div><div class="value" id="stat-dbsize" style="font-size:1.3em">—</div></div>
+      <div class="stat-card"><div class="label">Last Backup</div><div class="value" id="stat-backup" style="font-size:1em">—</div></div>
+    </div>
+
+    <div class="chart-container">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <h3 style="margin:0">📈 Daily Activity</h3>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <button class="chart-toggle active" id="toggleWeek" onclick="loadChart('week')">Week</button>
+          <button class="chart-toggle" id="toggleMonth" onclick="loadChart('month')">Month</button>
+          <span style="font-size:0.75em;color:var(--gray-400);margin:0 4px">or</span>
+          <input type="date" id="chartStart" style="padding:5px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.8em;font-family:inherit" onchange="loadChart('custom')">
+          <span style="font-size:0.75em;color:var(--gray-400)">to</span>
+          <input type="date" id="chartEnd" style="padding:5px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.8em;font-family:inherit" onchange="loadChart('custom')">
+        </div>
+      </div>
+      <div style="position:relative;height:200px;border-left:2px solid var(--gray-200);border-bottom:2px solid var(--gray-200);padding:0 8px 24px 40px" id="chartArea">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+    <div class="section-title">🕐 Recent Changes</div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Time</th><th>By</th><th>Name</th><th>Address</th><th>Field</th><th>Old → New</th></tr></thead>
+      <tbody id="recentChanges"><tr><td colspan="6" class="loading">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- User Management (admin only) v3 -->
+    <div class="section-title" id="usersSection" style="display:none">👥 User Management <span style="font-size:0.6em;color:var(--gray-400);font-weight:normal">v3</span></div>
+    <div id="usersTableWrap" style="display:none">
+      <div class="add-user-form" style="border-radius:12px 12px 0 0;border:1px solid var(--gray-200);border-bottom:none;background:white">
+        <input type="text" id="newUsername" placeholder="Username">
+        <input type="password" id="newPassword" placeholder="Password">
+        <input type="text" id="newDisplayName" placeholder="Display name">
+        <select id="newRole"><option value="canvasser">Canvasser</option><option value="admin">Admin</option></select>
+        <button onclick="createUser()">➕ Add User</button>
+        <span id="userError" style="color:var(--red);font-size:0.8em;display:none"></span>
+      </div>
+      <div class="table-wrap table-scroll" style="border-radius:0 0 12px 12px">
+        <table><thead><tr><th>User</th><th>Role</th><th>Display Name</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody id="usersList"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- Supporter Search (admin) -->
+    <div class="section-title" style="display:flex;align-items:center;gap:12px">🔍 Supporter Search</div>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="text" id="adminSearchInput" placeholder="Search by address, name, phone..." style="flex:1;min-width:200px;padding:10px 14px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.9em;font-family:inherit">
+        <select id="adminSearchFilter" onchange="adminSearch()" style="padding:10px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
+          <option value="">All Types</option>
+          <option value="supporter">Supporters</option>
+          <option value="neutral">Neutral</option>
+          <option value="non-supporter">Non-Supporters</option>
+          <option value="pending">Signs Pending</option>
+          <option value="completed">Signs Done</option>
+        </select>
+        <button onclick="adminSearch()" style="padding:10px 20px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Search</button>
+      </div>
+    </div>
+    <div class="table-wrap table-scroll" style="margin-bottom:24px">
+      <table><thead><tr><th>Name</th><th>Address</th><th>Phone</th><th>Support</th><th>Sign</th><th>Updated</th><th></th></tr></thead>
+      <tbody id="adminSearchResults"><tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px">Type a query above to search</td></tr></tbody></table>
+    </div>
+
+    <!-- Team Dashboard -->
+    <div class="section-title" style="display:flex;align-items:center;gap:12px">
+      <span>📊 Team Dashboard</span>
+      <a class="btn-download" onclick="downloadTeamDashboard(event)" style="font-size:0.75em;padding:4px 10px">📥 Download CSV</a>
+    </div>
+    <div class="stats-grid" id="teamStats">
+      <div class="stat-card green"><div class="label">Supporters</div><div class="value" id="team-supporters">—</div></div>
+      <div class="stat-card"><div class="label">Survey Refused</div><div class="value" id="team-refused">—</div></div>
+      <div class="stat-card"><div class="label">Signs Completed</div><div class="value" id="team-signs">—</div></div>
+      <div class="stat-card amber"><div class="label">Signs Pending</div><div class="value" id="team-signs-pending">—</div></div>
+      <div class="stat-card"><div class="label">Touched Today</div><div class="value" id="team-touched">—</div></div>
+    </div>
+    <div class="table-wrap" style="margin-bottom:12px">
+      <table><thead><tr><th>Support Level</th><th>Count</th><th style="width:100%">Distribution</th></tr></thead>
+      <tbody id="teamLevels"><tr><td colspan="3" class="loading">Loading...</td></tr></tbody></table>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>User</th><th>Changes (30d)</th></tr></thead>
+      <tbody id="teamActivity"><tr><td colspan="2" class="loading">Loading...</td></tr></tbody></table>
+    </div>
+
+    <div class="section-title">💾 Backups</div>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">
+      <a id="btnDownload" class="btn-download" onclick="downloadDB(event)">📥 Download Database</a>
+      <span style="font-size:0.75em;color:var(--gray-400)">Admin only — downloads full SQLite database</span>
+    </div>
+    <div class="table-wrap" id="backupList"><div class="loading">Loading...</div></div>
+  </div>
+</div>
+
+<script>
+var token = localStorage.getItem('ward25_token') || '';
+var currentUser = null;
+
+// Try auto-login
+if (token) {
+  fetch('/api/auth/me', {headers:{'Authorization':'Bearer '+token}})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if (d && d.user) {
+        currentUser = d.user;
+        showDashboard();
+      } else {
+        token = ''; localStorage.removeItem('ward25_token');
+      }
+    });
+}
+
+function doLogin() {
+  var u = document.getElementById('loginUser').value.trim();
+  var p = document.getElementById('loginPass').value;
+  if (!u || !p) return;
+  var err = document.getElementById('loginError');
+  err.style.display = 'none';
+  fetch('/api/auth/login', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username:u, password:p})
+  }).then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.token) {
+        token = d.token;
+        currentUser = d.user;
+        localStorage.setItem('ward25_token', token);
+        showDashboard();
+      } else {
+        err.textContent = '❌ ' + (d.error || 'Login failed');
+        err.style.display = 'block';
+      }
+    }).catch(function(){ err.textContent = '❌ Network error'; err.style.display = 'block'; });
+}
+
+function doLogout() {
+  if (token) {
+    fetch('/api/auth/logout', {method:'POST', headers:{'Authorization':'Bearer '+token}});
+  }
+  token = ''; currentUser = null;
+  localStorage.removeItem('ward25_token');
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loginGate').style.display = 'flex';
+  document.getElementById('btnLogout').style.display = 'none';
+  document.getElementById('userDisplay').style.display = 'none';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginUser').focus();
+}
+
+function showDashboard() {
+  document.getElementById('loginGate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('btnLogout').style.display = 'inline-block';
+  document.getElementById('userDisplay').style.display = 'inline';
+  document.getElementById('userDisplay').textContent = '👤 ' + currentUser.display_name + ' (' + currentUser.role + ')';
+  // Show user management for admins
+  if (currentUser.role === 'admin') {
+    document.getElementById('usersSection').style.display = 'block';
+    document.getElementById('usersTableWrap').style.display = 'block';
+    loadUsers();
+  }
+  loadDashboard();
+}
+
+function authHeaders() {
+  return {headers:{'Authorization':'Bearer '+token}};
+}
+
+async function loadDashboard() {
+  try {
+    var r = await fetch('/api/admin/today');
+    var d = await r.json();
+    document.getElementById('stat-total').textContent = d.total_records.toLocaleString();
+    document.getElementById('stat-today').textContent = d.today_changes;
+    document.getElementById('stat-touched').textContent = d.today_touched;
+    document.getElementById('stat-week').textContent = d.week_changes;
+    document.getElementById('stat-dbsize').textContent = formatSize(d.db_size);
+
+    if (d.backups && d.backups.length > 0) {
+      document.getElementById('stat-backup').textContent = timeAgo(d.backups[0].mtime * 1000);
+    } else {
+      document.getElementById('stat-backup').textContent = 'None';
+    }
+
+    var tbody = document.getElementById('recentChanges');
+    if (d.recent && d.recent.length > 0) {
+      tbody.innerHTML = d.recent.map(function(c) {
+        var userCol = c.user_id ? '<span style="font-size:0.75em;color:var(--gray-400)">#'+c.user_id+'</span>' : '—';
+        return '<tr><td>'+esc(c.changed_at)+'</td><td>'+userCol+'</td><td>'+esc(c.full_name)+'</td><td>'+esc(c.address)+'</td><td>'+esc(c.field_name)+'</td><td>'+esc(c.old_value||'(empty)')+' → '+esc(c.new_value||'(empty)')+'</td></tr>';
+      }).join('');
+    } else {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray-400)">No changes yet today</td></tr>';
+    }
+
+    var bl = document.getElementById('backupList');
+    if (d.backups && d.backups.length > 0) {
+      bl.innerHTML = d.backups.map(function(b) {
+        return '<div class="backup-item"><span class="backup-name">📁 '+esc(b.name)+'</span><span class="backup-info">'+formatSize(b.size)+' · '+timeAgo(b.mtime*1000)+'</span></div>';
+      }).join('');
+    } else {
+      bl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-400)">No backups yet</div>';
+    }
+  } catch(e) { console.error(e); }
+
+  loadChart('week');
+  loadTeamDashboard();
+}
+
+// ── Team Dashboard ──
+async function loadTeamDashboard() {
+  try {
+    var r = await fetch('/api/admin/team');
+    var d = await r.json();
+    document.getElementById('team-supporters').textContent = d.supporters.toLocaleString();
+    document.getElementById('team-refused').textContent = d.refused;
+    document.getElementById('team-signs').textContent = d.signs_completed;
+    document.getElementById('team-signs-pending').textContent = d.signs_pending;
+    document.getElementById('team-touched').textContent = d.touched_today;
+
+    // Support level breakdown with bar
+    var maxLvl = d.levels && d.levels.length > 0 ? Math.max.apply(null, d.levels.map(function(l){return l.cnt;})) : 1;
+    var lvlBody = document.getElementById('teamLevels');
+    if (d.levels && d.levels.length > 0) {
+      lvlBody.innerHTML = d.levels.map(function(l){
+        var pct = Math.round((l.cnt / d.total) * 100);
+        var barW = Math.round((l.cnt / maxLvl) * 100);
+        var sl = l.support_level||'Unknown';
+        return '<tr class="clickable-row" data-drill="level" data-value="'+esc(sl)+'" title="Click to see all '+esc(sl)+' records">'+
+          '<td>'+esc(sl)+'</td><td><strong>'+l.cnt.toLocaleString()+'</strong> ('+pct+'%)</td>'+
+          '<td><div style="background:var(--red);height:18px;width:'+barW+'%;border-radius:3px;min-width:2px"></div></td></tr>';
+      }).join('');
+    }
+
+    // User activity
+    var actBody = document.getElementById('teamActivity');
+    if (d.user_activity && d.user_activity.length > 0) {
+      actBody.innerHTML = d.user_activity.map(function(u){
+        var name = u.display_name||u.username||'System';
+        return '<tr class="clickable-row" data-drill="user" data-value="'+esc(u.username||'')+'" title="Click to see changes by '+esc(name)+'">'+
+          '<td>'+esc(name)+'</td><td><strong>'+u.changes+'</strong></td></tr>';
+      }).join('');
+    } else {
+      actBody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:var(--gray-400)">No user activity yet</td></tr>';
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function downloadTeamDashboard(e) {
+  e.preventDefault();
+  var a = document.createElement('a');
+  a.href = '/api/admin/team/export';
+  a.download = 'ward25_team_dashboard.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// ── Chart ──
+var chartData = [];
+var chartMode = 'week';
+var chartDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+async function loadChart(mode) {
+  chartMode = mode;
+  document.getElementById('toggleWeek').className = 'chart-toggle' + (mode==='week'?' active':'');
+  document.getElementById('toggleMonth').className = 'chart-toggle' + (mode==='month'?' active':'');
+
+  try {
+    var r = await fetch('/api/admin/daily-activity');
+    var d = await r.json();
+    chartData = d.daily || [];
+    renderChart();
+  } catch(e) { document.getElementById('chartArea').innerHTML = '<div class="loading">Failed to load</div>'; }
+}
+
+function renderChart() {
+  var area = document.getElementById('chartArea');
+  var startDate, endDate;
+
+  if (chartMode === 'custom') {
+    startDate = document.getElementById('chartStart').value;
+    endDate = document.getElementById('chartEnd').value;
+    if (!startDate && !endDate) { loadChart('week'); return; }
+    if (!startDate) startDate = '2020-01-01';
+    if (!endDate) endDate = new Date().toISOString().slice(0,10);
+  } else {
+    var days = chartMode === 'week' ? 7 : 30;
+    var cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+    startDate = cutoff.toISOString().slice(0,10);
+    endDate = new Date().toISOString().slice(0,10);
+  }
+
+  // Build data map
+  var dataMap = {};
+  chartData.forEach(function(d){ dataMap[d.day] = d.count; });
+
+  // Build bars for each day in range
+  var bars = [];
+  var s = new Date(startDate + 'T00:00:00');
+  var e = new Date(endDate + 'T00:00:00');
+  var d = new Date(s);
+  while (d <= e) {
+    var key = d.toISOString().slice(0,10);
+    bars.push({day: key, label: chartDays[d.getDay()]+' '+d.getDate(), count: dataMap[key] || 0});
+    d.setDate(d.getDate() + 1);
+  }
+
+  // If custom range has lots of days, skip labels to avoid clutter
+  var labelEvery = bars.length <= 14 ? 1 : Math.ceil(bars.length / 14);
+
+  var maxCount = Math.max.apply(null, bars.map(function(b){return b.count;}));
+  if (maxCount === 0) maxCount = 1;
+  var chartH = 170;
+  var barW = Math.max(Math.floor((area.clientWidth - 48) / bars.length), 4);
+
+  area.innerHTML = bars.length > 60 ? '<div style="padding:20px;color:var(--gray-400);text-align:center">Too many days — narrow your range (max 60 days)</div>' : '';
+  if (bars.length > 60) return;
+
+  area.innerHTML = '';
+  bars.forEach(function(b, i){
+    var h = Math.max((b.count / maxCount) * chartH, 1);
+    var left = 40 + i * barW;
+    var top = chartH - h;
+    var showLabel = (i % labelEvery === 0) || (i === bars.length - 1);
+    area.innerHTML +=
+      '<div class="chart-bar" style="left:'+left+'px;top:'+top+'px;width:'+(barW-2)+'px;height:'+h+'px">'+
+      '<div class="chart-bar-value" style="top:-18px">'+(b.count>0?b.count:'')+'</div>'+
+      '</div>'+
+      '<div class="chart-bar-label" style="left:'+left+'px;bottom:4px;width:'+barW+'px">'+
+      (showLabel ? (chartMode==='week'||bars.length<=14 ? b.label : b.label.slice(-2)) : '')+
+      '</div>';
+  });
+}
+
+// ── User management ──
+async function loadUsers() {
+  var tbody = document.getElementById('usersList');
+  try {
+    var r = await fetch('/api/admin/users', authHeaders());
+    if (!r.ok) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:16px">❌ Failed to load users (HTTP '+r.status+') — refresh and try again</td></tr>';
+      return;
+    }
+    var d = await r.json();
+    if (d.users && d.users.length > 0) {
+      tbody.innerHTML = d.users.map(function(u){
+        var isSelf = currentUser && u.id === currentUser.id;
+        var delTitle = isSelf ? 'Cannot delete yourself' : 'Delete this user';
+        var delDisabled = isSelf ? ' disabled' : '';
+        var delBtn = '<button class="btn-sm danger"'+delDisabled+' onclick="deleteUser('+u.id+')" title="'+delTitle+'">🗑</button>';
+        var resetBtn = '<button class="btn-sm" onclick="resetPassword('+u.id+',\''+esc(u.username)+'\')" style="margin-left:3px">🔑</button>';
+        return '<tr><td><strong>'+esc(u.username)+'</strong></td><td><span style="font-size:0.75em;padding:2px 6px;border-radius:4px;background:'+(u.role==='admin'?'#fee2e2;color:#991b1b':'var(--gray-100);color:var(--gray-700)')+'">'+esc(u.role)+'</span></td><td>'+esc(u.display_name||'')+'</td><td>'+esc(u.created_at||'')+'</td><td>'+delBtn+resetBtn+'</td></tr>';
+      }).join('');
+    } else {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:16px">No users found</td></tr>';
+    }
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:16px">❌ Error loading users: '+esc(String(e))+'</td></tr>';
+  }
+}
+
+async function createUser() {
+  var u = document.getElementById('newUsername').value.trim();
+  var p = document.getElementById('newPassword').value;
+  var n = document.getElementById('newDisplayName').value.trim();
+  var r = document.getElementById('newRole').value;
+  var err = document.getElementById('userError');
+  err.style.display = 'none';
+  if (!u || !p) { err.textContent = 'Username and password required'; err.style.display = 'inline'; return; }
+  try {
+    var resp = await fetch('/api/admin/users', {
+      method:'POST',
+      headers:{'Content-Type':'application/json', 'Authorization':'Bearer '+token},
+      body:JSON.stringify({username:u, password:p, role:r, display_name:n})
+    });
+    var d = await resp.json();
+    if (d.success) {
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('newDisplayName').value = '';
+      loadUsers();
+    } else {
+      err.textContent = '❌ ' + (d.error || 'Failed');
+      err.style.display = 'inline';
+    }
+  } catch(e) { err.textContent = '❌ Network error'; err.style.display = 'inline'; }
+}
+
+async function deleteUser(uid) {
+  if (!confirm('Delete this user? This cannot be undone. Their activity stats will remain on the dashboard.')) return;
+  try {
+    var r = await fetch('/api/admin/users/'+uid, {method:'DELETE', headers:{'Authorization':'Bearer '+token}});
+    var d = await r.json();
+    if (d.success) {
+      loadUsers();
+      loadTeamDashboard();
+    } else {
+      alert('❌ ' + (d.error || 'Failed to delete'));
+    }
+  } catch(e) { alert('❌ Network error'); }
+}
+
+// ── Admin supporter search ──
+async function adminSearch() {
+  var q = document.getElementById('adminSearchInput').value.trim();
+  var filter = document.getElementById('adminSearchFilter').value;
+  if (q.length < 2 && !filter) return;
+  var tbody = document.getElementById('adminSearchResults');
+  tbody.innerHTML = '<tr><td colspan="7" class="loading">Searching...</td></tr>';
+  try {
+    var url = '/api/search?q='+encodeURIComponent(q)+'&limit=50';
+    if (filter === 'supporter' || filter === 'neutral' || filter === 'non-supporter') {
+      var sl = filter === 'non-supporter' ? 'Non-Supporter' : filter.charAt(0).toUpperCase()+filter.slice(1);
+      url += '&support_level='+encodeURIComponent(sl);
+    } else if (filter === 'pending') {
+      url += '&sign_request=Pending';
+    } else if (filter === 'completed') {
+      url += '&sign_request=Completed';
+    }
+    var r = await fetch(url);
+    var d = await r.json();
+    if (d.results && d.results.length > 0) {
+      tbody.innerHTML = d.results.map(function(s){
+        var addr = [s.street_number, s.street].filter(Boolean).join(' ');
+        var badge = getSupportBadgeLabel(s.support_level);
+        var rowId = 'arow-'+s.id;
+        return '<tr id="'+rowId+'">'+
+          '<td id="ar-'+s.id+'-name"><strong>'+esc(s.full_name||'—')+'</strong></td>'+
+          '<td id="ar-'+s.id+'-addr">'+esc(addr)+(s.apartment?', Apt '+esc(s.apartment):'')+'</td>'+
+          '<td id="ar-'+s.id+'-phone">'+esc(s.phone||'—')+'</td>'+
+          '<td id="ar-'+s.id+'-level">'+badge+'</td>'+
+          '<td id="ar-'+s.id+'-sign">'+esc(s.sign_request||'—')+'</td>'+
+          '<td id="ar-'+s.id+'-updated" style="font-size:0.75em;color:var(--gray-400)">'+esc(s.updated_at||'—')+'</td>'+
+          '<td id="ar-'+s.id+'-actions"><button class="btn-sm" onclick="adminEditRow('+s.id+')" title="Edit">✏️</button></td>'+
+          '</tr>';
+      }).join('');
+      tbody.innerHTML += '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);font-size:0.8em">'+d.total+' results · showing first '+d.results.length+'</td></tr>';
+    } else {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px">No results</td></tr>';
+    }
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--red);padding:16px">Search failed</td></tr>';
+  }
+}
+
+var adminEditCache = {};
+function adminEditRow(id) {
+  var cache = {};
+  ['name','addr','phone','level','sign'].forEach(function(f){
+    var el = document.getElementById('ar-'+id+'-'+f);
+    cache[f] = el.innerHTML;
+  });
+  adminEditCache[id] = cache;
+
+  // Fetch current data from the server for accurate values
+  fetch('/api/supporter/'+id).then(function(r){return r.json()}).then(function(d){
+    if (!d.supporter) return;
+    var s = d.supporter;
+    document.getElementById('ar-'+id+'-name').innerHTML = '<input type="text" id="ein-'+id+'-name" value="'+esc(s.full_name||'')+'" style="width:100%;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em">';
+    var addr = [s.street_number, s.street].filter(Boolean).join(' ');
+    document.getElementById('ar-'+id+'-addr').innerHTML = '<input type="text" id="ein-'+id+'-addr" value="'+esc(addr)+'" style="width:100%;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><input type="text" id="ein-'+id+'-apt" value="'+esc(s.apartment||'')+'" placeholder="Apt" style="width:60px;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em;margin-left:4px">';
+    document.getElementById('ar-'+id+'-phone').innerHTML = '<input type="text" id="ein-'+id+'-phone" value="'+esc(s.phone||'')+'" style="width:100%;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em">';
+    document.getElementById('ar-'+id+'-level').innerHTML = '<select id="ein-'+id+'-level" style="padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><option value="">—</option><option value="Supporter"'+(s.support_level==='Supporter'?' selected':'')+'>Supporter</option><option value="Neutral"'+(s.support_level==='Neutral'?' selected':'')+'>Neutral</option><option value="Non-Supporter"'+(s.support_level==='Non-Supporter'?' selected':'')+'>Non-Supporter</option><option value="Unknown"'+(s.support_level==='Unknown'?' selected':'')+'>Unknown</option><option value="Survey Refused"'+(s.support_level==='Survey Refused'?' selected':'')+'>Survey Refused</option></select>';
+    document.getElementById('ar-'+id+'-sign').innerHTML = '<select id="ein-'+id+'-sign" style="padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><option value="">—</option><option value="Completed"'+(s.sign_request==='Completed'?' selected':'')+'>Completed</option><option value="Pending"'+(s.sign_request==='Pending'?' selected':'')+'>Pending</option><option value="Declined"'+(s.sign_request==='Declined'?' selected':'')+'>Declined</option><option value="Not Requested"'+(s.sign_request==='Not Requested'?' selected':'')+'>Not Requested</option></select>';
+    document.getElementById('ar-'+id+'-actions').innerHTML = '<button class="btn-sm" onclick="adminSaveRow('+id+')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0">💾</button> <button class="btn-sm danger" onclick="adminCancelRow('+id+')">✕</button>';
+  });
+}
+
+async function adminSaveRow(id) {
+  var fullName = document.getElementById('ein-'+id+'-name').value.trim();
+  var addr = document.getElementById('ein-'+id+'-addr').value.trim();
+  var apt = document.getElementById('ein-'+id+'-apt') ? document.getElementById('ein-'+id+'-apt').value.trim() : '';
+  var phone = document.getElementById('ein-'+id+'-phone').value.trim();
+  var level = document.getElementById('ein-'+id+'-level').value;
+  var sign = document.getElementById('ein-'+id+'-sign').value;
+
+  // Parse address into street_number and street
+  var streetNum = '', street = '';
+  var m = addr.match(/^(\d+[A-Za-z]?)\s+(.+)/);
+  if (m) { streetNum = m[1]; street = m[2]; } else { street = addr; }
+
+  var updates = {};
+  if (fullName) updates.full_name = fullName;
+  updates.street_number = streetNum;
+  updates.street = street;
+  if (apt) updates.apartment = apt;
+  updates.phone = phone;
+  updates.support_level = level;
+  updates.sign_request = sign;
+
+  try {
+    var r = await fetch('/api/supporter/'+id, {
+      method:'PUT',
+      headers:{'Content-Type':'application/json','Authorization':token?'Bearer '+token:''},
+      body:JSON.stringify(updates)
+    });
+    var d = await r.json();
+    if (d.success) {
+      // Refresh the row display
+      var s = d.supporter;
+      var addr2 = [s.street_number, s.street].filter(Boolean).join(' ');
+      var badge = getSupportBadgeLabel(s.support_level);
+      document.getElementById('ar-'+id+'-name').innerHTML = '<strong>'+esc(s.full_name||'—')+'</strong>';
+      document.getElementById('ar-'+id+'-addr').innerHTML = esc(addr2)+(s.apartment?', Apt '+esc(s.apartment):'');
+      document.getElementById('ar-'+id+'-phone').innerHTML = esc(s.phone||'—');
+      document.getElementById('ar-'+id+'-level').innerHTML = badge;
+      document.getElementById('ar-'+id+'-sign').innerHTML = esc(s.sign_request||'—');
+      document.getElementById('ar-'+id+'-updated').innerHTML = esc(s.updated_at||'—');
+      document.getElementById('ar-'+id+'-actions').innerHTML = '<button class="btn-sm" onclick="adminEditRow('+id+')" title="Edit">✏️</button>';
+      // Flash green
+      document.getElementById('arow-'+id).style.background = '#dcfce7';
+      setTimeout(function(){ document.getElementById('arow-'+id).style.background = ''; }, 1000);
+    } else {
+      alert('❌ Save failed: '+(d.error||'unknown'));
+    }
+  } catch(e) { alert('❌ Network error'); }
+}
+
+function adminCancelRow(id) {
+  var cache = adminEditCache[id] || {};
+  document.getElementById('ar-'+id+'-name').innerHTML = cache.name || '—';
+  document.getElementById('ar-'+id+'-addr').innerHTML = cache.addr || '—';
+  document.getElementById('ar-'+id+'-phone').innerHTML = cache.phone || '—';
+  document.getElementById('ar-'+id+'-level').innerHTML = cache.level || '—';
+  document.getElementById('ar-'+id+'-sign').innerHTML = cache.sign || '—';
+  document.getElementById('ar-'+id+'-actions').innerHTML = '<button class="btn-sm" onclick="adminEditRow('+id+')" title="Edit">✏️</button>';
+  delete adminEditCache[id];
+}
+function getSupportBadgeLabel(l) {
+  l = (l||'').toLowerCase();
+  if (l==='supporter') return '<span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;font-size:0.8em;font-weight:600">✓ Supporter</span>';
+  if (l==='neutral') return '<span style="background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:4px;font-size:0.8em">Neutral</span>';
+  if (l==='non-supporter'||l==='non supporter') return '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-size:0.8em">✗ Non-Supporter</span>';
+  return '<span style="color:var(--gray-400);font-size:0.8em">'+esc(l||'Unknown')+'</span>';
+}
+
+// ── Drill-down from team dashboard ──
+function drillSupportLevel(level) {
+  var l = level.toLowerCase();
+  var filterVal = '';
+  if (l === 'supporter') filterVal = 'supporter';
+  else if (l === 'neutral') filterVal = 'neutral';
+  else if (l === 'non-supporter' || l === 'non supporter') filterVal = 'non-supporter';
+  document.getElementById('adminSearchFilter').value = filterVal;
+  document.getElementById('adminSearchInput').value = '';
+  document.getElementById('adminSearchInput').focus();
+  adminSearch();
+  // Scroll to search section
+  document.getElementById('adminSearchInput').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function drillUser(username) {
+  document.getElementById('adminSearchFilter').value = '';
+  document.getElementById('adminSearchInput').value = username;
+  document.getElementById('adminSearchInput').focus();
+  adminSearch();
+  document.getElementById('adminSearchInput').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+async function resetPassword(uid, username) {
+  var pw = prompt('Enter new password for '+username+':');
+  if (!pw) return;
+  try {
+    var r = await fetch('/api/admin/users/'+uid+'/reset-password', {
+      method:'POST',
+      headers:{'Content-Type':'application/json', 'Authorization':'Bearer '+token},
+      body:JSON.stringify({password:pw})
+    });
+    var d = await r.json();
+    if (d.success) alert('✅ Password reset for '+username);
+    else alert('❌ Failed: '+(d.error||'error'));
+  } catch(e) { alert('❌ Network error'); }
+}
+
+// ── Helpers ──
+function formatSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1)+' KB';
+  return (b/1048576).toFixed(1)+' MB';
+}
+function timeAgo(ms) {
+  var diff = Date.now() - ms;
+  var mins = Math.floor(diff/60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins+'m ago';
+  var hrs = Math.floor(mins/60);
+  if (hrs < 24) return hrs+'h ago';
+  return Math.floor(hrs/24)+'d ago';
+}
+function esc(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Download DB with auth token
+function downloadDB(e) {
+  e.preventDefault();
+  if (!token) { alert('Not authenticated'); return; }
+  window.location.href = '/api/admin/export-db?token=' + encodeURIComponent(token);
+}
+
+// Enter key on login
+document.getElementById('loginPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+// Enter key on admin search
+document.getElementById('adminSearchInput').addEventListener('keydown', function(e){ if(e.key==='Enter') adminSearch(); });
+// Click delegation for team dashboard drill-down
+document.addEventListener('click', function(e) {
+  var row = e.target.closest('.clickable-row');
+  if (!row) return;
+  var drill = row.getAttribute('data-drill');
+  var val = row.getAttribute('data-value');
+  if (drill === 'level') drillSupportLevel(val);
+  else if (drill === 'user') drillUser(val);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+[Unit]
+Description=Ward 25 Supporter Database Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/supporter-db
+ExecStart=/usr/bin/python3 /root/supporter-db/server.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
