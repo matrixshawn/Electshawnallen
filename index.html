@@ -16,7 +16,7 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .top-bar{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 .top-bar h1{font-size:1em;font-weight:700;letter-spacing:-0.02em}
 .top-bar .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:0.65em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
-.top-bar .stats{font-size:0.82em;opacity:0.95;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.top-bar .stats{font-size:0.85em;opacity:0.95;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .top-bar .stats strong{font-size:1.15em}
 .stats-legend{flex-basis:100%;display:block}
 .top-bar .top-left{flex-shrink:0}
@@ -150,12 +150,11 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
   </div>
   <div class="stats" id="topStats">
     <span id="loggedInUser" style="font-weight:600"></span>
-    <span id="myStatsDisplay" style="display:none">
-      <span style="opacity:0.8">📝 <strong id="myToday">0</strong>/<small id="myWeekTotal">0</small></span>
-      <span style="opacity:0.8">📋 <strong id="mySurveysToday">0</strong>/<small id="mySurveys">0</small></span>
-      <span style="opacity:0.8">✅ <strong id="mySupportersToday">0</strong>/<small id="mySupporters">0</small></span>
-      <span style="opacity:0.8">🪧 <strong id="mySignsToday">0</strong>/<small id="mySigns">0</small></span>
-      <span class="stats-legend" style="font-size:0.6em;opacity:0.45">📝=today/wk 📋=day/all ✅=day/all 🪧=day/all</span>
+    <span id="myStatsDisplay" style="display:none;font-size:0.78em;opacity:0.92">
+      📝 changes&nbsp;<strong id="myToday">0</strong>/<small id="myWeekTotal">0</small>&nbsp;&nbsp;
+      📋 surveys&nbsp;<strong id="mySurveysToday">0</strong>/<small id="mySurveys">0</small>&nbsp;&nbsp;
+      ✅ supporters&nbsp;<strong id="mySupportersToday">0</strong>/<small id="mySupporters">0</small>&nbsp;&nbsp;
+      🪧 signs&nbsp;<strong id="mySignsToday">0</strong>/<small id="mySigns">0</small>
     </span>
     <span><a href="/admin" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85em">🔐 Admin</a></span>
     <span><a href="#" onclick="doLogout()" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8em">Logout</a></span>
