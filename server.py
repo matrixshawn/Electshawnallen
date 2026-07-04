@@ -647,10 +647,24 @@ class Handler(BaseHTTPRequestHandler):
             WHERE user_id = ? AND field_name = 'support_level' AND new_value = 'Supporter'
         ''', (uid,)).fetchone()[0]
 
+        # Supporters marked today
+        supporters_today = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND field_name = 'support_level' AND new_value = 'Supporter'
+            AND date(changed_at) = date('now','localtime')
+        ''', (uid,)).fetchone()[0]
+
         # Signs marked (completed)
         signs_completed = conn.execute('''
             SELECT COUNT(*) FROM change_log
             WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Completed'
+        ''', (uid,)).fetchone()[0]
+
+        # Signs completed today
+        signs_today = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Completed'
+            AND date(changed_at) = date('now','localtime')
         ''', (uid,)).fetchone()[0]
 
         conn.close()
@@ -662,7 +676,9 @@ class Handler(BaseHTTPRequestHandler):
             'surveys_today': surveys_today,
             'total_surveys': total_surveys,
             'supporters_marked': supporters_marked,
+            'supporters_today': supporters_today,
             'signs_completed': signs_completed,
+            'signs_today': signs_today,
             'display_name': self.current_user.get('display_name', '')
         })
 

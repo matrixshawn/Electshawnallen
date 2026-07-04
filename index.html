@@ -149,10 +149,10 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
   <div class="stats" id="topStats">
     <span id="loggedInUser" style="font-weight:600"></span>
     <span id="myStatsDisplay" style="display:none">
-      <span style="opacity:0.8">📝 <strong id="myToday">0</strong> today</span>
-      <span style="opacity:0.8">📋 <strong id="mySurveys">0</strong> surveys</span>
-      <span style="opacity:0.8">✅ <strong id="mySupporters">0</strong> supporters</span>
-      <span style="opacity:0.8">🪧 <strong id="mySigns">0</strong> signs</span>
+      <span style="opacity:0.8">📝 <strong id="myToday">0</strong>/<small id="myWeekTotal">0</small></span>
+      <span style="opacity:0.8">📋 <strong id="mySurveysToday">0</strong>/<small id="mySurveys">0</small></span>
+      <span style="opacity:0.8">✅ <strong id="mySupportersToday">0</strong>/<small id="mySupporters">0</small></span>
+      <span style="opacity:0.8">🪧 <strong id="mySignsToday">0</strong>/<small id="mySigns">0</small></span>
     </span>
     <span><a href="/admin" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85em">🔐 Admin</a></span>
     <span><a href="#" onclick="doLogout()" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8em">Logout</a></span>
@@ -367,8 +367,12 @@ async function loadMyStats() {
     const r = await fetch(API + '/api/my-stats', authHeaders());
     const d = await r.json();
     document.getElementById('myToday').textContent = d.today_changes || 0;
+    document.getElementById('myWeekTotal').textContent = d.week_changes || 0;
+    document.getElementById('mySurveysToday').textContent = d.surveys_today || 0;
     document.getElementById('mySurveys').textContent = d.total_surveys || 0;
+    document.getElementById('mySupportersToday').textContent = d.supporters_today || 0;
     document.getElementById('mySupporters').textContent = d.supporters_marked || 0;
+    document.getElementById('mySignsToday').textContent = d.signs_today || 0;
     document.getElementById('mySigns').textContent = d.signs_completed || 0;
     document.getElementById('myStatsDisplay').style.display = 'inline';
   } catch(e) {}
