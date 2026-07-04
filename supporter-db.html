@@ -2,53 +2,440 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="0;url=https://signals-anne-bottom-acrobat.trycloudflare.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ward25 DB">
 <title>Ward 25 Supporter Database — Elect Shawn Allen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--red:#dc2626;--blue:#1e3a5f;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;--white:#fff}
+:root{--red:#dc2626;--red-dark:#b91c1c;--blue:#1e3a5f;--blue-light:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;--white:#fff;--green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.6;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
-.card{background:white;border-radius:16px;padding:40px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid var(--gray-100);max-width:500px;width:100%}
-.card h1{font-size:1.5em;font-weight:800;margin-bottom:8px;letter-spacing:-0.02em}
-.card .subtitle{font-size:0.9em;color:var(--gray-500);margin-bottom:24px}
-.card .badge{display:inline-block;background:var(--red);color:white;padding:4px 14px;border-radius:20px;font-size:0.75em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px}
-.card .status{font-size:0.85em;color:var(--gray-500);margin-bottom:20px}
-.card .url{display:block;background:var(--gray-50);padding:12px;border-radius:8px;font-size:0.85em;color:var(--blue);word-break:break-all;border:1px dashed var(--gray-400);margin-bottom:16px}
-.btn{display:inline-block;padding:12px 28px;background:var(--red);color:white;border:none;border-radius:10px;font-size:1em;font-weight:700;cursor:pointer;text-decoration:none;transition:background 0.15s}
-.btn:hover{background:#b91c1c}
-.btn-secondary{background:var(--blue)}
-.btn-secondary:hover{background:#152e4a}
-.links{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.spinner{margin:20px auto;width:40px;height:40px;border:3px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.5;min-height:100vh}
+.top-bar{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.top-bar h1{font-size:1.15em;font-weight:700;letter-spacing:-0.02em;white-space:nowrap}
+.top-bar .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:12px;font-size:0.7em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+.top-bar .stats{font-size:0.75em;opacity:0.8;display:flex;gap:12px;flex-wrap:wrap}
+.stats-bar{background:white;border-bottom:1px solid var(--gray-200);padding:8px 16px;display:flex;gap:16px;font-size:0.78em;color:var(--gray-500);overflow-x:auto;white-space:nowrap}
+.stats-bar span{font-weight:600;color:var(--gray-700)}
+.stats-bar .green{color:var(--green)}
+.stats-bar .red{color:var(--red)}
+.container{max-width:900px;margin:0 auto;padding:16px}
+.search-box{position:relative;margin-bottom:12px}
+.search-box input{width:100%;padding:14px 18px;border:2px solid var(--gray-200);border-radius:12px;font-size:1.05em;font-family:inherit;transition:all 0.15s;background:white}
+.search-box input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(220,38,38,0.1)}
+.search-box .icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:1.2em}
+.search-box .spinner{display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;border:2px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+.search-hint{font-size:0.8em;color:var(--gray-400);margin-bottom:16px;text-align:center}
+.results-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:0.85em;color:var(--gray-500)}
+.supporter-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:10px;transition:all 0.15s;cursor:pointer}
+.supporter-card:hover{border-color:var(--gray-300);box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.supporter-card.editing{border-color:var(--red);box-shadow:0 2px 12px rgba(220,38,38,0.1)}
+.supporter-card.original{border-left:4px solid var(--green);background:linear-gradient(90deg,#f0fdf4 0%,white 40px)}
+.supporter-card .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.supporter-card .name{font-weight:700;font-size:1.05em;color:var(--gray-900)}
+.supporter-card .address-line{font-size:0.85em;color:var(--gray-500);margin-bottom:6px}
+.supporter-card .support-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:0.72em;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
+.badge-supporter{background:#dcfce7;color:#166534}
+.badge-neutral{background:var(--gray-100);color:var(--gray-500)}
+.badge-nonsupporter{background:#fee2e2;color:#991b1b}
+.badge-unknown{background:var(--gray-100);color:var(--gray-400)}
+.card-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.field-row{display:flex;align-items:center;gap:6px;padding:4px 0}
+.field-label{font-size:0.7em;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.05em;min-width:55px;flex-shrink:0}
+.field-value{font-size:0.88em;color:var(--gray-700);flex:1;cursor:text;padding:2px 4px;border-radius:4px;transition:background 0.1s;word-break:break-word}
+.field-value:hover{background:var(--gray-100)}
+.field-value.phone{color:var(--blue-light);font-weight:500}
+.field-value.email{color:var(--blue-light);font-size:0.82em}
+.field-value.notes{font-size:0.82em;color:var(--gray-500);font-style:italic}
+.field-value.editing{background:#fff7ed;outline:2px solid var(--amber);border-radius:4px}
+.field-value input,.field-value textarea,.field-value select{width:100%;border:none;background:transparent;font-family:inherit;font-size:0.88em;padding:2px 4px;outline:none;color:var(--gray-900)}
+.field-value textarea{resize:vertical;min-height:40px}
+.field-value select{font-size:0.85em}
+.card-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-100)}
+.btn{padding:6px 14px;border-radius:6px;font-size:0.8em;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;font-family:inherit}
+.btn-save{background:var(--green);color:white}
+.btn-save:hover{background:#15803d}
+.btn-cancel{background:var(--gray-100);color:var(--gray-700)}
+.btn-cancel:hover{background:var(--gray-200)}
+.btn-edit{background:var(--gray-100);color:var(--gray-700)}
+.btn-edit:hover{background:var(--gray-200);color:var(--gray-900)}
+.btn-history{background:var(--amber-bg);color:var(--amber)}
+.btn-history:hover{background:#fef3c7}
+.change-log{background:var(--amber-bg);border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.8em;max-height:200px;overflow-y:auto;display:none}
+.change-log.show{display:block}
+.change-log .log-entry{padding:4px 0;border-bottom:1px solid #fde68a;color:var(--gray-700)}
+.change-log .log-entry:last-child{border-bottom:none}
+.change-log .log-field{font-weight:600;color:var(--amber)}
+.change-log .log-old{color:var(--red);text-decoration:line-through}
+.change-log .log-new{color:var(--green)}
+.change-log .log-date{font-size:0.8em;color:var(--gray-400)}
+.no-results{text-align:center;padding:40px 20px;color:var(--gray-400)}
+.no-results .icon{font-size:3em;margin-bottom:10px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gray-900);color:white;padding:10px 20px;border-radius:8px;font-size:0.85em;z-index:200;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.toast.show{opacity:1}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+.export-bar{display:flex;gap:10px;align-items:center;padding:12px 16px;background:white;border-top:1px solid var(--gray-200);position:sticky;bottom:0;flex-wrap:wrap}
+.export-bar .btn-export{background:var(--blue);color:white;padding:8px 16px;font-size:0.82em}
+.export-bar .btn-export:hover{background:#152e4a}
+.loading-state{text-align:center;padding:40px;color:var(--gray-400)}
+.pagination{display:flex;gap:6px;justify-content:center;margin:16px 0}
+.pagination button{padding:6px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-size:0.82em;transition:all 0.1s}
+.pagination button:hover{background:var(--gray-50)}
+.pagination button.active{background:var(--red);color:white;border-color:var(--red)}
+@media(max-width:600px){.top-bar h1{font-size:1em}.search-box input{font-size:0.95em;padding:12px 14px}.supporter-card{padding:12px}.card-fields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="badge">WARD 25 · SCARBOROUGH–ROUGE PARK</div>
-  <h1>🗳️ Supporter Database</h1>
-  <p class="subtitle">Shawn Allen for City Councillor — 2026</p>
-  <div class="spinner"></div>
-  <p class="status">Connecting to the supporter database...</p>
-  <p class="status" style="font-size:0.75em;color:var(--gray-400)">6,586 supporter records · Address lookup · Inline editing · Change tracking</p>
-  <p style="font-size:0.8em;color:var(--gray-500);margin-top:16px">If you're not redirected automatically:</p>
-  <a href="https://signals-anne-bottom-acrobat.trycloudflare.com" class="btn">📋 Open Supporter Database</a>
-  <div class="links">
-    <a href="index.html" class="btn btn-secondary" style="font-size:0.85em;padding:8px 18px">📋 Back to Survey</a>
-    <a href="dashboard.html" class="btn btn-secondary" style="font-size:0.85em;padding:8px 18px">📊 Dashboard</a>
+<div class="top-bar">
+  <div>
+    <h1>🗳️ Ward 25 Supporter DB</h1>
+    <span class="badge">Elect Shawn Allen</span>
+  </div>
+  <div class="stats" id="topStats">
+    <span>📋 <strong id="statTotal">...</strong> records</span>
+    <span>📞 <strong id="statPhone">...</strong> with phones</span>
+    <span>✅ <strong id="statSupporters">...</strong> supporters</span>
   </div>
 </div>
+
+<div class="stats-bar">
+  <span>🔍 Type an <strong>address</strong>, <strong>name</strong>, or <strong>phone</strong> to search</span>
+  <span class="green" id="changesBadge" style="display:none">🔄 <span id="changesCount">0</span> changes today</span>
+  <span><a href="/api/export" style="color:var(--blue-light)" id="exportLink">📥 Export changes CSV</a></span>
+</div>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Type street address, name, or phone number..." autocomplete="off" autofocus>
+    <span class="icon">🔍</span>
+    <div class="spinner" id="searchSpinner"></div>
+  </div>
+  <div class="results-info" id="resultsInfo" style="display:none">
+    <span id="resultsCount"></span>
+    <span id="resultsQuery"></span>
+  </div>
+
+  <div id="results"></div>
+  <div class="pagination" id="pagination" style="display:none"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-// Try to detect tunnel URL from cache
-(function() {
-  var tunnelUrl = localStorage.getItem('supporter_db_tunnel');
-  if (tunnelUrl) {
-    window.location.href = tunnelUrl;
+const API = 'https://signals-anne-bottom-acrobat.trycloudflare.com';
+let currentPage = 1;
+const PAGE_SIZE = 30;
+let debounceTimer = null;
+let currentQuery = '';
+let editingCard = null;
+
+// ── Load stats on startup ──────────────────────────
+async function loadStats() {
+  try {
+    const r = await fetch(API + '/api/stats');
+    const d = await r.json();
+    document.getElementById('statTotal').textContent = d.total?.toLocaleString() || '...';
+    document.getElementById('statPhone').textContent = d.with_phone?.toLocaleString() || '...';
+    document.getElementById('statSupporters').textContent = d.supporters?.toLocaleString() || '...';
+    if (d.recent_changes > 0) {
+      document.getElementById('changesBadge').style.display = 'inline';
+      document.getElementById('changesCount').textContent = d.recent_changes;
+    }
+  } catch(e) { console.error('Stats error:', e); }
+}
+
+// ── Search ──────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', function() {
+  clearTimeout(debounceTimer);
+  const q = this.value.trim();
+  if (q.length < 2) {
+    document.getElementById('results').innerHTML = q.length === 0 ? '' : '<div class="no-results"><div class="icon">🔍</div><p>Type 2+ characters to search</p></div>';
+    document.getElementById('resultsInfo').style.display = 'none';
+    document.getElementById('pagination').style.display = 'none';
+    editingCard = null;
+    return;
   }
-})();
+  document.getElementById('searchSpinner').style.display = 'block';
+  debounceTimer = setTimeout(() => search(q), 250);
+});
+
+async function search(q, page = 1) {
+  currentQuery = q;
+  currentPage = page;
+  const offset = (page - 1) * PAGE_SIZE;
+  try {
+    const r = await fetch(API + `/api/search?q=${encodeURIComponent(q)}&limit=${PAGE_SIZE}&offset=${offset}`);
+    const d = await r.json();
+    document.getElementById('searchSpinner').style.display = 'none';
+    renderResults(d, page);
+  } catch(e) {
+    document.getElementById('searchSpinner').style.display = 'none';
+    document.getElementById('results').innerHTML = '<div class="no-results"><div class="icon">⚠️</div><p>Search failed. Is the server running?</p></div>';
+  }
+}
+
+function renderResults(d, page) {
+  const info = document.getElementById('resultsInfo');
+  const container = document.getElementById('results');
+  const pagination = document.getElementById('pagination');
+  editingCard = null;
+
+  if (!d.results || d.results.length === 0) {
+    info.style.display = 'block';
+    document.getElementById('resultsCount').textContent = 'No results';
+    document.getElementById('resultsQuery').textContent = `for "${d.query}"`;
+    container.innerHTML = '<div class="no-results"><div class="icon">📭</div><p>No supporters match your search.</p><p style="font-size:0.8em;color:var(--gray-400)">Try a different address, name, or phone number.</p></div>';
+    pagination.style.display = 'none';
+    return;
+  }
+
+  info.style.display = 'block';
+  document.getElementById('resultsCount').innerHTML = `<strong>${d.total}</strong> results`;
+  document.getElementById('resultsQuery').textContent = `for "${d.query}"`;
+
+  container.innerHTML = d.results.map(s => renderCard(s)).join('');
+
+  // Pagination
+  const totalPages = Math.ceil(d.total / PAGE_SIZE);
+  if (totalPages > 1) {
+    pagination.style.display = 'flex';
+    let html = '';
+    if (page > 1) html += `<button onclick="search('${d.query}', ${page-1})">‹ Prev</button>`;
+    for (let i = Math.max(1, page-2); i <= Math.min(totalPages, page+2); i++) {
+      html += `<button class="${i===page?'active':''}" onclick="search('${d.query}', ${i})">${i}</button>`;
+    }
+    if (page < totalPages) html += `<button onclick="search('${d.query}', ${page+1})">Next ›</button>`;
+    pagination.innerHTML = html;
+  } else {
+    pagination.style.display = 'none';
+  }
+}
+
+function renderCard(s) {
+  const addr = [s.street_number, s.street].filter(Boolean).join(' ');
+  const cityPc = [s.city, s.postal_code].filter(Boolean).join(' ');
+  const badge = getSupportBadge(s.support_level);
+  const hasChanges = false; // will check on expand
+
+  return `
+  <div class="supporter-card${s.is_original ? ' original' : ''}" id="card-${s.id}">
+    <div class="card-header">
+      <div>
+        <div class="name">${escHtml(s.full_name || 'Unknown')}</div>
+        <div class="address-line">📍 ${escHtml(addr)}${cityPc ? ' · ' + escHtml(cityPc) : ''}${s.is_original ? ' <span style="background:#dcfce7;color:#166534;font-size:0.7em;padding:1px 6px;border-radius:4px;font-weight:600">✓ Original</span>' : ''}</div>
+      </div>
+      <span class="support-badge ${badge.class}">${badge.label}</span>
+    </div>
+
+    <div class="card-fields">
+      ${fieldRow('📞', 'Phone', s.phone, 'phone', s.id, 'phone')}
+      ${fieldRow('✉️', 'Email', s.email, 'email', s.id, 'email')}
+      ${fieldRow('📋', 'Poll', s.poll, '', s.id, 'poll')}
+      ${fieldRow('🪧', 'Sign', s.sign_request, '', s.id, 'sign_request')}
+      ${fieldRow('💬', 'Conv', s.candidate_conversation_request, '', s.id, 'candidate_conversation_request')}
+      ${fieldRow('📝', 'Notes', s.notes, 'notes', s.id, 'notes')}
+      ${fieldRow('🕐', 'Updated', formatDate(s.updated_at), '', s.id, '')}
+    </div>
+
+    <div class="card-actions">
+      <button class="btn btn-edit" onclick="editCard(${s.id})">✏️ Edit</button>
+      <button class="btn btn-history" onclick="toggleHistory(${s.id})">📜 History</button>
+      <span style="font-size:0.7em;color:var(--gray-400);margin-left:auto">ID: ${s.id}</span>
+    </div>
+    <div class="change-log" id="history-${s.id}"></div>
+    <div class="card-actions" id="edit-actions-${s.id}" style="display:none">
+      <button class="btn btn-save" onclick="saveCard(${s.id})">💾 Save Changes</button>
+      <button class="btn btn-cancel" onclick="cancelEdit(${s.id})">Cancel</button>
+      <span style="font-size:0.75em;color:var(--amber);margin-left:auto" id="edit-status-${s.id}"></span>
+    </div>
+  </div>`;
+}
+
+function fieldRow(emoji, label, value, cssClass, id, field) {
+  const val = value || '—';
+  const isEmpty = !value;
+  return `<div class="field-row">
+    <span class="field-label">${emoji} ${label}</span>
+    <span class="field-value ${cssClass}${isEmpty?' empty':''}" id="fv-${id}-${field}" ${field ? `ondblclick="startEdit('${id}','${field}')" title="Double-click to edit"` : ''}>${escHtml(val)}</span>
+  </div>`;
+}
+
+function getSupportBadge(level) {
+  const l = (level || '').toLowerCase();
+  if (l === 'supporter') return {label:'✓ Supporter', class:'badge-supporter'};
+  if (l === 'neutral') return {label:'Neutral', class:'badge-neutral'};
+  if (l === 'non-supporter' || l === 'non supporter') return {label:'✗ Non-Supporter', class:'badge-nonsupporter'};
+  return {label:level || 'Unknown', class:'badge-unknown'};
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  try {
+    const dt = new Date(d + (d.includes('T') ? '' : 'T00:00:00'));
+    return dt.toLocaleDateString('en-CA', {year:'numeric',month:'short',day:'numeric'});
+  } catch(e) { return d; }
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Edit Mode ───────────────────────────────────────
+const EDITABLE_FIELDS = ['phone', 'email', 'full_name', 'first_name', 'last_name',
+  'street_number', 'street', 'city', 'postal_code', 'support_level', 'notes',
+  'sign_request', 'candidate_conversation_request', 'apartment', 'poll'];
+
+const FIELD_INPUTS = {
+  'support_level': {type:'select', options:['Supporter','Neutral','Non-Supporter','Unknown']},
+  'sign_request': {type:'select', options:['','Completed','Declined','Not Requested','Pending']},
+  'candidate_conversation_request': {type:'select', options:['','Completed','Declined','Not Requested','Pending']},
+  'notes': {type:'textarea'},
+};
+
+let originalValues = {};
+
+function editCard(id) {
+  editingCard = id;
+  const card = document.getElementById('card-' + id);
+  card.classList.add('editing');
+  document.getElementById('edit-actions-' + id).style.display = 'flex';
+
+  // Make fields editable
+  EDITABLE_FIELDS.forEach(field => {
+    const el = document.getElementById('fv-' + id + '-' + field);
+    if (!el) return;
+    const currentVal = el.textContent === '—' ? '' : el.textContent;
+    originalValues[field] = currentVal;
+    el.classList.add('editing');
+
+    const fi = FIELD_INPUTS[field];
+    if (fi && fi.type === 'select') {
+      let opts = fi.options.map(o => `<option value="${escHtml(o)}"${o===currentVal?' selected':''}>${o||'(none)'}</option>`).join('');
+      el.innerHTML = `<select id="input-${id}-${field}">${opts}</select>`;
+    } else if (fi && fi.type === 'textarea') {
+      el.innerHTML = `<textarea id="input-${id}-${field}" rows="2">${escHtml(currentVal)}</textarea>`;
+    } else {
+      el.innerHTML = `<input type="text" id="input-${id}-${field}" value="${escHtml(currentVal)}">`;
+    }
+  });
+
+  document.getElementById('edit-status-' + id).textContent = 'Editing...';
+}
+
+async function saveCard(id) {
+  const updates = {};
+  EDITABLE_FIELDS.forEach(field => {
+    const inputEl = document.getElementById('input-' + id + '-' + field);
+    if (!inputEl) return;
+    const newVal = inputEl.value || '';
+    if (newVal !== (originalValues[field] || '')) {
+      updates[field] = newVal;
+    }
+  });
+
+  if (Object.keys(updates).length === 0) {
+    cancelEdit(id);
+    return;
+  }
+
+  document.getElementById('edit-status-' + id).textContent = 'Saving...';
+  try {
+    const r = await fetch(API + '/api/supporter/' + id, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(updates)
+    });
+    const d = await r.json();
+    if (d.success) {
+      showToast(`✅ ${d.changes_count} field(s) updated`, 'success');
+      // Refresh the search
+      if (currentQuery) search(currentQuery, currentPage);
+      loadStats();
+    } else {
+      showToast('❌ Save failed', 'error');
+      document.getElementById('edit-status-' + id).textContent = 'Error!';
+    }
+  } catch(e) {
+    showToast('❌ Network error', 'error');
+    document.getElementById('edit-status-' + id).textContent = 'Network error!';
+  }
+}
+
+function cancelEdit(id) {
+  editingCard = null;
+  const card = document.getElementById('card-' + id);
+  card.classList.remove('editing');
+  document.getElementById('edit-actions-' + id).style.display = 'none';
+  // Refresh to restore original values
+  if (currentQuery) search(currentQuery, currentPage);
+  originalValues = {};
+}
+
+function startEdit(id, field) {
+  if (editingCard === id) return;
+  editCard(id);
+  // Focus the specific field
+  setTimeout(() => {
+    const input = document.getElementById('input-' + id + '-' + field);
+    if (input) input.focus();
+  }, 100);
+}
+
+// ── Change History ──────────────────────────────────
+async function toggleHistory(id) {
+  const el = document.getElementById('history-' + id);
+  if (el.classList.contains('show')) {
+    el.classList.remove('show');
+    el.innerHTML = '';
+    return;
+  }
+  el.innerHTML = '<div style="color:var(--gray-400);padding:8px">Loading history...</div>';
+  el.classList.add('show');
+  try {
+    const r = await fetch(API + '/api/supporter/' + id + '/history');
+    const d = await r.json();
+    if (!d.history || d.history.length === 0) {
+      el.innerHTML = '<div style="color:var(--gray-400);padding:8px">No changes recorded yet.</div>';
+      return;
+    }
+    el.innerHTML = d.history.map(h => `
+      <div class="log-entry">
+        <span class="log-field">${escHtml(h.field_name)}</span>:
+        <span class="log-old">${escHtml(h.old_value || '(empty)')}</span>
+        →
+        <span class="log-new">${escHtml(h.new_value || '(empty)')}</span>
+        <span class="log-date"> · ${formatDate(h.changed_at)}</span>
+      </div>
+    `).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="color:var(--red);padding:8px">Failed to load history.</div>';
+  }
+}
+
+// ── Toast ───────────────────────────────────────────
+function showToast(msg, type) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + type + ' show';
+  setTimeout(() => { toast.className = 'toast'; }, 2500);
+}
+
+// ── Init ────────────────────────────────────────────
+loadStats();
+
+// Handle Enter key in search
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && this.value.trim().length >= 2) {
+    clearTimeout(debounceTimer);
+    document.getElementById('searchSpinner').style.display = 'block';
+    search(this.value.trim());
+  }
+});
 </script>
 </body>
 </html>
