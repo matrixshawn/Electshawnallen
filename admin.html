@@ -365,6 +365,22 @@ async function loadTeamDashboard() {
     } else {
       actBody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:var(--gray-400)">No user activity yet</td></tr>';
     }
+
+    // ── Update export button labels with real counts ──
+    var lvlMap = {};
+    if (d.levels) d.levels.forEach(function(l){ lvlMap[(l.support_level||'').toLowerCase()] = l.cnt; });
+    var supCnt = d.supporters || lvlMap['supporter'] || 0;
+    var neuCnt = lvlMap['neutral'] || 0;
+    var nonCnt = lvlMap['non-supporter'] || lvlMap['non supporter'] || 0;
+    window._exportCounts = { supporter: supCnt, neutral: neuCnt, nonsupporter: nonCnt, pending: d.signs_pending || 0, completed: d.signs_completed || 0 };
+    var chips = document.querySelectorAll('.btn-export-chip');
+    if (chips.length >= 5) {
+      if (chips[0].textContent.indexOf('(') === -1) chips[0].textContent += ' (' + supCnt.toLocaleString() + ')';
+      if (chips[1].textContent.indexOf('(') === -1) chips[1].textContent += ' (' + neuCnt.toLocaleString() + ')';
+      if (chips[2].textContent.indexOf('(') === -1) chips[2].textContent += ' (' + nonCnt.toLocaleString() + ')';
+      if (chips[3].textContent.indexOf('(') === -1) chips[3].textContent += ' (' + (d.signs_pending||0).toLocaleString() + ')';
+      if (chips[4].textContent.indexOf('(') === -1) chips[4].textContent += ' (' + (d.signs_completed||0).toLocaleString() + ')';
+    }
   } catch(e) { console.error(e); }
 }
 
@@ -569,6 +585,12 @@ async function adminSearch() {
 
 // ── Quick Export functions ──
 async function adminExportFilter(type) {
+  var counts = window._exportCounts || {};
+  var labelMap = { supporter: 'Supporters', neutral: 'Neutral', 'non-supporter': 'Non-Supporters', pending: 'Signs Pending', completed: 'Signs Done' };
+  var label = labelMap[type] || type;
+  var cnt = counts[type] || 0;
+  var cntStr = cnt > 0 ? cnt.toLocaleString() : '';
+
   var url = '/api/search/export?q=';
   if (type === 'supporter') url += '&support_level=Supporter';
   else if (type === 'neutral') url += '&support_level=Neutral';
@@ -580,7 +602,10 @@ async function adminExportFilter(type) {
   var btn = event.target;
   btn.classList.add('active-download');
   var origText = btn.textContent;
-  btn.textContent = '⏳ Downloading...';
+  btn.textContent = '⏳ Downloading ' + label + (cntStr ? ' (' + cntStr + ')' : '') + '...';
+
+  // Toast notification
+  showAdminToast('📥 Downloading ' + cntStr + ' ' + label + ' as CSV...');
 
   var a = document.createElement('a');
   a.href = url;
@@ -592,27 +617,33 @@ async function adminExportFilter(type) {
   setTimeout(function() {
     btn.classList.remove('active-download');
     btn.textContent = origText;
-  }, 800);
+    showAdminToast('✅ Downloaded ' + cntStr + ' ' + label + '!');
+  }, 1000);
 }
 
 async function adminExportCurrent() {
   var q = document.getElementById('adminSearchInput').value.trim();
   var filter = document.getElementById('adminSearchFilter').value;
   var url = '/api/search/export?q=' + encodeURIComponent(q);
+  var label = 'Current View';
   if (filter === 'supporter' || filter === 'neutral' || filter === 'non-supporter') {
     var sl = filter === 'non-supporter' ? 'Non-Supporter' : filter.charAt(0).toUpperCase() + filter.slice(1);
     url += '&support_level=' + encodeURIComponent(sl);
+    label = sl;
   } else if (filter === 'pending') {
     url += '&sign_request=Pending';
+    label = 'Signs Pending';
   } else if (filter === 'completed') {
     url += '&sign_request=Completed';
+    label = 'Signs Done';
   }
 
   // Flash the clicked button
   var btn = event.target;
   btn.classList.add('active-download');
   var origText = btn.textContent;
-  btn.textContent = '⏳ Downloading...';
+  btn.textContent = '⏳ Downloading ' + label + '...';
+  showAdminToast('📥 Downloading ' + label + ' as CSV...');
 
   var a = document.createElement('a');
   a.href = url;
@@ -624,7 +655,8 @@ async function adminExportCurrent() {
   setTimeout(function() {
     btn.classList.remove('active-download');
     btn.textContent = origText;
-  }, 800);
+    showAdminToast('✅ Downloaded ' + label + '!');
+  }, 1000);
 }
 
 var adminEditCache = {};
@@ -772,6 +804,21 @@ function timeAgo(ms) {
   return Math.floor(hrs/24)+'d ago';
 }
 function esc(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+var _adminToastTimer;
+function showAdminToast(msg) {
+  var t = document.getElementById('adminToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'adminToast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--gray-900);color:white;padding:10px 24px;border-radius:10px;font-size:0.88em;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.2)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(_adminToastTimer);
+  _adminToastTimer = setTimeout(function(){ t.style.opacity = '0'; }, 2500);
+}
 
 // Download DB with auth token
 function downloadDB(e) {
