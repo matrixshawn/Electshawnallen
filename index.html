@@ -18,6 +18,7 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .top-bar .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:0.65em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
 .top-bar .stats{font-size:0.82em;opacity:0.95;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .top-bar .stats strong{font-size:1.15em}
+.stats-legend{flex-basis:100%;display:block}
 .top-bar .top-left{flex-shrink:0}
 .top-bar .top-search{flex:1;min-width:180px;max-width:400px;position:relative}
 .top-bar .top-search input{width:100%;padding:8px 14px;border:none;border-radius:8px;font-size:0.88em;font-family:inherit;background:rgba(255,255,255,0.15);color:white;outline:none;transition:background 0.2s}
@@ -150,10 +151,11 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
   <div class="stats" id="topStats">
     <span id="loggedInUser" style="font-weight:600"></span>
     <span id="myStatsDisplay" style="display:none">
-      <span style="opacity:0.8" title="Changes (today / this week)">📝 <strong id="myToday">0</strong>/<small id="myWeekTotal">0</small></span>
-      <span style="opacity:0.8" title="Surveys completed (today / all-time)">📋 <strong id="mySurveysToday">0</strong>/<small id="mySurveys">0</small></span>
-      <span style="opacity:0.8" title="Supporters marked (today / all-time)">✅ <strong id="mySupportersToday">0</strong>/<small id="mySupporters">0</small></span>
-      <span style="opacity:0.8" title="Signs completed (today / all-time)">🪧 <strong id="mySignsToday">0</strong>/<small id="mySigns">0</small></span>
+      <span style="opacity:0.8">📝 <strong id="myToday">0</strong>/<small id="myWeekTotal">0</small></span>
+      <span style="opacity:0.8">📋 <strong id="mySurveysToday">0</strong>/<small id="mySurveys">0</small></span>
+      <span style="opacity:0.8">✅ <strong id="mySupportersToday">0</strong>/<small id="mySupporters">0</small></span>
+      <span style="opacity:0.8">🪧 <strong id="mySignsToday">0</strong>/<small id="mySigns">0</small></span>
+      <span class="stats-legend" style="font-size:0.6em;opacity:0.45">📝=today/wk 📋=day/all ✅=day/all 🪧=day/all</span>
     </span>
     <span><a href="/admin" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85em">🔐 Admin</a></span>
     <span><a href="#" onclick="doLogout()" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8em">Logout</a></span>
