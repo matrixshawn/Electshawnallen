@@ -355,20 +355,25 @@ function renderCard(s) {
   const badge=getSupportBadge(s.support_level);
   return '<div class="supporter-card'+(s.is_original?' original':'')+'" id="card-'+s.id+'">'+
     '<div class="card-header"><div>'+
-    '<div class="name">'+escHtml(s.full_name||'Unknown')+'</div>'+
+    '<div class="name" id="fv-'+s.id+'-full_name" ondblclick="startEdit(\''+s.id+'\',\'full_name\')" title="Double-click to edit name">'+escHtml(s.full_name||'Unknown')+'</div>'+
     '<div class="address-line">📍 '+escHtml(addr)+(cityPc?' · '+escHtml(cityPc):'')+
     (s.is_original?' <span style="background:#dcfce7;color:#166534;font-size:0.7em;padding:1px 6px;border-radius:4px;font-weight:600">✓ Original</span>':'')+'</div></div>'+
     '<span class="support-badge '+badge.class+'">'+badge.label+'</span></div>'+
     '<div class="card-fields">'+
+    fieldRow('👤','First',s.first_name,'',s.id,'first_name')+
+    fieldRow('👥','Last',s.last_name,'',s.id,'last_name')+
     fieldRow('📞','Phone',s.phone,'phone',s.id,'phone')+
     fieldRow('✉️','Email',s.email,'email',s.id,'email')+
-    fieldRow('📋','Poll',s.poll,'',s.id,'poll')+
+    fieldRow('🏠','Apt',s.apartment,'',s.id,'apartment')+
+    fieldRow('📋','Support',s.support_level,'',s.id,'support_level')+
+    fieldRow('🪧','Sign',s.sign_request,'',s.id,'sign_request')+
+    fieldRow('💬','Conv',s.candidate_conversation_request,'',s.id,'candidate_conversation_request')+
     fieldRow('📝','Notes',s.notes,'notes',s.id,'notes')+
     fieldRow('🕐','Updated',formatDate(s.updated_at),'',s.id,'')+
     '</div>'+
     '<div class="card-actions">'+
-    '<button class="btn btn-survey" onclick="openSurvey('+s.id+',\''+escHtml(addr)+'\',\''+escHtml(s.full_name||'')+'\',\''+escHtml(s.phone||'')+'\',\''+escHtml(s.email||'')+'\')">📋 Fill Survey</button>'+
-    '<button class="btn btn-edit" onclick="editCard('+s.id+')">✏️ Edit</button>'+
+    '<button class="btn btn-survey" onclick="openSurvey('+s.id+',\''+escHtml(addr)+'\')">📋 Fill Survey</button>'+
+    '<button class="btn btn-edit" onclick="editCard('+s.id+')">✏️ Edit All</button>'+
     '<button class="btn btn-history" onclick="toggleHistory('+s.id+')">📜 History</button>'+
     '<span style="font-size:0.7em;color:var(--gray-400);margin-left:auto">ID:'+s.id+'</span></div>'+
     '<div class="change-log" id="history-'+s.id+'"></div>'+
@@ -396,16 +401,16 @@ function formatDate(d) { if(!d) return '—'; try{ return new Date(d+(d.includes
 function escHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── Survey Integration ──
-function openSurvey(id, addr, name, phone, email) {
-  selectedSupporter = {id, addr, name, phone, email};
-  // Highlight selected card
+function openSurvey(id, addr) {
+  selectedSupporter = {id, addr};
   document.querySelectorAll('.supporter-card.selected').forEach(c=>c.classList.remove('selected'));
   const card = document.getElementById('card-'+id);
   if(card) card.classList.add('selected');
-  // Fill address + pre-fill name/phone/email
-  document.getElementById('voterName').value = name || '';
-  document.getElementById('voterPhone').value = phone || '';
-  document.getElementById('voterEmail').value = email || '';
+  // Read live values from the card (may have been edited)
+  const getName = (f) => { const el = document.getElementById('fv-'+id+'-'+f); return el ? el.textContent.replace('—','').trim() : ''; };
+  document.getElementById('voterName').value = getName('full_name');
+  document.getElementById('voterPhone').value = getName('phone');
+  document.getElementById('voterEmail').value = getName('email');
   document.getElementById('surveyAddrPreview').textContent = addr;
   document.getElementById('surveySection').classList.add('active');
   document.getElementById('surveySection').scrollIntoView({behavior:'smooth'});
