@@ -66,6 +66,8 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .btn-cancel{background:var(--gray-100);color:var(--gray-700)}
 .btn-history{background:var(--amber-bg);color:var(--amber)}
 .btn-history:hover{background:#fef3c7}
+.btn-export{background:var(--blue);color:white;font-size:0.75em;padding:5px 12px}
+.btn-export:hover{background:var(--blue-light)}
 .change-log{background:var(--amber-bg);border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.8em;max-height:180px;overflow-y:auto;display:none}
 .change-log.show{display:block}
 .change-log .log-entry{padding:3px 0;border-bottom:1px solid #fde68a;font-size:0.85em}
@@ -167,6 +169,7 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
   <div class="results-info" id="resultsInfo" style="display:none">
     <span id="resultsCount"></span>
     <span id="resultsQuery"></span>
+    <button class="btn btn-export" onclick="exportSearch()" style="margin-left:auto" id="exportBtn" title="Download all matching results as CSV">📥 Download CSV</button>
   </div>
   <div id="results"></div>
   <div class="pagination" id="pagination" style="display:none"></div>
@@ -402,6 +405,42 @@ async function search(q, page=1) {
   } catch(e) {
     document.getElementById('searchSpinner').style.display='none';
     document.getElementById('results').innerHTML='<div class="no-results"><p>⚠️ Search failed. Is the server running?</p></div>';
+  }
+}
+
+async function exportSearch() {
+  const q = currentQuery || '';
+  let url = API+'/api/search/export?q='+encodeURIComponent(q);
+  if (currentFilter) url += '&'+currentFilter+'='+encodeURIComponent(currentFilterValue);
+  try {
+    var exportBtn = document.getElementById('exportBtn');
+    exportBtn.textContent = '⏳ Downloading...';
+    exportBtn.disabled = true;
+    var r = await fetch(url);
+    if (!r.ok) {
+      var err = await r.json();
+      showToast('❌ ' + (err.error || 'Export failed'), 'error');
+      exportBtn.textContent = '📥 Download CSV';
+      exportBtn.disabled = false;
+      return;
+    }
+    var blob = await r.blob();
+    var downloadUrl = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = 'ward25_search_export.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(downloadUrl);
+    showToast('✅ CSV downloaded!', 'success');
+    exportBtn.textContent = '📥 Download CSV';
+    exportBtn.disabled = false;
+  } catch(e) {
+    showToast('❌ Export failed', 'error');
+    var exportBtn = document.getElementById('exportBtn');
+    exportBtn.textContent = '📥 Download CSV';
+    exportBtn.disabled = false;
   }
 }
 

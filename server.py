@@ -148,6 +148,11 @@ class Handler(BaseHTTPRequestHandler):
             self.handle_search(qs)
             return
 
+        # API: Search export as CSV
+        if path == '/api/search/export':
+            self.handle_search_export(qs)
+            return
+
         # API: Get single supporter
         if path.startswith('/api/supporter/'):
             try:
@@ -391,6 +396,91 @@ class Handler(BaseHTTPRequestHandler):
             'support_level': support_level,
             'sign_request': sign_request
         })
+
+    def handle_search_export(self, qs):
+        """Export current search results as CSV."""
+        query = qs.get('q', [''])[0].strip()
+        support_level = qs.get('support_level', [''])[0].strip()
+        sign_request = qs.get('sign_request', [''])[0].strip()
+
+        # Require at least a filter or search term
+        if (not query or len(query) < 2) and not support_level and not sign_request:
+            self._json({'error': 'Enter a search query or filter to export'}, 400)
+            return
+
+        conn = get_db()
+        where_parts = []
+        params = []
+
+        if query and len(query) >= 2:
+            like = f'%{query}%'
+            query_nospace = query.replace(' ', '')
+            like_nospace = f'%{query_nospace}%'
+            where_parts.append('''(
+                REPLACE(street, ' ', '') LIKE ? OR full_name LIKE ? OR phone LIKE ?
+                OR REPLACE(street_number || street, ' ', '') LIKE ?
+                OR postal_code LIKE ?
+                OR sign_request LIKE ?
+                OR support_level LIKE ?
+            )''')
+            params.extend([like_nospace, like, like, like_nospace, like, like, like])
+            order_params = [like_nospace, like, like]
+        else:
+            order_params = []
+
+        if support_level:
+            where_parts.append('support_level = ?')
+            params.append(support_level)
+
+        if sign_request:
+            where_parts.append('sign_request = ?')
+            params.append(sign_request)
+
+        where_clause = ' AND '.join(where_parts) if where_parts else '1=1'
+
+        if order_params:
+            order_clause = '''ORDER BY
+                CASE
+                    WHEN REPLACE(street_number || street, ' ', '') LIKE ? THEN 1
+                    WHEN full_name LIKE ? THEN 2
+                    WHEN phone LIKE ? THEN 3
+                    ELSE 4
+                END,
+                street, street_number'''
+        else:
+            order_clause = 'ORDER BY street, street_number'
+
+        # Export ALL matching results (no pagination)
+        rows = conn.execute(f'''
+            SELECT * FROM supporters
+            WHERE {where_clause}
+            {order_clause}
+        ''', params + order_params).fetchall()
+        conn.close()
+
+        import io
+        from datetime import datetime as dt
+        output = io.StringIO()
+        writer = csv.writer(output)
+
+        if rows:
+            writer.writerow(rows[0].keys())
+            for row in rows:
+                writer.writerow([str(v) if v is not None else '' for v in row])
+        else:
+            writer.writerow(['No results found'])
+
+        csv_data = output.getvalue().encode('utf-8')
+        # Sanitize query for filename
+        safe_query = re.sub(r'[^a-zA-Z0-9]', '_', query or 'filtered')[:40]
+        filename = f'ward25_search_{safe_query}_{dt.now().strftime("%Y-%m-%d")}.csv'
+
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/csv; charset=utf-8')
+        self.send_header('Content-Disposition', f'attachment; filename="{filename}"')
+        self.send_header('Content-Length', len(csv_data))
+        self.end_headers()
+        self.wfile.write(csv_data)
 
     def handle_get_supporter(self, sid):
         conn = get_db()
