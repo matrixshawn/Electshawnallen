@@ -76,6 +76,8 @@ tr:hover{background:var(--gray-50)}
 .btn-export-chip.sign{background:#fef3c7;border-color:#fde68a;color:#92400e}
 .btn-export-chip.sign-done{background:#dcfce7;border-color:#bbf7d0;color:#166534}
 .btn-export-chip.current{background:var(--blue);border-color:var(--blue);color:white}
+.btn-export-chip:active{transform:scale(0.95)}
+.btn-export-chip.active-download{opacity:0.6;pointer-events:none;transform:scale(0.95)}
 /* Add user form */
 .add-user-form{display:flex;gap:8px;padding:14px;align-items:flex-end;flex-wrap:wrap;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
 .add-user-form input,.add-user-form select{padding:8px 12px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.85em;font-family:inherit}
@@ -574,12 +576,23 @@ async function adminExportFilter(type) {
   else if (type === 'pending') url += '&sign_request=Pending';
   else if (type === 'completed') url += '&sign_request=Completed';
 
+  // Flash the clicked button
+  var btn = event.target;
+  btn.classList.add('active-download');
+  var origText = btn.textContent;
+  btn.textContent = '⏳ Downloading...';
+
   var a = document.createElement('a');
   a.href = url;
   a.download = 'ward25_' + type + '.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+
+  setTimeout(function() {
+    btn.classList.remove('active-download');
+    btn.textContent = origText;
+  }, 800);
 }
 
 async function adminExportCurrent() {
@@ -595,12 +608,23 @@ async function adminExportCurrent() {
     url += '&sign_request=Completed';
   }
 
+  // Flash the clicked button
+  var btn = event.target;
+  btn.classList.add('active-download');
+  var origText = btn.textContent;
+  btn.textContent = '⏳ Downloading...';
+
   var a = document.createElement('a');
   a.href = url;
   a.download = 'ward25_search_export.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+
+  setTimeout(function() {
+    btn.classList.remove('active-download');
+    btn.textContent = origText;
+  }, 800);
 }
 
 var adminEditCache = {};
