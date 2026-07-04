@@ -144,6 +144,11 @@ class Handler(BaseHTTPRequestHandler):
             self.handle_admin_team_export()
             return
 
+        # API: Admin canvasser stats (daily + custom date range)
+        if path == '/api/admin/canvasser-stats':
+            self.handle_canvasser_stats(qs)
+            return
+
         # Admin dashboard page
         if path == '/admin':
             self._serve_file('/admin.html')
@@ -654,16 +659,16 @@ class Handler(BaseHTTPRequestHandler):
             AND date(changed_at) = date('now','localtime')
         ''', (uid,)).fetchone()[0]
 
-        # Signs marked (completed)
+        # Signs marked (requested)
         signs_completed = conn.execute('''
             SELECT COUNT(*) FROM change_log
-            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Completed'
+            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Requested'
         ''', (uid,)).fetchone()[0]
 
-        # Signs completed today
+        # Signs requested today
         signs_today = conn.execute('''
             SELECT COUNT(*) FROM change_log
-            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Completed'
+            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Requested'
             AND date(changed_at) = date('now','localtime')
         ''', (uid,)).fetchone()[0]
 
@@ -779,10 +784,15 @@ class Handler(BaseHTTPRequestHandler):
             return
         conn = get_db()
         row = conn.execute('SELECT * FROM users WHERE LOWER(username) = ?', (username,)).fetchone()
-        conn.close()
         if not row or not verify_password(password, row['password_hash']):
+            conn.close()
             self._json({'error': 'Invalid credentials'}, 401)
             return
+        # Record last login
+        conn.execute('UPDATE users SET last_login = ? WHERE id = ?',
+                     (datetime.now().strftime('%Y-%m-%d %H:%M'), row['id']))
+        conn.commit()
+        conn.close()
         token = create_session(row['id'])
         self._json({
             'token': token,
@@ -801,7 +811,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def handle_admin_list_users(self):
         conn = get_db()
-        users = conn.execute('SELECT id, username, role, display_name, created_at FROM users ORDER BY id').fetchall()
+        users = conn.execute('SELECT id, username, role, display_name, created_at, last_login FROM users ORDER BY id').fetchall()
         conn.close()
         self._json({'users': dict_rows(users)})
 
@@ -943,9 +953,9 @@ class Handler(BaseHTTPRequestHandler):
         # Overall counts
         total = conn.execute('SELECT COUNT(*) FROM supporters').fetchone()[0]
         supporters = conn.execute("SELECT COUNT(*) FROM supporters WHERE support_level='Supporter'").fetchone()[0]
-        refused = conn.execute("SELECT COUNT(*) FROM supporters WHERE support_level='Survey Refused'").fetchone()[0]
-        signs_completed = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Completed'").fetchone()[0]
-        signs_pending = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Pending'").fetchone()[0]
+        surveys_completed = conn.execute("SELECT COUNT(DISTINCT supporter_id) FROM change_log WHERE field_name='notes' AND new_value LIKE '%Survey%'").fetchone()[0]
+        signs_completed = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Requested'").fetchone()[0]
+        signs_pending = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Declined'").fetchone()[0]
         # Records touched today
         touched_today = conn.execute("SELECT COUNT(*) FROM supporters WHERE date(updated_at)=date('now','localtime')").fetchone()[0]
         # By-user breakdown (last 30 days) — uses changed_by (stored at write time, survives deletion)
@@ -970,7 +980,7 @@ class Handler(BaseHTTPRequestHandler):
         self._json({
             'total': total,
             'supporters': supporters,
-            'refused': refused,
+            'surveys_completed': surveys_completed,
             'signs_completed': signs_completed,
             'signs_pending': signs_pending,
             'touched_today': touched_today,
@@ -983,9 +993,9 @@ class Handler(BaseHTTPRequestHandler):
         conn = get_db()
         total = conn.execute('SELECT COUNT(*) FROM supporters').fetchone()[0]
         supporters = conn.execute("SELECT COUNT(*) FROM supporters WHERE support_level='Supporter'").fetchone()[0]
-        refused = conn.execute("SELECT COUNT(*) FROM supporters WHERE support_level='Survey Refused'").fetchone()[0]
-        signs_completed = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Completed'").fetchone()[0]
-        signs_pending = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Pending'").fetchone()[0]
+        surveys_completed = conn.execute("SELECT COUNT(DISTINCT supporter_id) FROM change_log WHERE field_name='notes' AND new_value LIKE '%Survey%'").fetchone()[0]
+        signs_completed = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Requested'").fetchone()[0]
+        signs_pending = conn.execute("SELECT COUNT(*) FROM supporters WHERE sign_request='Declined'").fetchone()[0]
         touched_today = conn.execute("SELECT COUNT(*) FROM supporters WHERE date(updated_at)=date('now','localtime')").fetchone()[0]
 
         levels = conn.execute('''
@@ -1018,9 +1028,9 @@ class Handler(BaseHTTPRequestHandler):
         writer.writerow(['METRIC', 'COUNT'])
         writer.writerow(['Total Records', total])
         writer.writerow(['Supporters', supporters])
-        writer.writerow(['Survey Refused', refused])
-        writer.writerow(['Signs Completed', signs_completed])
-        writer.writerow(['Signs Pending', signs_pending])
+        writer.writerow(['Surveys Completed', surveys_completed])
+        writer.writerow(['Signs Requested', signs_completed])
+        writer.writerow(['Signs Declined', signs_pending])
         writer.writerow(['Touched Today', touched_today])
         writer.writerow([])
         writer.writerow(['SUPPORT LEVEL', 'COUNT', 'PERCENTAGE'])
@@ -1041,6 +1051,104 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', len(csv_data))
         self.end_headers()
         self.wfile.write(csv_data)
+
+    # ── Canvasser Stats ───────────────────────────────────────
+
+    def handle_canvasser_stats(self, qs):
+        """Return per-canvasser stats: daily (static) + cumulative totals.
+        Supports optional ?start=YYYY-MM-DD&end=YYYY-MM-DD for custom date range."""
+        conn = get_db()
+
+        # Determine date range
+        today = datetime.now().strftime('%Y-%m-%d')
+        start_date = qs.get('start', [today])[0]
+        end_date = qs.get('end', [today])[0]
+
+        # Get all users
+        users = conn.execute('SELECT id, username, display_name, role FROM users ORDER BY username').fetchall()
+
+        results = []
+        for u in users:
+            uid = u['id']
+            name = u['display_name'] or u['username']
+
+            # Daily stats (today only, static)
+            daily_changes = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)=date('now','localtime')",
+                (uid,)).fetchone()[0]
+            daily_supporters = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)=date('now','localtime') AND field_name='support_level' AND new_value='Supporter'",
+                (uid,)).fetchone()[0]
+            daily_signs = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)=date('now','localtime') AND field_name='sign_request' AND new_value='Requested'",
+                (uid,)).fetchone()[0]
+            daily_surveys = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)=date('now','localtime') AND field_name='notes' AND new_value LIKE '%Survey%'",
+                (uid,)).fetchone()[0]
+
+            # Total stats (all time, cumulative)
+            total_changes = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=?", (uid,)).fetchone()[0]
+            total_supporters = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND field_name='support_level' AND new_value='Supporter'",
+                (uid,)).fetchone()[0]
+            total_signs = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND field_name='sign_request' AND new_value='Requested'",
+                (uid,)).fetchone()[0]
+            total_surveys = conn.execute(
+                "SELECT COUNT(*) FROM change_log WHERE user_id=? AND field_name='notes' AND new_value LIKE '%Survey%'",
+                (uid,)).fetchone()[0]
+
+            # Custom date range stats (if start != today or end != today)
+            range_changes = 0
+            range_supporters = 0
+            range_signs = 0
+            range_surveys = 0
+            if start_date != today or end_date != today:
+                range_changes = conn.execute(
+                    "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)>=? AND date(changed_at)<=?",
+                    (uid, start_date, end_date)).fetchone()[0]
+                range_supporters = conn.execute(
+                    "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)>=? AND date(changed_at)<=? AND field_name='support_level' AND new_value='Supporter'",
+                    (uid, start_date, end_date)).fetchone()[0]
+                range_signs = conn.execute(
+                    "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)>=? AND date(changed_at)<=? AND field_name='sign_request' AND new_value='Requested'",
+                    (uid, start_date, end_date)).fetchone()[0]
+                range_surveys = conn.execute(
+                    "SELECT COUNT(*) FROM change_log WHERE user_id=? AND date(changed_at)>=? AND date(changed_at)<=? AND field_name='notes' AND new_value LIKE '%Survey%'",
+                    (uid, start_date, end_date)).fetchone()[0]
+
+            results.append({
+                'user_id': uid,
+                'username': u['username'],
+                'display_name': name,
+                'role': u['role'],
+                'daily': {
+                    'changes': daily_changes,
+                    'supporters': daily_supporters,
+                    'signs_requested': daily_signs,
+                    'surveys': daily_surveys,
+                },
+                'total': {
+                    'changes': total_changes,
+                    'supporters': total_supporters,
+                    'signs_requested': total_signs,
+                    'surveys': total_surveys,
+                },
+                'range': {
+                    'changes': range_changes,
+                    'supporters': range_supporters,
+                    'signs_requested': range_signs,
+                    'surveys': range_surveys,
+                }
+            })
+
+        conn.close()
+        self._json({
+            'users': results,
+            'date_range': {'start': start_date, 'end': end_date},
+            'today': today,
+        })
 
     # ── Existing endpoints ───────────────────────────────────
 

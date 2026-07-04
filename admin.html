@@ -124,8 +124,8 @@ tr:hover{background:var(--gray-50)}
           <option value="supporter">Supporters</option>
           <option value="neutral">Neutral</option>
           <option value="non-supporter">Non-Supporters</option>
-          <option value="pending">Signs Requested</option>
-          <option value="completed">Signs Done</option>
+          <option value="requested">Signs Requested</option>
+          <option value="declined">Signs Declined</option>
         </select>
         <button onclick="adminSearch()" style="padding:10px 20px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Search</button>
       </div>
@@ -134,8 +134,8 @@ tr:hover{background:var(--gray-50)}
         <button class="btn-export-chip" onclick="adminExportFilter('supporter')" title="Download all Supporters CSV">✅ Supporters</button>
         <button class="btn-export-chip neutral" onclick="adminExportFilter('neutral')" title="Download all Neutral CSV">😐 Neutral</button>
         <button class="btn-export-chip nonsupporter" onclick="adminExportFilter('non-supporter')" title="Download all Non-Supporters CSV">❌ Non-Supporters</button>
-        <button class="btn-export-chip sign" onclick="adminExportFilter('pending')" title="Download all Signs Requested CSV">🪧 Requested</button>
-        <button class="btn-export-chip sign-done" onclick="adminExportFilter('completed')" title="Download all Signs Done CSV">✅ Signs Done</button>
+        <button class="btn-export-chip sign" onclick="adminExportFilter('requested')" title="Download all Signs Requested CSV">🪧 Requested</button>
+        <button class="btn-export-chip sign-done" onclick="adminExportFilter('declined')" title="Download all Signs Declined CSV">🚫 Declined</button>
         <button class="btn-export-chip current" onclick="adminExportCurrent()" title="Download current search results CSV">📋 Current View</button>
       </div>
     </div>
@@ -162,7 +162,7 @@ tr:hover{background:var(--gray-50)}
     </div>
 
     <div class="section-title">🕐 Recent Changes</div>
-    <div class="table-wrap">
+    <div class="table-wrap table-scroll">
       <table><thead><tr><th>Time</th><th>By</th><th>Name</th><th>Address</th><th>Field</th><th>Old → New</th></tr></thead>
       <tbody id="recentChanges"><tr><td colspan="6" class="loading">Loading...</td></tr></tbody></table>
     </div>
@@ -179,8 +179,8 @@ tr:hover{background:var(--gray-50)}
         <span id="userError" style="color:var(--red);font-size:0.8em;display:none"></span>
       </div>
       <div class="table-wrap table-scroll" style="border-radius:0 0 12px 12px">
-        <table><thead><tr><th>User</th><th>Role</th><th>Display Name</th><th>Created</th><th>Actions</th></tr></thead>
-        <tbody id="usersList"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody></table>
+        <table><thead><tr><th>User</th><th>Role</th><th>Display Name</th><th>Created</th><th>Last Login</th><th>Actions</th></tr></thead>
+        <tbody id="usersList"><tr><td colspan="6" class="loading">Loading...</td></tr></tbody></table>
       </div>
     </div>
 
@@ -191,9 +191,9 @@ tr:hover{background:var(--gray-50)}
     </div>
     <div class="stats-grid" id="teamStats">
       <div class="stat-card green"><div class="label">Supporters</div><div class="value" id="team-supporters">—</div></div>
-      <div class="stat-card"><div class="label">Survey Refused</div><div class="value" id="team-refused">—</div></div>
-      <div class="stat-card"><div class="label">Signs Completed</div><div class="value" id="team-signs">—</div></div>
-      <div class="stat-card amber"><div class="label">Signs Requested</div><div class="value" id="team-signs-pending">—</div></div>
+      <div class="stat-card"><div class="label">Surveys Completed</div><div class="value" id="team-surveys">—</div></div>
+      <div class="stat-card"><div class="label">Signs Requested</div><div class="value" id="team-signs">—</div></div>
+      <div class="stat-card amber"><div class="label">Signs Declined</div><div class="value" id="team-signs-pending">—</div></div>
       <div class="stat-card"><div class="label">Touched Today</div><div class="value" id="team-touched">—</div></div>
     </div>
     <div class="table-wrap" style="margin-bottom:12px">
@@ -203,6 +203,36 @@ tr:hover{background:var(--gray-50)}
     <div class="table-wrap">
       <table><thead><tr><th>User</th><th>Changes (30d)</th></tr></thead>
       <tbody id="teamActivity"><tr><td colspan="2" class="loading">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- ── Canvasser Stats Table: Daily + Custom Range ── -->
+    <div class="section-title" style="display:flex;align-items:center;gap:12px;margin-top:32px">
+      <span>📋 Canvasser Stats</span>
+      <span style="font-size:0.7em;color:var(--gray-400)" id="csRangeLabel">Today</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+      <button class="chart-toggle active" id="csDaily" onclick="loadCanvasserStats('daily')">Today</button>
+      <button class="chart-toggle" id="csWeek" onclick="loadCanvasserStats('week')">This Week</button>
+      <button class="chart-toggle" id="csMonth" onclick="loadCanvasserStats('month')">This Month</button>
+      <button class="chart-toggle" id="csTotal" onclick="loadCanvasserStats('total')">All Time</button>
+      <span style="font-size:0.75em;color:var(--gray-400);margin:0 4px">or</span>
+      <input type="date" id="csStart" style="padding:5px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.8em;font-family:inherit" onchange="loadCanvasserStats('custom')">
+      <span style="font-size:0.75em;color:var(--gray-400)">to</span>
+      <input type="date" id="csEnd" style="padding:5px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.8em;font-family:inherit" onchange="loadCanvasserStats('custom')">
+    </div>
+    <div class="table-wrap table-scroll" style="margin-bottom:12px">
+      <table>
+        <thead>
+          <tr>
+            <th>Canvasser</th>
+            <th>Changes</th>
+            <th>Supporters</th>
+            <th>Signs Req.</th>
+            <th>Surveys</th>
+          </tr>
+        </thead>
+        <tbody id="canvasserStatsBody"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+      </table>
     </div>
 
     <div class="section-title">💾 Backups</div>
@@ -327,6 +357,7 @@ async function loadDashboard() {
 
   loadChart('week');
   loadTeamDashboard();
+  loadCanvasserStats('daily');
 }
 
 // ── Team Dashboard ──
@@ -335,7 +366,7 @@ async function loadTeamDashboard() {
     var r = await fetch('/api/admin/team');
     var d = await r.json();
     document.getElementById('team-supporters').textContent = d.supporters.toLocaleString();
-    document.getElementById('team-refused').textContent = d.refused;
+    document.getElementById('team-surveys').textContent = d.surveys_completed;
     document.getElementById('team-signs').textContent = d.signs_completed;
     document.getElementById('team-signs-pending').textContent = d.signs_pending;
     document.getElementById('team-touched').textContent = d.touched_today;
@@ -372,7 +403,7 @@ async function loadTeamDashboard() {
     var supCnt = d.supporters || lvlMap['supporter'] || 0;
     var neuCnt = lvlMap['neutral'] || 0;
     var nonCnt = lvlMap['non-supporter'] || lvlMap['non supporter'] || 0;
-    window._exportCounts = { supporter: supCnt, neutral: neuCnt, nonsupporter: nonCnt, pending: d.signs_pending || 0, completed: d.signs_completed || 0 };
+    window._exportCounts = { supporter: supCnt, neutral: neuCnt, nonsupporter: nonCnt, declined: d.signs_pending || 0, requested: d.signs_completed || 0 };
     var chips = document.querySelectorAll('.btn-export-chip');
     if (chips.length >= 5) {
       if (chips[0].textContent.indexOf('(') === -1) chips[0].textContent += ' (' + supCnt.toLocaleString() + ')';
@@ -382,6 +413,108 @@ async function loadTeamDashboard() {
       if (chips[4].textContent.indexOf('(') === -1) chips[4].textContent += ' (' + (d.signs_completed||0).toLocaleString() + ')';
     }
   } catch(e) { console.error(e); }
+}
+
+// ── Canvasser Stats Table ──
+var csCurrentMode = 'daily';
+
+async function loadCanvasserStats(mode) {
+  csCurrentMode = mode || 'daily';
+  var today = new Date().toISOString().slice(0,10);
+  var start = today, end = today;
+  var label = 'Today';
+
+  // Deactivate all toggle buttons
+  ['csDaily','csWeek','csMonth','csTotal'].forEach(function(id){
+    document.getElementById(id).classList.remove('active');
+  });
+
+  if (mode === 'daily') {
+    document.getElementById('csDaily').classList.add('active');
+    document.getElementById('csStart').value = '';
+    document.getElementById('csEnd').value = '';
+  } else if (mode === 'week') {
+    document.getElementById('csWeek').classList.add('active');
+    var d = new Date(); d.setDate(d.getDate() - d.getDay());
+    start = d.toISOString().slice(0,10); end = today;
+    label = 'This Week (' + start + ' – ' + end + ')';
+  } else if (mode === 'month') {
+    document.getElementById('csMonth').classList.add('active');
+    start = today.slice(0,7) + '-01'; end = today;
+    label = 'This Month (' + start + ' – ' + end + ')';
+  } else if (mode === 'total') {
+    document.getElementById('csTotal').classList.add('active');
+    start = '2000-01-01'; end = today;
+    label = 'All Time';
+    document.getElementById('csStart').value = '';
+    document.getElementById('csEnd').value = '';
+  } else if (mode === 'custom') {
+    start = document.getElementById('csStart').value || today;
+    end = document.getElementById('csEnd').value || today;
+    label = start + ' – ' + end;
+  }
+
+  document.getElementById('csRangeLabel').textContent = label;
+
+  var tbody = document.getElementById('canvasserStatsBody');
+  tbody.innerHTML = '<tr><td colspan="5" class="loading">Loading...</td></tr>';
+
+  try {
+    var url = '/api/admin/canvasser-stats?start='+encodeURIComponent(start)+'&end='+encodeURIComponent(end);
+    var r = await fetch(url);
+    var d = await r.json();
+    var users = d.users || [];
+
+    if (users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400)">No canvasser data</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = users.map(function(u){
+      // For daily mode, show daily stats; for all other modes, show range or total
+      var stats;
+      if (mode === 'daily') {
+        stats = u.daily;
+      } else if (mode === 'total') {
+        stats = u.total;
+      } else {
+        // week, month, or custom — show range stats
+        stats = u.range;
+      }
+      var name = u.display_name || u.username;
+      return '<tr>'+
+        '<td><strong>'+esc(name)+'</strong></td>'+
+        '<td>'+stats.changes+'</td>'+
+        '<td>'+(stats.supporters||0)+'</td>'+
+        '<td>'+(stats.signs_requested||0)+'</td>'+
+        '<td>'+(stats.surveys||0)+'</td>'+
+        '</tr>';
+    }).join('');
+
+    // Add totals row
+    var tChanges=0, tSupporters=0, tSigns=0, tSurveys=0;
+    users.forEach(function(u){
+      var stats;
+      if (mode === 'daily') stats = u.daily;
+      else if (mode === 'total') stats = u.total;
+      else stats = u.range;
+      tChanges += stats.changes||0;
+      tSupporters += stats.supporters||0;
+      tSigns += stats.signs_requested||0;
+      tSurveys += stats.surveys||0;
+    });
+    tbody.innerHTML += '<tr style="border-top:2px solid var(--gray-300);font-weight:700;background:var(--gray-50)">'+
+      '<td>TOTAL</td>'+
+      '<td>'+tChanges+'</td>'+
+      '<td>'+tSupporters+'</td>'+
+      '<td>'+tSigns+'</td>'+
+      '<td>'+tSurveys+'</td>'+
+      '</tr>';
+
+  } catch(e) {
+    console.error(e);
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red)">Error loading stats</td></tr>';
+  }
 }
 
 async function downloadTeamDashboard(e) {
@@ -478,7 +611,7 @@ async function loadUsers() {
   try {
     var r = await fetch('/api/admin/users', authHeaders());
     if (!r.ok) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:16px">❌ Failed to load users (HTTP '+r.status+') — refresh and try again</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--red);padding:16px">❌ Failed to load users (HTTP '+r.status+') — refresh and try again</td></tr>';
       return;
     }
     var d = await r.json();
@@ -489,13 +622,14 @@ async function loadUsers() {
         var delDisabled = isSelf ? ' disabled' : '';
         var delBtn = '<button class="btn-sm danger"'+delDisabled+' onclick="deleteUser('+u.id+')" title="'+delTitle+'">🗑</button>';
         var resetBtn = '<button class="btn-sm" onclick="resetPassword('+u.id+',\''+esc(u.username)+'\')" style="margin-left:3px">🔑</button>';
-        return '<tr><td><strong>'+esc(u.username)+'</strong></td><td><span style="font-size:0.75em;padding:2px 6px;border-radius:4px;background:'+(u.role==='admin'?'#fee2e2;color:#991b1b':'var(--gray-100);color:var(--gray-700)')+'">'+esc(u.role)+'</span></td><td>'+esc(u.display_name||'')+'</td><td>'+esc(u.created_at||'')+'</td><td>'+delBtn+resetBtn+'</td></tr>';
+        var lastLogin = u.last_login ? u.last_login.replace('T',' ').slice(0,16) : 'Never';
+        return '<tr><td><strong>'+esc(u.username)+'</strong></td><td><span style="font-size:0.75em;padding:2px 6px;border-radius:4px;background:'+(u.role==='admin'?'#fee2e2;color:#991b1b':'var(--gray-100);color:var(--gray-700)')+'">'+esc(u.role)+'</span></td><td>'+esc(u.display_name||'')+'</td><td>'+esc(u.created_at||'')+'</td><td style="font-size:0.8em;color:var(--gray-500)">'+esc(lastLogin)+'</td><td>'+delBtn+resetBtn+'</td></tr>';
       }).join('');
     } else {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:16px">No users found</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:16px">No users found</td></tr>';
     }
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:16px">❌ Error loading users: '+esc(String(e))+'</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--red);padding:16px">❌ Error loading users: '+esc(String(e))+'</td></tr>';
   }
 }
 
@@ -552,10 +686,10 @@ async function adminSearch() {
     if (filter === 'supporter' || filter === 'neutral' || filter === 'non-supporter') {
       var sl = filter === 'non-supporter' ? 'Non-Supporter' : filter.charAt(0).toUpperCase()+filter.slice(1);
       url += '&support_level='+encodeURIComponent(sl);
-    } else if (filter === 'pending') {
-      url += '&sign_request=Pending';
-    } else if (filter === 'completed') {
-      url += '&sign_request=Completed';
+    } else if (filter === 'requested') {
+      url += '&sign_request=Requested';
+    } else if (filter === 'declined') {
+      url += '&sign_request=Declined';
     }
     var r = await fetch(url);
     var d = await r.json();
@@ -586,7 +720,7 @@ async function adminSearch() {
 // ── Quick Export functions ──
 async function adminExportFilter(type) {
   var counts = window._exportCounts || {};
-  var labelMap = { supporter: 'Supporters', neutral: 'Neutral', 'non-supporter': 'Non-Supporters', pending: 'Signs Requested', completed: 'Signs Done' };
+  var labelMap = { supporter: 'Supporters', neutral: 'Neutral', 'non-supporter': 'Non-Supporters', requested: 'Signs Requested', declined: 'Signs Declined' };
   var label = labelMap[type] || type;
   var cnt = counts[type] || 0;
   var cntStr = cnt > 0 ? cnt.toLocaleString() : '';
@@ -595,8 +729,8 @@ async function adminExportFilter(type) {
   if (type === 'supporter') url += '&support_level=Supporter';
   else if (type === 'neutral') url += '&support_level=Neutral';
   else if (type === 'non-supporter') url += '&support_level=Non-Supporter';
-  else if (type === 'pending') url += '&sign_request=Pending';
-  else if (type === 'completed') url += '&sign_request=Completed';
+  else if (type === 'requested') url += '&sign_request=Requested';
+  else if (type === 'declined') url += '&sign_request=Declined';
 
   // Flash the clicked button
   var btn = event.target;
@@ -630,12 +764,12 @@ async function adminExportCurrent() {
     var sl = filter === 'non-supporter' ? 'Non-Supporter' : filter.charAt(0).toUpperCase() + filter.slice(1);
     url += '&support_level=' + encodeURIComponent(sl);
     label = sl;
-  } else if (filter === 'pending') {
-    url += '&sign_request=Pending';
+  } else if (filter === 'requested') {
+    url += '&sign_request=Requested';
     label = 'Signs Requested';
-  } else if (filter === 'completed') {
-    url += '&sign_request=Completed';
-    label = 'Signs Done';
+  } else if (filter === 'declined') {
+    url += '&sign_request=Declined';
+    label = 'Signs Declined';
   }
 
   // Flash the clicked button
