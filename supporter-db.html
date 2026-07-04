@@ -554,6 +554,14 @@ function resetSurvey() {
   document.getElementById('form').style.display='block';
   document.getElementById('surveySuccess').style.display='none';
   document.querySelectorAll('.opt.selected').forEach(l=>l.classList.remove('selected'));
+  // Clear search for next address
+  document.getElementById('searchInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('resultsInfo').style.display = 'none';
+  document.getElementById('pagination').style.display = 'none';
+  closeSurvey();
+  document.getElementById('searchInput').focus();
+  currentQuery = '';
 }
 
 // ── Editing (same as before) ──
