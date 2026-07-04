@@ -275,12 +275,6 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
         <div class="form-group"><label>Canvasser notes</label><textarea id="canvasserNotes" rows="2" placeholder="Observations, follow-up..."></textarea></div>
         <button type="submit" class="btn-submit" id="submitBtn">📤 Submit Survey</button>
       </form>
-      <div id="surveySuccess" style="display:none;text-align:center;padding:30px">
-        <div style="font-size:3em">✅</div>
-        <h3>Survey Submitted!</h3>
-        <p style="color:var(--gray-500)">Response saved.</p>
-        <button class="btn btn-survey" onclick="resetSurvey()" style="margin-top:12px;font-size:0.9em;padding:10px 20px">Submit Another →</button>
-      </div>
     </div>
   </div>
 </div>
@@ -544,28 +538,35 @@ async function submitSurvey(e) {
       body:params.toString()
     });
     if (r.ok) {
-      document.getElementById('form').style.display='none';
-      document.getElementById('surveySuccess').style.display='block';
-      showToast('✅ Survey submitted!','success');
+      clearSurveyAnswers();
+      showToast('✅ Survey submitted! Ready for next.','success');
     } else {
-      // Fallback: just show success locally
-      document.getElementById('form').style.display='none';
-      document.getElementById('surveySuccess').style.display='block';
+      clearSurveyAnswers();
       showToast('📋 Survey saved locally','success');
     }
   } catch(e) {
-    // Offline fallback
-    document.getElementById('form').style.display='none';
-    document.getElementById('surveySuccess').style.display='block';
+    clearSurveyAnswers();
     showToast('📋 Survey saved (server unreachable)','success');
   }
   btn.disabled=false; btn.textContent='📤 Submit Survey';
 }
 
+// Clear only survey answers — keep name/phone/email/address for next survey
+function clearSurveyAnswers() {
+  // Uncheck all radio/checkboxes
+  document.querySelectorAll('#form input[type="radio"], #form input[type="checkbox"]').forEach(el => el.checked = false);
+  document.querySelectorAll('.opt.selected').forEach(l => l.classList.remove('selected'));
+  // Clear text areas
+  document.getElementById('streetConcern').value = '';
+  document.getElementById('canvasserNotes').value = '';
+  document.getElementById('topIssueOther').value = '';
+  document.getElementById('eligibleVoters').value = '';
+  // Scroll back to top of survey
+  document.getElementById('surveyForm').scrollIntoView({behavior:'smooth'});
+}
+
 function resetSurvey() {
   document.getElementById('form').reset();
-  document.getElementById('form').style.display='block';
-  document.getElementById('surveySuccess').style.display='none';
   document.querySelectorAll('.opt.selected').forEach(l=>l.classList.remove('selected'));
   // Clear search for next address
   document.getElementById('searchInput').value = '';
