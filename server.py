@@ -96,6 +96,12 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({'user': self.current_user})
             return
 
+        # API: Personal canvasser stats
+        if path == '/api/my-stats':
+            if require_auth(self):
+                self.handle_my_stats()
+            return
+
         # API: Admin — list users (admin only)
         if path == '/api/admin/users':
             if require_admin(self):
@@ -597,6 +603,67 @@ class Handler(BaseHTTPRequestHandler):
         self._json({
             'total': total, 'with_phone': with_phone, 'supporters': supporters,
             'total_changes': changes, 'recent_changes': recent
+        })
+
+    def handle_my_stats(self):
+        """Return personal stats for the logged-in canvasser."""
+        uid = self.current_user['id']
+        conn = get_db()
+
+        # Changes made today
+        today_changes = conn.execute(
+            "SELECT COUNT(*) FROM change_log WHERE user_id = ? AND date(changed_at) = date('now','localtime')",
+            (uid,)
+        ).fetchone()[0]
+
+        # Changes made this week
+        week_changes = conn.execute(
+            "SELECT COUNT(*) FROM change_log WHERE user_id = ? AND changed_at > datetime('now', '-7 days', 'localtime')",
+            (uid,)
+        ).fetchone()[0]
+
+        # Records touched today (updated_at matches today + user made a change)
+        touched_today = conn.execute('''
+            SELECT COUNT(DISTINCT supporter_id) FROM change_log
+            WHERE user_id = ? AND date(changed_at) = date('now','localtime')
+        ''', (uid,)).fetchone()[0]
+
+        # Surveys completed today (notes updated with "Survey")
+        surveys_today = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND date(changed_at) = date('now','localtime')
+            AND field_name = 'notes' AND new_value LIKE '%Survey%'
+        ''', (uid,)).fetchone()[0]
+
+        # Total surveys (all time)
+        total_surveys = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND field_name = 'notes' AND new_value LIKE '%Survey%'
+        ''', (uid,)).fetchone()[0]
+
+        # Supporters marked (all time)
+        supporters_marked = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND field_name = 'support_level' AND new_value = 'Supporter'
+        ''', (uid,)).fetchone()[0]
+
+        # Signs marked (completed)
+        signs_completed = conn.execute('''
+            SELECT COUNT(*) FROM change_log
+            WHERE user_id = ? AND field_name = 'sign_request' AND new_value = 'Completed'
+        ''', (uid,)).fetchone()[0]
+
+        conn.close()
+
+        self._json({
+            'today_changes': today_changes,
+            'week_changes': week_changes,
+            'touched_today': touched_today,
+            'surveys_today': surveys_today,
+            'total_surveys': total_surveys,
+            'supporters_marked': supporters_marked,
+            'signs_completed': signs_completed,
+            'display_name': self.current_user.get('display_name', '')
         })
 
     def handle_recent_changes(self, qs):

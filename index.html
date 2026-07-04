@@ -147,10 +147,13 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
     <div class="spinner" id="searchSpinner"></div>
   </div>
   <div class="stats" id="topStats">
-    <span id="loggedInUser" style="font-size:0.8em;opacity:0.8;margin-right:8px"></span>
-    <span>📋 <strong id="statTotal">...</strong></span>
-    <span>📞 <strong id="statPhone">...</strong></span>
-    <span>✅ <strong id="statSupporters">...</strong></span>
+    <span id="loggedInUser" style="font-weight:600"></span>
+    <span id="myStatsDisplay" style="display:none">
+      <span style="opacity:0.8">📝 <strong id="myToday">0</strong> today</span>
+      <span style="opacity:0.8">📋 <strong id="mySurveys">0</strong> surveys</span>
+      <span style="opacity:0.8">✅ <strong id="mySupporters">0</strong> supporters</span>
+      <span style="opacity:0.8">🪧 <strong id="mySigns">0</strong> signs</span>
+    </span>
     <span><a href="/admin" style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85em">🔐 Admin</a></span>
     <span><a href="#" onclick="doLogout()" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.8em">Logout</a></span>
   </div>
@@ -330,7 +333,7 @@ function doLogin() {
       currentUser = d.user;
       document.getElementById('loginOverlay').style.display = 'none';
       document.getElementById('loggedInUser').textContent = '👤 '+d.user.display_name;
-      loadStats();
+      loadMyStats();
     } else {
       err.textContent = '❌ '+(d.error||'Login failed');
       err.style.display = 'block';
@@ -345,6 +348,7 @@ function doLogout() {
   authToken = ''; currentUser = null;
   document.getElementById('loginOverlay').style.display = 'flex';
   document.getElementById('loggedInUser').textContent = '';
+  document.getElementById('myStatsDisplay').style.display = 'none';
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
   document.getElementById('loginUser').focus();
@@ -358,12 +362,15 @@ function authHeaders() {
 document.getElementById('loginPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 
 // ── Stats ──
-async function loadStats() {
+async function loadMyStats() {
   try {
-    const r = await fetch(API + '/api/stats'); const d = await r.json();
-    document.getElementById('statTotal').textContent = (d.total||0).toLocaleString();
-    document.getElementById('statPhone').textContent = (d.with_phone||0).toLocaleString();
-    document.getElementById('statSupporters').textContent = (d.supporters||0).toLocaleString();
+    const r = await fetch(API + '/api/my-stats', authHeaders());
+    const d = await r.json();
+    document.getElementById('myToday').textContent = d.today_changes || 0;
+    document.getElementById('mySurveys').textContent = d.total_surveys || 0;
+    document.getElementById('mySupporters').textContent = d.supporters_marked || 0;
+    document.getElementById('mySigns').textContent = d.signs_completed || 0;
+    document.getElementById('myStatsDisplay').style.display = 'inline';
   } catch(e) {}
 }
 
@@ -634,7 +641,7 @@ async function addSupporter(query) {
       // Refresh search to show the new record, then open survey
       await search(query);
       setTimeout(() => openSurvey(d.supporter.id, [data.street_number, data.street].filter(Boolean).join(' ')), 500);
-      loadStats();
+      loadMyStats();
     } else {
       showToast('❌ Failed to add','error');
     }
@@ -797,7 +804,7 @@ async function saveCard(id) {
         const d=await r.json();
         if(d.success){
           showToast('✅ '+d.changes_count+' field(s) updated','success');
-          if(currentQuery)search(currentQuery,currentPage);loadStats();
+          if(currentQuery)search(currentQuery,currentPage);loadMyStats();
         }else{showToast('❌ Save failed','error');}
       }catch(e){showToast('❌ Network error','error');}
     }
@@ -852,7 +859,7 @@ async function markSurveyRefused(id) {
     var d = await r.json();
     if (d.success) {
       showToast('🚫 Marked as Survey Refused','success');
-      if(currentQuery)search(currentQuery,currentPage);loadStats();
+      if(currentQuery)search(currentQuery,currentPage);loadMyStats();
     }
   } catch(e) { showToast('❌ Failed to mark','error'); }
   // Record action timestamp
@@ -943,7 +950,7 @@ document.querySelectorAll('.option-group label.opt').forEach(label=>{
 });
 
 // ── Init ──
-loadStats();
+loadMyStats();
 document.getElementById('searchInput').addEventListener('keydown',function(e){
   if(e.key==='Enter'&&this.value.trim().length>=2){clearTimeout(debounceTimer);document.getElementById('searchSpinner').style.display='block';search(this.value.trim());}
 });
