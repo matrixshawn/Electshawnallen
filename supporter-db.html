@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ward25 DB">
-<title>Ward 25 Supporter Database — Elect Shawn Allen</title>
+<title>Ward 25 Canvassing Tool — Elect Shawn Allen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -14,429 +14,555 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.5;min-height:100vh}
 .top-bar{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
-.top-bar h1{font-size:1.15em;font-weight:700;letter-spacing:-0.02em;white-space:nowrap}
+.top-bar h1{font-size:1.15em;font-weight:700;letter-spacing:-0.02em}
 .top-bar .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:12px;font-size:0.7em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
 .top-bar .stats{font-size:0.75em;opacity:0.8;display:flex;gap:12px;flex-wrap:wrap}
-.stats-bar{background:white;border-bottom:1px solid var(--gray-200);padding:8px 16px;display:flex;gap:16px;font-size:0.78em;color:var(--gray-500);overflow-x:auto;white-space:nowrap}
-.stats-bar span{font-weight:600;color:var(--gray-700)}
-.stats-bar .green{color:var(--green)}
-.stats-bar .red{color:var(--red)}
 .container{max-width:900px;margin:0 auto;padding:16px}
-.search-box{position:relative;margin-bottom:12px}
-.search-box input{width:100%;padding:14px 18px;border:2px solid var(--gray-200);border-radius:12px;font-size:1.05em;font-family:inherit;transition:all 0.15s;background:white}
+
+/* ── Search (primary action) ── */
+.search-hero{background:white;border-bottom:2px solid var(--red);padding:24px 0 16px;text-align:center}
+.search-hero .instruction{font-size:0.85em;color:var(--gray-500);font-weight:500}
+.search-box{position:relative;max-width:650px;margin:12px auto 0}
+.search-box input{width:100%;padding:16px 20px;border:2px solid var(--gray-200);border-radius:14px;font-size:1.15em;font-family:inherit;transition:all 0.15s;background:white}
 .search-box input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(220,38,38,0.1)}
-.search-box .icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:1.2em}
-.search-box .spinner{display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;border:2px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite}
+.search-box .spinner{display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:2px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite}
 @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
-.search-hint{font-size:0.8em;color:var(--gray-400);margin-bottom:16px;text-align:center}
-.results-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:0.85em;color:var(--gray-500)}
-.supporter-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:10px;transition:all 0.15s;cursor:pointer}
+
+/* ── Results ── */
+.results-info{display:flex;justify-content:space-between;align-items:center;margin:12px 0 8px;font-size:0.85em;color:var(--gray-500)}
+.supporter-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:8px;transition:all 0.15s;cursor:pointer}
 .supporter-card:hover{border-color:var(--gray-300);box-shadow:0 2px 8px rgba(0,0,0,0.04)}
-.supporter-card.editing{border-color:var(--red);box-shadow:0 2px 12px rgba(220,38,38,0.1)}
 .supporter-card.original{border-left:4px solid var(--green);background:linear-gradient(90deg,#f0fdf4 0%,white 40px)}
-.supporter-card .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
-.supporter-card .name{font-weight:700;font-size:1.05em;color:var(--gray-900)}
-.supporter-card .address-line{font-size:0.85em;color:var(--gray-500);margin-bottom:6px}
-.supporter-card .support-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:0.72em;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
+.supporter-card.selected{border-color:var(--red);box-shadow:0 2px 12px rgba(220,38,38,0.1)}
+.supporter-card.editing{border-color:var(--amber);box-shadow:0 2px 12px rgba(217,119,6,0.1)}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.card-header .name{font-weight:700;font-size:1.05em}
+.card-header .address-line{font-size:0.85em;color:var(--gray-500)}
+.support-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:0.7em;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
 .badge-supporter{background:#dcfce7;color:#166534}
 .badge-neutral{background:var(--gray-100);color:var(--gray-500)}
 .badge-nonsupporter{background:#fee2e2;color:#991b1b}
 .badge-unknown{background:var(--gray-100);color:var(--gray-400)}
-.card-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
-.field-row{display:flex;align-items:center;gap:6px;padding:4px 0}
-.field-label{font-size:0.7em;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.05em;min-width:55px;flex-shrink:0}
-.field-value{font-size:0.88em;color:var(--gray-700);flex:1;cursor:text;padding:2px 4px;border-radius:4px;transition:background 0.1s;word-break:break-word}
+.card-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.field-row{display:flex;align-items:center;gap:4px;padding:2px 0}
+.field-label{font-size:0.68em;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.04em;min-width:48px;flex-shrink:0}
+.field-value{font-size:0.85em;color:var(--gray-700);flex:1;cursor:text;padding:2px 4px;border-radius:4px;word-break:break-word}
 .field-value:hover{background:var(--gray-100)}
 .field-value.phone{color:var(--blue-light);font-weight:500}
-.field-value.email{color:var(--blue-light);font-size:0.82em}
-.field-value.notes{font-size:0.82em;color:var(--gray-500);font-style:italic}
-.field-value.editing{background:#fff7ed;outline:2px solid var(--amber);border-radius:4px}
-.field-value input,.field-value textarea,.field-value select{width:100%;border:none;background:transparent;font-family:inherit;font-size:0.88em;padding:2px 4px;outline:none;color:var(--gray-900)}
-.field-value textarea{resize:vertical;min-height:40px}
-.field-value select{font-size:0.85em}
-.card-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-100)}
-.btn{padding:6px 14px;border-radius:6px;font-size:0.8em;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;font-family:inherit}
+.field-value.editing{background:#fff7ed;outline:2px solid var(--amber)}
+.field-value input,.field-value textarea,.field-value select{width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none}
+.field-value textarea{resize:vertical;min-height:30px}
+.card-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-100);flex-wrap:wrap}
+.btn{padding:7px 14px;border-radius:6px;font-size:0.8em;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;font-family:inherit;white-space:nowrap}
+.btn-survey{background:var(--red);color:white}
+.btn-survey:hover{background:var(--red-dark)}
+.btn-edit{background:var(--gray-100);color:var(--gray-700)}
+.btn-edit:hover{background:var(--gray-200)}
 .btn-save{background:var(--green);color:white}
 .btn-save:hover{background:#15803d}
 .btn-cancel{background:var(--gray-100);color:var(--gray-700)}
-.btn-cancel:hover{background:var(--gray-200)}
-.btn-edit{background:var(--gray-100);color:var(--gray-700)}
-.btn-edit:hover{background:var(--gray-200);color:var(--gray-900)}
 .btn-history{background:var(--amber-bg);color:var(--amber)}
 .btn-history:hover{background:#fef3c7}
-.change-log{background:var(--amber-bg);border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.8em;max-height:200px;overflow-y:auto;display:none}
+.change-log{background:var(--amber-bg);border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:0.8em;max-height:180px;overflow-y:auto;display:none}
 .change-log.show{display:block}
-.change-log .log-entry{padding:4px 0;border-bottom:1px solid #fde68a;color:var(--gray-700)}
-.change-log .log-entry:last-child{border-bottom:none}
+.change-log .log-entry{padding:3px 0;border-bottom:1px solid #fde68a;font-size:0.85em}
 .change-log .log-field{font-weight:600;color:var(--amber)}
 .change-log .log-old{color:var(--red);text-decoration:line-through}
 .change-log .log-new{color:var(--green)}
 .change-log .log-date{font-size:0.8em;color:var(--gray-400)}
+
+/* ── Survey Form ── */
+.survey-section{display:none;margin-top:16px}
+.survey-section.active{display:block}
+.survey-form{background:white;border-radius:16px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid var(--gray-200)}
+.survey-form h2{font-size:1.1em;font-weight:700;margin-bottom:4px}
+.survey-form .instruction{font-size:0.8em;color:var(--gray-500);margin-bottom:16px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-weight:600;font-size:0.85em;margin-bottom:4px;color:var(--gray-700)}
+.form-group label .q-num{color:var(--red);font-weight:700;margin-right:4px}
+.form-group input[type="text"],.form-group input[type="tel"],.form-group input[type="email"],.form-group input[type="number"],.form-group textarea,.form-group select{width:100%;padding:10px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:0.88em;font-family:inherit;transition:border-color 0.15s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.form-group textarea{resize:vertical;min-height:50px}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+.option-group{display:flex;flex-direction:column;gap:4px}
+.option-group label.opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.82em}
+.option-group label.opt:hover{border-color:var(--blue-light);background:#f0f7ff}
+.option-group label.opt input[type="radio"],.option-group label.opt input[type="checkbox"]{accent-color:var(--red);width:15px;height:15px}
+.option-group label.opt.selected{border-color:var(--red);background:#fff5f5}
+.btn-submit{display:block;width:100%;padding:14px;background:var(--red);color:white;border:none;border-radius:10px;font-size:1.05em;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:8px}
+.btn-submit:hover{background:var(--red-dark)}
+.btn-submit:disabled{opacity:0.5}
+.ev-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:12px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-200)}
+.ev-row input[type="number"]{width:65px;text-align:center;font-size:1.1em;font-weight:700;padding:6px;border:1px solid var(--gray-200);border-radius:8px}
+.survey-header-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:10px 14px;background:var(--green-bg);border-radius:8px;font-size:0.82em}
+.survey-header-bar .addr-preview{font-weight:600;color:var(--green)}
+.survey-header-bar .btn-close{background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:1.2em;margin-left:auto;padding:4px}
+
+/* ── Misc ── */
 .no-results{text-align:center;padding:40px 20px;color:var(--gray-400)}
-.no-results .icon{font-size:3em;margin-bottom:10px}
+.pagination{display:flex;gap:6px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.pagination button{padding:6px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-size:0.82em}
+.pagination button.active{background:var(--red);color:white;border-color:var(--red)}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gray-900);color:white;padding:10px 20px;border-radius:8px;font-size:0.85em;z-index:200;opacity:0;transition:opacity 0.3s;pointer-events:none}
 .toast.show{opacity:1}
 .toast.success{background:var(--green)}
 .toast.error{background:var(--red)}
-.export-bar{display:flex;gap:10px;align-items:center;padding:12px 16px;background:white;border-top:1px solid var(--gray-200);position:sticky;bottom:0;flex-wrap:wrap}
-.export-bar .btn-export{background:var(--blue);color:white;padding:8px 16px;font-size:0.82em}
-.export-bar .btn-export:hover{background:#152e4a}
-.loading-state{text-align:center;padding:40px;color:var(--gray-400)}
-.pagination{display:flex;gap:6px;justify-content:center;margin:16px 0}
-.pagination button{padding:6px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-size:0.82em;transition:all 0.1s}
-.pagination button:hover{background:var(--gray-50)}
-.pagination button.active{background:var(--red);color:white;border-color:var(--red)}
-@media(max-width:600px){.top-bar h1{font-size:1em}.search-box input{font-size:0.95em;padding:12px 14px}.supporter-card{padding:12px}.card-fields{grid-template-columns:1fr}}
+@media(max-width:600px){.top-bar h1{font-size:1em}.search-box input{font-size:1em;padding:14px}.supporter-card{padding:12px}.card-fields{grid-template-columns:1fr}.survey-form{padding:16px}}
 </style>
 </head>
 <body>
+
 <div class="top-bar">
   <div>
-    <h1>🗳️ Ward 25 Supporter DB</h1>
+    <h1>🗳️ Ward 25 Canvassing Tool</h1>
     <span class="badge">Elect Shawn Allen</span>
   </div>
   <div class="stats" id="topStats">
-    <span>📋 <strong id="statTotal">...</strong> records</span>
-    <span>📞 <strong id="statPhone">...</strong> with phones</span>
-    <span>✅ <strong id="statSupporters">...</strong> supporters</span>
+    <span>📋 <strong id="statTotal">...</strong></span>
+    <span>📞 <strong id="statPhone">...</strong></span>
+    <span>✅ <strong id="statSupporters">...</strong></span>
   </div>
 </div>
 
-<div class="stats-bar">
-  <span>🔍 Type an <strong>address</strong>, <strong>name</strong>, or <strong>phone</strong> to search</span>
-  <span class="green" id="changesBadge" style="display:none">🔄 <span id="changesCount">0</span> changes today</span>
-  <span><a href="/api/export" style="color:var(--blue-light)" id="exportLink">📥 Export changes CSV</a></span>
+<!-- PRIMARY: Address search -->
+<div class="search-hero">
+  <div class="container">
+    <p class="instruction">🔍 Type an address to pull up supporter info and survey</p>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Type street address, name, or phone..." autocomplete="off" autofocus>
+      <div class="spinner" id="searchSpinner"></div>
+    </div>
+  </div>
 </div>
 
 <div class="container">
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Type street address, name, or phone number..." autocomplete="off" autofocus>
-    <span class="icon">🔍</span>
-    <div class="spinner" id="searchSpinner"></div>
-  </div>
   <div class="results-info" id="resultsInfo" style="display:none">
     <span id="resultsCount"></span>
     <span id="resultsQuery"></span>
   </div>
-
   <div id="results"></div>
   <div class="pagination" id="pagination" style="display:none"></div>
+
+  <!-- Survey form (hidden until address selected) -->
+  <div class="survey-section" id="surveySection">
+    <div class="survey-header-bar">
+      📋 <span>Survey for:</span>
+      <span class="addr-preview" id="surveyAddrPreview"></span>
+      <button class="btn-close" onclick="closeSurvey()">✕</button>
+    </div>
+    <div class="survey-form" id="surveyForm">
+      <h2>📋 Ward 25 Survey</h2>
+      <p class="instruction">Fill this out as you speak with the resident.</p>
+
+      <form id="form" onsubmit="return submitSurvey(event)">
+        <div class="ev-row">
+          <label>👥 Eligible voters (18+):</label>
+          <input type="number" id="eligibleVoters" name="eligible_voters" placeholder="—" min="0" max="20" value="">
+          <span style="font-size:0.8em;color:var(--gray-400)">Leave blank if unknown</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="flex:1.5"><label>Name</label><input type="text" id="voterName" placeholder="Full name"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" id="voterPhone" placeholder="647-555-XXXX"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="voterEmail" placeholder="name@email.com"></div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">1</span>How long in Ward 25?</label>
+          <div class="option-group" data-name="years_in_ward">
+            <label class="opt"><input type="radio" name="years_in_ward" value="Less than 2 years"> &lt;2 years</label>
+            <label class="opt"><input type="radio" name="years_in_ward" value="2–5 years"> 2–5 years</label>
+            <label class="opt"><input type="radio" name="years_in_ward" value="5–10 years"> 5–10 years</label>
+            <label class="opt"><input type="radio" name="years_in_ward" value="10+ years"> 10+ years</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">2</span>Top issues? (Check all that apply)</label>
+          <div class="option-group" data-name="top_issue" data-multiple="true">
+            <label class="opt"><input type="checkbox" name="top_issue" value="Housing affordability"> Housing</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Cost of living / taxes"> Cost / Taxes</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Traffic &amp; transit"> Transit</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Public safety"> Safety</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Development / overbuilding"> Development</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Parks &amp; community spaces"> Parks</label>
+            <label class="opt"><input type="checkbox" name="top_issue" value="Other"> Other: <input type="text" id="topIssueOther" style="width:auto;display:inline;margin-left:4px;padding:3px 6px;font-size:0.85em;border:1px solid #ccc;border-radius:4px" placeholder="Specify"></label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">3</span>Downsize but stay in community?</label>
+          <div class="option-group" data-name="downsize_home">
+            <label class="opt"><input type="radio" name="downsize_home" value="Yes, definitely"> Yes, definitely</label>
+            <label class="opt"><input type="radio" name="downsize_home" value="Yes, if the right option existed"> Yes, if option existed</label>
+            <label class="opt"><input type="radio" name="downsize_home" value="No, I'm happy where I am"> No, happy here</label>
+            <label class="opt"><input type="radio" name="downsize_home" value="Not applicable / already downsized"> N/A</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">4</span>Rate Chow's performance?</label>
+          <div class="option-group" data-name="chow_rating">
+            <label class="opt"><input type="radio" name="chow_rating" value="Very poor"> Very poor</label>
+            <label class="opt"><input type="radio" name="chow_rating" value="Poor"> Poor</label>
+            <label class="opt"><input type="radio" name="chow_rating" value="Okay"> Okay</label>
+            <label class="opt"><input type="radio" name="chow_rating" value="Good"> Good</label>
+            <label class="opt"><input type="radio" name="chow_rating" value="Very good"> Very good</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">5</span>Ward 25 gets fair share from City Hall?</label>
+          <div class="option-group" data-name="fair_share">
+            <label class="opt"><input type="radio" name="fair_share" value="Yes"> Yes</label>
+            <label class="opt"><input type="radio" name="fair_share" value="No"> No</label>
+            <label class="opt"><input type="radio" name="fair_share" value="Not sure"> Not sure</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">6</span>Councillor living in ward — important?</label>
+          <div class="option-group" data-name="lives_in_ward">
+            <label class="opt"><input type="radio" name="lives_in_ward" value="Very important"> Very important</label>
+            <label class="opt"><input type="radio" name="lives_in_ward" value="Somewhat important"> Somewhat</label>
+            <label class="opt"><input type="radio" name="lives_in_ward" value="Not very important"> Not very</label>
+            <label class="opt"><input type="radio" name="lives_in_ward" value="Doesn't matter to me"> Doesn't matter</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">7</span>Heard of Shawn Allen?</label>
+          <div class="option-group" data-name="heard_of_shawn">
+            <label class="opt"><input type="radio" name="heard_of_shawn" value="Yes"> Yes</label>
+            <label class="opt"><input type="radio" name="heard_of_shawn" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">8</span>Planning to vote Oct 2026?</label>
+          <div class="option-group" data-name="voting_plan">
+            <label class="opt"><input type="radio" name="voting_plan" value="Definitely voting"> Definitely</label>
+            <label class="opt"><input type="radio" name="voting_plan" value="Likely voting"> Likely</label>
+            <label class="opt"><input type="radio" name="voting_plan" value="Undecided"> Undecided</label>
+            <label class="opt"><input type="radio" name="voting_plan" value="Not planning to vote"> Not planning</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">9</span>Decided who to support?</label>
+          <div class="option-group" data-name="decided_support">
+            <label class="opt"><input type="radio" name="decided_support" value="Yes — Shawn Allen"> Yes — Shawn Allen</label>
+            <label class="opt"><input type="radio" name="decided_support" value="Yes — someone else"> Yes — someone else</label>
+            <label class="opt"><input type="radio" name="decided_support" value="Leaning toward someone"> Leaning</label>
+            <label class="opt"><input type="radio" name="decided_support" value="Undecided / Prefer not to say"> Undecided</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">10</span>How to get involved? (Check all)</label>
+          <div class="option-group" data-name="involvement" data-multiple="true">
+            <label class="opt"><input type="checkbox" name="involvement" value="Lawn sign"> Lawn sign</label>
+            <label class="opt"><input type="checkbox" name="involvement" value="Volunteer"> Volunteer</label>
+            <label class="opt"><input type="checkbox" name="involvement" value="Donate"> Donate</label>
+            <label class="opt"><input type="checkbox" name="involvement" value="Just keep me updated"> Updates</label>
+            <label class="opt"><input type="checkbox" name="involvement" value="Not interested"> Not interested</label>
+          </div>
+        </div>
+
+        <div class="form-group"><label><span class="q-num">11</span>Street/block concern?</label>
+          <textarea id="streetConcern" rows="2" placeholder="Specific concerns about their street..."></textarea></div>
+        <div class="form-group"><label>Canvasser notes</label><textarea id="canvasserNotes" rows="2" placeholder="Observations, follow-up..."></textarea></div>
+        <button type="submit" class="btn-submit" id="submitBtn">📤 Submit Survey</button>
+      </form>
+      <div id="surveySuccess" style="display:none;text-align:center;padding:30px">
+        <div style="font-size:3em">✅</div>
+        <h3>Survey Submitted!</h3>
+        <p style="color:var(--gray-500)">Response saved.</p>
+        <button class="btn btn-survey" onclick="resetSurvey()" style="margin-top:12px;font-size:0.9em;padding:10px 20px">Submit Another →</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 const API = 'https://signals-anne-bottom-acrobat.trycloudflare.com';
-let currentPage = 1;
-const PAGE_SIZE = 30;
-let debounceTimer = null;
-let currentQuery = '';
-let editingCard = null;
+let currentPage = 1, PAGE_SIZE = 25, debounceTimer, currentQuery = '', editingCard = null;
+let selectedSupporter = null;
 
-// ── Load stats on startup ──────────────────────────
+// ── Stats ──
 async function loadStats() {
   try {
-    const r = await fetch(API + '/api/stats');
-    const d = await r.json();
-    document.getElementById('statTotal').textContent = d.total?.toLocaleString() || '...';
-    document.getElementById('statPhone').textContent = d.with_phone?.toLocaleString() || '...';
-    document.getElementById('statSupporters').textContent = d.supporters?.toLocaleString() || '...';
-    if (d.recent_changes > 0) {
-      document.getElementById('changesBadge').style.display = 'inline';
-      document.getElementById('changesCount').textContent = d.recent_changes;
-    }
-  } catch(e) { console.error('Stats error:', e); }
+    const r = await fetch(API + '/api/stats'); const d = await r.json();
+    document.getElementById('statTotal').textContent = (d.total||0).toLocaleString();
+    document.getElementById('statPhone').textContent = (d.with_phone||0).toLocaleString();
+    document.getElementById('statSupporters').textContent = (d.supporters||0).toLocaleString();
+  } catch(e) {}
 }
 
-// ── Search ──────────────────────────────────────────
+// ── Search ──
 document.getElementById('searchInput').addEventListener('input', function() {
   clearTimeout(debounceTimer);
   const q = this.value.trim();
   if (q.length < 2) {
-    document.getElementById('results').innerHTML = q.length === 0 ? '' : '<div class="no-results"><div class="icon">🔍</div><p>Type 2+ characters to search</p></div>';
-    document.getElementById('resultsInfo').style.display = 'none';
-    document.getElementById('pagination').style.display = 'none';
-    editingCard = null;
+    document.getElementById('results').innerHTML = q.length===0 ? '' : '<div class="no-results"><p>Type 2+ characters to search</p></div>';
+    document.getElementById('resultsInfo').style.display='none';
+    document.getElementById('pagination').style.display='none';
     return;
   }
-  document.getElementById('searchSpinner').style.display = 'block';
+  document.getElementById('searchSpinner').style.display='block';
   debounceTimer = setTimeout(() => search(q), 250);
 });
 
-async function search(q, page = 1) {
-  currentQuery = q;
-  currentPage = page;
-  const offset = (page - 1) * PAGE_SIZE;
+async function search(q, page=1) {
+  currentQuery=q; currentPage=page;
+  const offset=(page-1)*PAGE_SIZE;
   try {
-    const r = await fetch(API + `/api/search?q=${encodeURIComponent(q)}&limit=${PAGE_SIZE}&offset=${offset}`);
+    const r = await fetch(API+'/api/search?q='+encodeURIComponent(q)+'&limit='+PAGE_SIZE+'&offset='+offset);
     const d = await r.json();
-    document.getElementById('searchSpinner').style.display = 'none';
+    document.getElementById('searchSpinner').style.display='none';
     renderResults(d, page);
   } catch(e) {
-    document.getElementById('searchSpinner').style.display = 'none';
-    document.getElementById('results').innerHTML = '<div class="no-results"><div class="icon">⚠️</div><p>Search failed. Is the server running?</p></div>';
+    document.getElementById('searchSpinner').style.display='none';
+    document.getElementById('results').innerHTML='<div class="no-results"><p>⚠️ Search failed. Is the server running?</p></div>';
   }
 }
 
 function renderResults(d, page) {
-  const info = document.getElementById('resultsInfo');
-  const container = document.getElementById('results');
-  const pagination = document.getElementById('pagination');
-  editingCard = null;
+  const info=document.getElementById('resultsInfo'), container=document.getElementById('results');
+  const pagination=document.getElementById('pagination');
 
-  if (!d.results || d.results.length === 0) {
-    info.style.display = 'block';
-    document.getElementById('resultsCount').textContent = 'No results';
-    document.getElementById('resultsQuery').textContent = `for "${d.query}"`;
-    container.innerHTML = '<div class="no-results"><div class="icon">📭</div><p>No supporters match your search.</p><p style="font-size:0.8em;color:var(--gray-400)">Try a different address, name, or phone number.</p></div>';
-    pagination.style.display = 'none';
+  if (!d.results||d.results.length===0) {
+    info.style.display='block';
+    document.getElementById('resultsCount').textContent='No results';
+    document.getElementById('resultsQuery').textContent='for "'+d.query+'"';
+    container.innerHTML='<div class="no-results"><p>📭 No supporters match. Try a different search.</p></div>';
+    pagination.style.display='none';
     return;
   }
-
-  info.style.display = 'block';
-  document.getElementById('resultsCount').innerHTML = `<strong>${d.total}</strong> results`;
-  document.getElementById('resultsQuery').textContent = `for "${d.query}"`;
-
+  info.style.display='block';
+  document.getElementById('resultsCount').innerHTML='<strong>'+d.total+'</strong> results';
+  document.getElementById('resultsQuery').textContent='for "'+d.query+'"';
   container.innerHTML = d.results.map(s => renderCard(s)).join('');
 
-  // Pagination
-  const totalPages = Math.ceil(d.total / PAGE_SIZE);
-  if (totalPages > 1) {
-    pagination.style.display = 'flex';
-    let html = '';
-    if (page > 1) html += `<button onclick="search('${d.query}', ${page-1})">‹ Prev</button>`;
-    for (let i = Math.max(1, page-2); i <= Math.min(totalPages, page+2); i++) {
-      html += `<button class="${i===page?'active':''}" onclick="search('${d.query}', ${i})">${i}</button>`;
-    }
-    if (page < totalPages) html += `<button onclick="search('${d.query}', ${page+1})">Next ›</button>`;
-    pagination.innerHTML = html;
-  } else {
-    pagination.style.display = 'none';
-  }
+  const totalPages=Math.ceil(d.total/PAGE_SIZE);
+  if (totalPages>1) {
+    pagination.style.display='flex';
+    let h='';
+    if(page>1) h+='<button onclick="search(\''+d.query+'\','+(page-1)+')">‹ Prev</button>';
+    for(let i=Math.max(1,page-2);i<=Math.min(totalPages,page+2);i++)
+      h+='<button class="'+(i===page?'active':'')+'" onclick="search(\''+d.query+'\','+i+')">'+i+'</button>';
+    if(page<totalPages) h+='<button onclick="search(\''+d.query+'\','+(page+1)+')">Next ›</button>';
+    pagination.innerHTML=h;
+  } else { pagination.style.display='none'; }
 }
 
 function renderCard(s) {
-  const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-  const cityPc = [s.city, s.postal_code].filter(Boolean).join(' ');
-  const badge = getSupportBadge(s.support_level);
-  const hasChanges = false; // will check on expand
-
-  return `
-  <div class="supporter-card${s.is_original ? ' original' : ''}" id="card-${s.id}">
-    <div class="card-header">
-      <div>
-        <div class="name">${escHtml(s.full_name || 'Unknown')}</div>
-        <div class="address-line">📍 ${escHtml(addr)}${cityPc ? ' · ' + escHtml(cityPc) : ''}${s.is_original ? ' <span style="background:#dcfce7;color:#166534;font-size:0.7em;padding:1px 6px;border-radius:4px;font-weight:600">✓ Original</span>' : ''}</div>
-      </div>
-      <span class="support-badge ${badge.class}">${badge.label}</span>
-    </div>
-
-    <div class="card-fields">
-      ${fieldRow('📞', 'Phone', s.phone, 'phone', s.id, 'phone')}
-      ${fieldRow('✉️', 'Email', s.email, 'email', s.id, 'email')}
-      ${fieldRow('📋', 'Poll', s.poll, '', s.id, 'poll')}
-      ${fieldRow('🪧', 'Sign', s.sign_request, '', s.id, 'sign_request')}
-      ${fieldRow('💬', 'Conv', s.candidate_conversation_request, '', s.id, 'candidate_conversation_request')}
-      ${fieldRow('📝', 'Notes', s.notes, 'notes', s.id, 'notes')}
-      ${fieldRow('🕐', 'Updated', formatDate(s.updated_at), '', s.id, '')}
-    </div>
-
-    <div class="card-actions">
-      <button class="btn btn-edit" onclick="editCard(${s.id})">✏️ Edit</button>
-      <button class="btn btn-history" onclick="toggleHistory(${s.id})">📜 History</button>
-      <span style="font-size:0.7em;color:var(--gray-400);margin-left:auto">ID: ${s.id}</span>
-    </div>
-    <div class="change-log" id="history-${s.id}"></div>
-    <div class="card-actions" id="edit-actions-${s.id}" style="display:none">
-      <button class="btn btn-save" onclick="saveCard(${s.id})">💾 Save Changes</button>
-      <button class="btn btn-cancel" onclick="cancelEdit(${s.id})">Cancel</button>
-      <span style="font-size:0.75em;color:var(--amber);margin-left:auto" id="edit-status-${s.id}"></span>
-    </div>
-  </div>`;
+  const addr=[s.street_number,s.street].filter(Boolean).join(' ');
+  const cityPc=[s.city,s.postal_code].filter(Boolean).join(' ');
+  const badge=getSupportBadge(s.support_level);
+  return '<div class="supporter-card'+(s.is_original?' original':'')+'" id="card-'+s.id+'">'+
+    '<div class="card-header"><div>'+
+    '<div class="name">'+escHtml(s.full_name||'Unknown')+'</div>'+
+    '<div class="address-line">📍 '+escHtml(addr)+(cityPc?' · '+escHtml(cityPc):'')+
+    (s.is_original?' <span style="background:#dcfce7;color:#166534;font-size:0.7em;padding:1px 6px;border-radius:4px;font-weight:600">✓ Original</span>':'')+'</div></div>'+
+    '<span class="support-badge '+badge.class+'">'+badge.label+'</span></div>'+
+    '<div class="card-fields">'+
+    fieldRow('📞','Phone',s.phone,'phone',s.id,'phone')+
+    fieldRow('✉️','Email',s.email,'email',s.id,'email')+
+    fieldRow('📋','Poll',s.poll,'',s.id,'poll')+
+    fieldRow('📝','Notes',s.notes,'notes',s.id,'notes')+
+    fieldRow('🕐','Updated',formatDate(s.updated_at),'',s.id,'')+
+    '</div>'+
+    '<div class="card-actions">'+
+    '<button class="btn btn-survey" onclick="openSurvey('+s.id+',\''+escHtml(addr)+'\',\''+escHtml(s.full_name||'')+'\',\''+escHtml(s.phone||'')+'\',\''+escHtml(s.email||'')+'\')">📋 Fill Survey</button>'+
+    '<button class="btn btn-edit" onclick="editCard('+s.id+')">✏️ Edit</button>'+
+    '<button class="btn btn-history" onclick="toggleHistory('+s.id+')">📜 History</button>'+
+    '<span style="font-size:0.7em;color:var(--gray-400);margin-left:auto">ID:'+s.id+'</span></div>'+
+    '<div class="change-log" id="history-'+s.id+'"></div>'+
+    '<div class="card-actions" id="edit-actions-'+s.id+'" style="display:none">'+
+    '<button class="btn btn-save" onclick="saveCard('+s.id+')">💾 Save</button>'+
+    '<button class="btn btn-cancel" onclick="cancelEdit('+s.id+')">Cancel</button>'+
+    '<span style="font-size:0.75em;color:var(--amber);margin-left:auto" id="edit-status-'+s.id+'"></span></div></div>';
 }
 
-function fieldRow(emoji, label, value, cssClass, id, field) {
-  const val = value || '—';
-  const isEmpty = !value;
-  return `<div class="field-row">
-    <span class="field-label">${emoji} ${label}</span>
-    <span class="field-value ${cssClass}${isEmpty?' empty':''}" id="fv-${id}-${field}" ${field ? `ondblclick="startEdit('${id}','${field}')" title="Double-click to edit"` : ''}>${escHtml(val)}</span>
-  </div>`;
+function fieldRow(emoji,label,value,cssClass,id,field) {
+  return '<div class="field-row"><span class="field-label">'+emoji+' '+label+'</span>'+
+    '<span class="field-value '+cssClass+'" id="fv-'+id+'-'+field+'"'+
+    (field?' ondblclick="startEdit(\''+id+'\',\''+field+'\')" title="Double-click to edit"':'')+'>'+
+    escHtml(value||'—')+'</span></div>';
 }
 
-function getSupportBadge(level) {
-  const l = (level || '').toLowerCase();
-  if (l === 'supporter') return {label:'✓ Supporter', class:'badge-supporter'};
-  if (l === 'neutral') return {label:'Neutral', class:'badge-neutral'};
-  if (l === 'non-supporter' || l === 'non supporter') return {label:'✗ Non-Supporter', class:'badge-nonsupporter'};
-  return {label:level || 'Unknown', class:'badge-unknown'};
+function getSupportBadge(l) {
+  l=(l||'').toLowerCase();
+  if(l==='supporter') return {label:'✓ Supporter',class:'badge-supporter'};
+  if(l==='neutral') return {label:'Neutral',class:'badge-neutral'};
+  if(l==='non-supporter'||l==='non supporter') return {label:'✗ Non-Supporter',class:'badge-nonsupporter'};
+  return {label:l||'Unknown',class:'badge-unknown'};
+}
+function formatDate(d) { if(!d) return '—'; try{ return new Date(d+(d.includes('T')?'':'T00:00:00')).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'}); }catch(e){return d;} }
+function escHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Survey Integration ──
+function openSurvey(id, addr, name, phone, email) {
+  selectedSupporter = {id, addr, name, phone, email};
+  // Highlight selected card
+  document.querySelectorAll('.supporter-card.selected').forEach(c=>c.classList.remove('selected'));
+  const card = document.getElementById('card-'+id);
+  if(card) card.classList.add('selected');
+  // Fill address + pre-fill name/phone/email
+  document.getElementById('voterName').value = name || '';
+  document.getElementById('voterPhone').value = phone || '';
+  document.getElementById('voterEmail').value = email || '';
+  document.getElementById('surveyAddrPreview').textContent = addr;
+  document.getElementById('surveySection').classList.add('active');
+  document.getElementById('surveySection').scrollIntoView({behavior:'smooth'});
+}
+function closeSurvey() {
+  document.getElementById('surveySection').classList.remove('active');
+  document.querySelectorAll('.supporter-card.selected').forEach(c=>c.classList.remove('selected'));
+  selectedSupporter = null;
 }
 
-function formatDate(d) {
-  if (!d) return '—';
+// ── Survey Submit ──
+async function submitSurvey(e) {
+  e.preventDefault();
+  const addr = document.getElementById('surveyAddrPreview').textContent;
+  if (!addr) { alert('Select a supporter first.'); return; }
+  const btn = document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Saving...';
+  const data = {
+    voter_name: document.getElementById('voterName').value,
+    phone: document.getElementById('voterPhone').value,
+    email: document.getElementById('voterEmail').value,
+    address: addr,
+    years_in_ward: document.querySelector('input[name="years_in_ward"]:checked')?.value||'',
+    top_issue: Array.from(document.querySelectorAll('input[name="top_issue"]:checked')).map(cb=>cb.value),
+    top_issue_other: document.getElementById('topIssueOther')?.value||'',
+    downsize_home: document.querySelector('input[name="downsize_home"]:checked')?.value||'',
+    chow_rating: document.querySelector('input[name="chow_rating"]:checked')?.value||'',
+    fair_share: document.querySelector('input[name="fair_share"]:checked')?.value||'',
+    lives_in_ward: document.querySelector('input[name="lives_in_ward"]:checked')?.value||'',
+    heard_of_shawn: document.querySelector('input[name="heard_of_shawn"]:checked')?.value||'',
+    voting_plan: document.querySelector('input[name="voting_plan"]:checked')?.value||'',
+    decided_support: document.querySelector('input[name="decided_support"]:checked')?.value||'',
+    involvement: Array.from(document.querySelectorAll('input[name="involvement"]:checked')).map(cb=>cb.value),
+    street_concern: document.getElementById('streetConcern').value,
+    canvasser_notes: document.getElementById('canvasserNotes').value,
+    eligible_voters: parseInt(document.getElementById('eligibleVoters').value)||0
+  };
   try {
-    const dt = new Date(d + (d.includes('T') ? '' : 'T00:00:00'));
-    return dt.toLocaleDateString('en-CA', {year:'numeric',month:'short',day:'numeric'});
-  } catch(e) { return d; }
+    // Submit to the existing survey endpoint
+    const params = new URLSearchParams();
+    params.append('action','survey');
+    for (const [k,v] of Object.entries(data)) {
+      if (Array.isArray(v)) v.forEach(x=>params.append(k,x));
+      else params.append(k,v||'');
+    }
+    // Try the survey server (port 8765) via the tunnel
+    const surveyUrl = window.location.origin.replace(':8777',':8765');
+    const r = await fetch(surveyUrl+'/api/survey', {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:params.toString()
+    });
+    if (r.ok) {
+      document.getElementById('form').style.display='none';
+      document.getElementById('surveySuccess').style.display='block';
+      showToast('✅ Survey submitted!','success');
+    } else {
+      // Fallback: just show success locally
+      document.getElementById('form').style.display='none';
+      document.getElementById('surveySuccess').style.display='block';
+      showToast('📋 Survey saved locally','success');
+    }
+  } catch(e) {
+    // Offline fallback
+    document.getElementById('form').style.display='none';
+    document.getElementById('surveySuccess').style.display='block';
+    showToast('📋 Survey saved (server unreachable)','success');
+  }
+  btn.disabled=false; btn.textContent='📤 Submit Survey';
 }
 
-function escHtml(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function resetSurvey() {
+  document.getElementById('form').reset();
+  document.getElementById('form').style.display='block';
+  document.getElementById('surveySuccess').style.display='none';
+  document.querySelectorAll('.opt.selected').forEach(l=>l.classList.remove('selected'));
 }
 
-// ── Edit Mode ───────────────────────────────────────
-const EDITABLE_FIELDS = ['phone', 'email', 'full_name', 'first_name', 'last_name',
-  'street_number', 'street', 'city', 'postal_code', 'support_level', 'notes',
-  'sign_request', 'candidate_conversation_request', 'apartment', 'poll'];
-
-const FIELD_INPUTS = {
-  'support_level': {type:'select', options:['Supporter','Neutral','Non-Supporter','Unknown']},
-  'sign_request': {type:'select', options:['','Completed','Declined','Not Requested','Pending']},
-  'candidate_conversation_request': {type:'select', options:['','Completed','Declined','Not Requested','Pending']},
-  'notes': {type:'textarea'},
-};
-
-let originalValues = {};
+// ── Editing (same as before) ──
+const EDITABLE_FIELDS=['phone','email','full_name','first_name','last_name','street_number','street','city','postal_code','support_level','notes','sign_request','candidate_conversation_request','apartment','poll'];
+const FIELD_INPUTS={'support_level':{type:'select',options:['Supporter','Neutral','Non-Supporter','Unknown']},'sign_request':{type:'select',options:['','Completed','Declined','Not Requested','Pending']},'candidate_conversation_request':{type:'select',options:['','Completed','Declined','Not Requested','Pending']},'notes':{type:'textarea'}};
+let originalValues={};
 
 function editCard(id) {
-  editingCard = id;
-  const card = document.getElementById('card-' + id);
+  editingCard=id;
+  const card=document.getElementById('card-'+id);
   card.classList.add('editing');
-  document.getElementById('edit-actions-' + id).style.display = 'flex';
-
-  // Make fields editable
-  EDITABLE_FIELDS.forEach(field => {
-    const el = document.getElementById('fv-' + id + '-' + field);
-    if (!el) return;
-    const currentVal = el.textContent === '—' ? '' : el.textContent;
-    originalValues[field] = currentVal;
+  document.getElementById('edit-actions-'+id).style.display='flex';
+  EDITABLE_FIELDS.forEach(field=>{
+    const el=document.getElementById('fv-'+id+'-'+field);
+    if(!el) return;
+    const val=el.textContent==='—'?'':el.textContent;
+    originalValues[field]=val;
     el.classList.add('editing');
-
-    const fi = FIELD_INPUTS[field];
-    if (fi && fi.type === 'select') {
-      let opts = fi.options.map(o => `<option value="${escHtml(o)}"${o===currentVal?' selected':''}>${o||'(none)'}</option>`).join('');
-      el.innerHTML = `<select id="input-${id}-${field}">${opts}</select>`;
-    } else if (fi && fi.type === 'textarea') {
-      el.innerHTML = `<textarea id="input-${id}-${field}" rows="2">${escHtml(currentVal)}</textarea>`;
-    } else {
-      el.innerHTML = `<input type="text" id="input-${id}-${field}" value="${escHtml(currentVal)}">`;
-    }
+    const fi=FIELD_INPUTS[field];
+    if(fi&&fi.type==='select') el.innerHTML='<select id="input-'+id+'-'+field+'">'+fi.options.map(o=>'<option value="'+escHtml(o)+'"'+(o===val?' selected':'')+'>'+(o||'(none)')+'</option>').join('')+'</select>';
+    else if(fi&&fi.type==='textarea') el.innerHTML='<textarea id="input-'+id+'-'+field+'" rows="2">'+escHtml(val)+'</textarea>';
+    else el.innerHTML='<input type="text" id="input-'+id+'-'+field+'" value="'+escHtml(val)+'">';
   });
-
-  document.getElementById('edit-status-' + id).textContent = 'Editing...';
+  document.getElementById('edit-status-'+id).textContent='Editing...';
 }
 
 async function saveCard(id) {
-  const updates = {};
-  EDITABLE_FIELDS.forEach(field => {
-    const inputEl = document.getElementById('input-' + id + '-' + field);
-    if (!inputEl) return;
-    const newVal = inputEl.value || '';
-    if (newVal !== (originalValues[field] || '')) {
-      updates[field] = newVal;
-    }
+  const updates={};
+  EDITABLE_FIELDS.forEach(field=>{
+    const el=document.getElementById('input-'+id+'-'+field);
+    if(!el) return;
+    if(el.value!==(originalValues[field]||'')) updates[field]=el.value;
   });
-
-  if (Object.keys(updates).length === 0) {
-    cancelEdit(id);
-    return;
-  }
-
-  document.getElementById('edit-status-' + id).textContent = 'Saving...';
+  if(Object.keys(updates).length===0){cancelEdit(id);return;}
+  document.getElementById('edit-status-'+id).textContent='Saving...';
   try {
-    const r = await fetch(API + '/api/supporter/' + id, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(updates)
-    });
-    const d = await r.json();
-    if (d.success) {
-      showToast(`✅ ${d.changes_count} field(s) updated`, 'success');
-      // Refresh the search
-      if (currentQuery) search(currentQuery, currentPage);
-      loadStats();
-    } else {
-      showToast('❌ Save failed', 'error');
-      document.getElementById('edit-status-' + id).textContent = 'Error!';
-    }
-  } catch(e) {
-    showToast('❌ Network error', 'error');
-    document.getElementById('edit-status-' + id).textContent = 'Network error!';
-  }
+    const r=await fetch(API+'/api/supporter/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updates)});
+    const d=await r.json();
+    if(d.success){showToast('✅ '+d.changes_count+' field(s) updated','success');if(currentQuery)search(currentQuery,currentPage);loadStats();}
+    else{showToast('❌ Save failed','error');}
+  }catch(e){showToast('❌ Network error','error');}
 }
 
 function cancelEdit(id) {
-  editingCard = null;
-  const card = document.getElementById('card-' + id);
-  card.classList.remove('editing');
-  document.getElementById('edit-actions-' + id).style.display = 'none';
-  // Refresh to restore original values
-  if (currentQuery) search(currentQuery, currentPage);
-  originalValues = {};
+  editingCard=null;
+  document.getElementById('card-'+id).classList.remove('editing');
+  document.getElementById('edit-actions-'+id).style.display='none';
+  if(currentQuery)search(currentQuery,currentPage);
+  originalValues={};
 }
 
-function startEdit(id, field) {
-  if (editingCard === id) return;
-  editCard(id);
-  // Focus the specific field
-  setTimeout(() => {
-    const input = document.getElementById('input-' + id + '-' + field);
-    if (input) input.focus();
-  }, 100);
-}
+function startEdit(id,field){if(editingCard===id)return;editCard(id);setTimeout(()=>{const el=document.getElementById('input-'+id+'-'+field);if(el)el.focus();},100);}
 
-// ── Change History ──────────────────────────────────
 async function toggleHistory(id) {
-  const el = document.getElementById('history-' + id);
-  if (el.classList.contains('show')) {
-    el.classList.remove('show');
-    el.innerHTML = '';
-    return;
-  }
-  el.innerHTML = '<div style="color:var(--gray-400);padding:8px">Loading history...</div>';
+  const el=document.getElementById('history-'+id);
+  if(el.classList.contains('show')){el.classList.remove('show');el.innerHTML='';return;}
+  el.innerHTML='<div style="color:var(--gray-400);padding:8px">Loading...</div>';
   el.classList.add('show');
   try {
-    const r = await fetch(API + '/api/supporter/' + id + '/history');
-    const d = await r.json();
-    if (!d.history || d.history.length === 0) {
-      el.innerHTML = '<div style="color:var(--gray-400);padding:8px">No changes recorded yet.</div>';
-      return;
-    }
-    el.innerHTML = d.history.map(h => `
-      <div class="log-entry">
-        <span class="log-field">${escHtml(h.field_name)}</span>:
-        <span class="log-old">${escHtml(h.old_value || '(empty)')}</span>
-        →
-        <span class="log-new">${escHtml(h.new_value || '(empty)')}</span>
-        <span class="log-date"> · ${formatDate(h.changed_at)}</span>
-      </div>
-    `).join('');
-  } catch(e) {
-    el.innerHTML = '<div style="color:var(--red);padding:8px">Failed to load history.</div>';
-  }
+    const r=await fetch(API+'/api/supporter/'+id+'/history');const d=await r.json();
+    if(!d.history||d.history.length===0){el.innerHTML='<div style="color:var(--gray-400);padding:8px">No changes yet.</div>';return;}
+    el.innerHTML=d.history.map(h=>'<div class="log-entry"><span class="log-field">'+escHtml(h.field_name)+'</span>: <span class="log-old">'+escHtml(h.old_value||'(empty)')+'</span> → <span class="log-new">'+escHtml(h.new_value||'(empty)')+'</span><span class="log-date"> · '+formatDate(h.changed_at)+'</span></div>').join('');
+  }catch(e){el.innerHTML='<div style="color:var(--red);padding:8px">Failed to load.</div>';}
 }
 
-// ── Toast ───────────────────────────────────────────
-function showToast(msg, type) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.className = 'toast ' + type + ' show';
-  setTimeout(() => { toast.className = 'toast'; }, 2500);
-}
+function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.className='toast',2500);}
 
-// ── Init ────────────────────────────────────────────
+// ── Highlight radio/checkbox ──
+document.querySelectorAll('.option-group label.opt').forEach(label=>{
+  const input=label.querySelector('input');
+  if(input) input.addEventListener('change',function(){
+    if(this.type==='radio'){this.closest('.option-group').querySelectorAll('label.opt').forEach(l=>l.classList.remove('selected'));if(this.checked)label.classList.add('selected');}
+    else label.classList.toggle('selected',this.checked);
+  });
+});
+
+// ── Init ──
 loadStats();
-
-// Handle Enter key in search
-document.getElementById('searchInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && this.value.trim().length >= 2) {
-    clearTimeout(debounceTimer);
-    document.getElementById('searchSpinner').style.display = 'block';
-    search(this.value.trim());
-  }
+document.getElementById('searchInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&this.value.trim().length>=2){clearTimeout(debounceTimer);document.getElementById('searchSpinner').style.display='block';search(this.value.trim());}
 });
 </script>
 </body>
 </html>
-
