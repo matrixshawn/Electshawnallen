@@ -153,19 +153,29 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
     </div>
     <div class="survey-form" id="surveyForm">
       <h2>📋 Ward 25 Survey</h2>
-      <p class="instruction">Fill this out as you speak with the resident.</p>
+      <p class="instruction">Fill this out as you speak with the resident. Address is editable if incorrect.</p>
 
       <form id="form" onsubmit="return submitSurvey(event)">
+        <!-- Address - editable with Canada Post lookup -->
+        <div class="form-group address-lookup">
+          <label>📍 Address <span style="color:var(--red)">*</span> <span style="font-weight:400;font-size:0.8em;color:var(--gray-400)">(edit if wrong)</span></label>
+          <div style="position:relative">
+            <input type="text" id="surveyAddress" required autocomplete="shipping street-address" placeholder="123 Main St, Toronto, ON">
+            <div class="spinner" id="addrSpinner" style="display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border:2px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.6s linear infinite"></div>
+          </div>
+          <div class="suggestions" id="addrSuggestions" style="position:absolute;background:white;border:1px solid var(--gray-200);border-radius:0 0 8px 8px;max-height:180px;overflow-y:auto;z-index:50;display:none;width:calc(100% - 48px)"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="flex:1.5"><label>👤 Name</label><input type="text" id="voterName" placeholder="Auto-filled from database"></div>
+          <div class="form-group"><label>📞 Phone</label><input type="tel" id="voterPhone" placeholder="Auto-filled"></div>
+          <div class="form-group"><label>✉️ Email</label><input type="email" id="voterEmail" placeholder="Auto-filled"></div>
+        </div>
+
         <div class="ev-row">
           <label>👥 Eligible voters (18+):</label>
           <input type="number" id="eligibleVoters" name="eligible_voters" placeholder="—" min="0" max="20" value="">
           <span style="font-size:0.8em;color:var(--gray-400)">Leave blank if unknown</span>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group" style="flex:1.5"><label>Name</label><input type="text" id="voterName" placeholder="Full name"></div>
-          <div class="form-group"><label>Phone</label><input type="tel" id="voterPhone" placeholder="647-555-XXXX"></div>
-          <div class="form-group"><label>Email</label><input type="email" id="voterEmail" placeholder="name@email.com"></div>
         </div>
 
         <div class="form-group"><label><span class="q-num">1</span>How long in Ward 25?</label>
@@ -426,6 +436,7 @@ function openSurvey(id, addr) {
   document.getElementById('voterName').value = getName('full_name');
   document.getElementById('voterPhone').value = getName('phone');
   document.getElementById('voterEmail').value = getName('email');
+  document.getElementById('surveyAddress').value = addr;
   document.getElementById('surveyAddrPreview').textContent = addr;
   document.getElementById('surveySection').classList.add('active');
   document.getElementById('surveySection').scrollIntoView({behavior:'smooth'});
@@ -491,8 +502,10 @@ async function addSupporter(query) {
 // ── Survey Submit ──
 async function submitSurvey(e) {
   e.preventDefault();
-  const addr = document.getElementById('surveyAddrPreview').textContent;
-  if (!addr) { alert('Select a supporter first.'); return; }
+  const addr = document.getElementById('surveyAddress').value.trim();
+  if (!addr) { alert('Address is required.'); return; }
+  // Update the header preview to match
+  document.getElementById('surveyAddrPreview').textContent = addr;
   const btn = document.getElementById('submitBtn');
   btn.disabled=true; btn.textContent='Saving...';
   const data = {
@@ -628,6 +641,42 @@ async function toggleHistory(id) {
 }
 
 function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.className='toast',2500);}
+
+// ── Canada Post Address Lookup (survey address field) ──
+var addrLookupTimer;
+var surveyAddrInput = document.getElementById('surveyAddress');
+var addrSuggestions = document.getElementById('addrSuggestions');
+var addrSpinner = document.getElementById('addrSpinner');
+
+surveyAddrInput.addEventListener('input', function() {
+  clearTimeout(addrLookupTimer);
+  var val = this.value.trim();
+  if (val.length < 3) { addrSuggestions.style.display='none'; addrSuggestions.innerHTML=''; return; }
+  addrSpinner.style.display='block';
+  addrLookupTimer = setTimeout(function() {
+    fetch('https://geocoder.ca/?suggest=' + encodeURIComponent(val) + '&thoroughfare=1&geoit=json&limit=5')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        addrSpinner.style.display='none';
+        if (data && data.suggestions && data.suggestions.length > 0) {
+          addrSuggestions.innerHTML = data.suggestions.map(function(s) {
+            var addr = (s.streetAddress||'') + ', ' + (s.localityName||'') + (s.postalCode?' ' + s.postalCode:'');
+            return '<div onclick="selectSurveyAddress(\'' + addr.replace(/'/g,"\\'") + '\')" style="padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--gray-100);font-size:0.85em">' + addr + '</div>';
+          }).join('');
+          addrSuggestions.style.display='block';
+        } else { addrSuggestions.style.display='none'; }
+      }).catch(function() { addrSpinner.style.display='none'; addrSuggestions.style.display='none'; });
+  }, 300);
+});
+
+function selectSurveyAddress(val) {
+  surveyAddrInput.value = val;
+  addrSuggestions.style.display='none';
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.address-lookup')) { addrSuggestions.style.display='none'; }
+});
 
 // ── Highlight radio/checkbox ──
 document.querySelectorAll('.option-group label.opt').forEach(label=>{
