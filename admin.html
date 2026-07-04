@@ -68,6 +68,14 @@ tr:hover{background:var(--gray-50)}
 .clickable-row:hover{background:#fef2f2 !important}
 .btn-download{padding:10px 20px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
 .btn-download:hover{opacity:0.9}
+/* Quick Export chips */
+.btn-export-chip{padding:4px 12px;border-radius:20px;border:1.5px solid var(--gray-200);background:white;font-size:0.72em;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;color:var(--gray-700);white-space:nowrap}
+.btn-export-chip:hover{opacity:0.85;transform:translateY(-1px)}
+.btn-export-chip.neutral{background:var(--gray-100);border-color:var(--gray-300);color:var(--gray-700)}
+.btn-export-chip.nonsupporter{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.btn-export-chip.sign{background:#fef3c7;border-color:#fde68a;color:#92400e}
+.btn-export-chip.sign-done{background:#dcfce7;border-color:#bbf7d0;color:#166534}
+.btn-export-chip.current{background:var(--blue);border-color:var(--blue);color:white}
 /* Add user form */
 .add-user-form{display:flex;gap:8px;padding:14px;align-items:flex-end;flex-wrap:wrap;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
 .add-user-form input,.add-user-form select{padding:8px 12px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.85em;font-family:inherit}
@@ -158,6 +166,15 @@ tr:hover{background:var(--gray-50)}
           <option value="completed">Signs Done</option>
         </select>
         <button onclick="adminSearch()" style="padding:10px 20px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Search</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center">
+        <span style="font-size:0.75em;color:var(--gray-400);font-weight:600;margin-right:4px">📥 Quick Export:</span>
+        <button class="btn-export-chip" onclick="adminExportFilter('supporter')" title="Download all Supporters CSV">✅ Supporters</button>
+        <button class="btn-export-chip neutral" onclick="adminExportFilter('neutral')" title="Download all Neutral CSV">😐 Neutral</button>
+        <button class="btn-export-chip nonsupporter" onclick="adminExportFilter('non-supporter')" title="Download all Non-Supporters CSV">❌ Non-Supporters</button>
+        <button class="btn-export-chip sign" onclick="adminExportFilter('pending')" title="Download all Signs Pending CSV">🪧 Signs Pending</button>
+        <button class="btn-export-chip sign-done" onclick="adminExportFilter('completed')" title="Download all Signs Done CSV">✅ Signs Done</button>
+        <button class="btn-export-chip current" onclick="adminExportCurrent()" title="Download current search results CSV">📋 Current View</button>
       </div>
     </div>
     <div class="table-wrap table-scroll" style="margin-bottom:24px">
@@ -546,6 +563,44 @@ async function adminSearch() {
   } catch(e) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--red);padding:16px">Search failed</td></tr>';
   }
+}
+
+// ── Quick Export functions ──
+async function adminExportFilter(type) {
+  var url = '/api/search/export?q=';
+  if (type === 'supporter') url += '&support_level=Supporter';
+  else if (type === 'neutral') url += '&support_level=Neutral';
+  else if (type === 'non-supporter') url += '&support_level=Non-Supporter';
+  else if (type === 'pending') url += '&sign_request=Pending';
+  else if (type === 'completed') url += '&sign_request=Completed';
+
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'ward25_' + type + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+async function adminExportCurrent() {
+  var q = document.getElementById('adminSearchInput').value.trim();
+  var filter = document.getElementById('adminSearchFilter').value;
+  var url = '/api/search/export?q=' + encodeURIComponent(q);
+  if (filter === 'supporter' || filter === 'neutral' || filter === 'non-supporter') {
+    var sl = filter === 'non-supporter' ? 'Non-Supporter' : filter.charAt(0).toUpperCase() + filter.slice(1);
+    url += '&support_level=' + encodeURIComponent(sl);
+  } else if (filter === 'pending') {
+    url += '&sign_request=Pending';
+  } else if (filter === 'completed') {
+    url += '&sign_request=Completed';
+  }
+
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'ward25_search_export.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 var adminEditCache = {};
