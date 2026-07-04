@@ -772,7 +772,7 @@ function resetSurvey() {
 
 // ── Editing (same as before) ──
 const EDITABLE_FIELDS=['phone','email','full_name','first_name','last_name','street_number','street','city','postal_code','support_level','notes','sign_request','candidate_conversation_request','apartment','poll'];
-const FIELD_INPUTS={'support_level':{type:'select',options:['Supporter','Neutral','Non-Supporter','Unknown','Survey Refused']},'sign_request':{type:'select',options:['','Completed','Declined','Not Requested','Pending']},'candidate_conversation_request':{type:'select',options:['','Completed','Declined','Not Requested','Pending']},'notes':{type:'textarea'}};
+const FIELD_INPUTS={'support_level':{type:'select',options:['Supporter','Neutral','Non-Supporter','Unknown','Survey Refused']},'sign_request':{type:'select',options:['','Requested','Declined']},'candidate_conversation_request':{type:'select',options:['','Requested','Declined']},'notes':{type:'textarea'}};
 let originalValues={};
 
 function editCard(id) {

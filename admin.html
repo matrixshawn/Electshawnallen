@@ -124,7 +124,7 @@ tr:hover{background:var(--gray-50)}
           <option value="supporter">Supporters</option>
           <option value="neutral">Neutral</option>
           <option value="non-supporter">Non-Supporters</option>
-          <option value="pending">Signs Pending</option>
+          <option value="pending">Signs Requested</option>
           <option value="completed">Signs Done</option>
         </select>
         <button onclick="adminSearch()" style="padding:10px 20px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Search</button>
@@ -134,7 +134,7 @@ tr:hover{background:var(--gray-50)}
         <button class="btn-export-chip" onclick="adminExportFilter('supporter')" title="Download all Supporters CSV">✅ Supporters</button>
         <button class="btn-export-chip neutral" onclick="adminExportFilter('neutral')" title="Download all Neutral CSV">😐 Neutral</button>
         <button class="btn-export-chip nonsupporter" onclick="adminExportFilter('non-supporter')" title="Download all Non-Supporters CSV">❌ Non-Supporters</button>
-        <button class="btn-export-chip sign" onclick="adminExportFilter('pending')" title="Download all Signs Pending CSV">🪧 Signs Pending</button>
+        <button class="btn-export-chip sign" onclick="adminExportFilter('pending')" title="Download all Signs Requested CSV">🪧 Requested</button>
         <button class="btn-export-chip sign-done" onclick="adminExportFilter('completed')" title="Download all Signs Done CSV">✅ Signs Done</button>
         <button class="btn-export-chip current" onclick="adminExportCurrent()" title="Download current search results CSV">📋 Current View</button>
       </div>
@@ -193,7 +193,7 @@ tr:hover{background:var(--gray-50)}
       <div class="stat-card green"><div class="label">Supporters</div><div class="value" id="team-supporters">—</div></div>
       <div class="stat-card"><div class="label">Survey Refused</div><div class="value" id="team-refused">—</div></div>
       <div class="stat-card"><div class="label">Signs Completed</div><div class="value" id="team-signs">—</div></div>
-      <div class="stat-card amber"><div class="label">Signs Pending</div><div class="value" id="team-signs-pending">—</div></div>
+      <div class="stat-card amber"><div class="label">Signs Requested</div><div class="value" id="team-signs-pending">—</div></div>
       <div class="stat-card"><div class="label">Touched Today</div><div class="value" id="team-touched">—</div></div>
     </div>
     <div class="table-wrap" style="margin-bottom:12px">
@@ -586,7 +586,7 @@ async function adminSearch() {
 // ── Quick Export functions ──
 async function adminExportFilter(type) {
   var counts = window._exportCounts || {};
-  var labelMap = { supporter: 'Supporters', neutral: 'Neutral', 'non-supporter': 'Non-Supporters', pending: 'Signs Pending', completed: 'Signs Done' };
+  var labelMap = { supporter: 'Supporters', neutral: 'Neutral', 'non-supporter': 'Non-Supporters', pending: 'Signs Requested', completed: 'Signs Done' };
   var label = labelMap[type] || type;
   var cnt = counts[type] || 0;
   var cntStr = cnt > 0 ? cnt.toLocaleString() : '';
@@ -632,7 +632,7 @@ async function adminExportCurrent() {
     label = sl;
   } else if (filter === 'pending') {
     url += '&sign_request=Pending';
-    label = 'Signs Pending';
+    label = 'Signs Requested';
   } else if (filter === 'completed') {
     url += '&sign_request=Completed';
     label = 'Signs Done';
@@ -677,7 +677,7 @@ function adminEditRow(id) {
     document.getElementById('ar-'+id+'-addr').innerHTML = '<input type="text" id="ein-'+id+'-addr" value="'+esc(addr)+'" style="width:100%;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><input type="text" id="ein-'+id+'-apt" value="'+esc(s.apartment||'')+'" placeholder="Apt" style="width:60px;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em;margin-left:4px">';
     document.getElementById('ar-'+id+'-phone').innerHTML = '<input type="text" id="ein-'+id+'-phone" value="'+esc(s.phone||'')+'" style="width:100%;padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em">';
     document.getElementById('ar-'+id+'-level').innerHTML = '<select id="ein-'+id+'-level" style="padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><option value="">—</option><option value="Supporter"'+(s.support_level==='Supporter'?' selected':'')+'>Supporter</option><option value="Neutral"'+(s.support_level==='Neutral'?' selected':'')+'>Neutral</option><option value="Non-Supporter"'+(s.support_level==='Non-Supporter'?' selected':'')+'>Non-Supporter</option><option value="Unknown"'+(s.support_level==='Unknown'?' selected':'')+'>Unknown</option><option value="Survey Refused"'+(s.support_level==='Survey Refused'?' selected':'')+'>Survey Refused</option></select>';
-    document.getElementById('ar-'+id+'-sign').innerHTML = '<select id="ein-'+id+'-sign" style="padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><option value="">—</option><option value="Completed"'+(s.sign_request==='Completed'?' selected':'')+'>Completed</option><option value="Pending"'+(s.sign_request==='Pending'?' selected':'')+'>Pending</option><option value="Declined"'+(s.sign_request==='Declined'?' selected':'')+'>Declined</option><option value="Not Requested"'+(s.sign_request==='Not Requested'?' selected':'')+'>Not Requested</option></select>';
+    document.getElementById('ar-'+id+'-sign').innerHTML = '<select id="ein-'+id+'-sign" style="padding:4px;border:1px solid var(--gray-200);border-radius:4px;font-size:0.85em"><option value="">—</option><option value="Requested"'+(s.sign_request==='Requested'?' selected':'')+'>Requested</option><option value="Declined"'+(s.sign_request==='Declined'?' selected':'')+'>Declined</option></select>';
     document.getElementById('ar-'+id+'-actions').innerHTML = '<button class="btn-sm" onclick="adminSaveRow('+id+')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0">💾</button> <button class="btn-sm danger" onclick="adminCancelRow('+id+')">✕</button>';
   });
 }
