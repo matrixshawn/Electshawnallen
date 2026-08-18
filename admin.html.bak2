@@ -110,77 +110,6 @@ tr:hover{background:var(--gray-50)}
 .poll-badge-blue{background:#2563eb;color:white}
 .poll-badge-orange{background:#ea580c;color:white}
 .poll-badge-purple{background:#7c3aed;color:white}
-/* ── Advance Voters: mobile-friendly card layout ── */
-@media (max-width: 900px){
-  /* ── Advance Voters: card layout ── */
-  #advanceSection .table-scroll{overflow:visible}
-  #advanceSection table{min-width:0 !important;width:100%;border-collapse:separate;border-spacing:0 8px}
-  #advanceSection thead{display:none}
-  #advanceSection tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;background:white;border:2px solid var(--gray-200);border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
-  #advanceSection tbody tr td{display:inline-flex;align-items:center;border:none;padding:2px 0;font-size:0.95em}
-  #advanceSection tbody tr td:first-child{position:static;display:none;background:transparent;box-shadow:none}
-  #advanceSection tbody tr td::before{content:none}
-  #advanceSection tbody tr td[data-label="POLL"]{order:0}
-  #advanceSection tbody tr td[data-label="NAME"]{order:1;flex:1 1 100%;font-size:1.05em}
-  #advanceSection tbody tr td[data-label="ADDRESS"]{order:2;color:var(--gray-600)}
-  #advanceSection tbody tr td[data-label="POSTAL"]{order:2;color:var(--gray-500)}
-  #advanceSection tbody tr td[data-label="POSTAL"]::before{content:' · ';color:var(--gray-400)}
-  #advanceSection tbody tr td[data-label="RESULT"]{order:3;margin-left:auto}
-  #advanceSection tbody tr td.loading{display:block;text-align:center;color:var(--gray-400);width:100%;padding:14px;font-size:0.9em}
-
-  /* ── Supporters: card layout (like Advance Voters) ── */
-  #supportersSection .table-scroll{overflow:visible}
-  #supportersSection table{min-width:0 !important;width:100%;border-collapse:separate;border-spacing:0 8px}
-  #supportersSection thead{display:none}
-  #supportersSection tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;background:white;border:2px solid var(--gray-200);border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
-  #supportersSection tbody tr td{display:inline-flex;align-items:center;border:none;padding:2px 0;font-size:0.95em}
-  #supportersSection tbody tr td:first-child{position:static;display:none;background:transparent;box-shadow:none}
-  #supportersSection tbody tr td::before{content:none}
-  #supportersSection tbody tr td[data-label="POLL"]{order:0}
-  #supportersSection tbody tr td[data-label="NAME"]{order:1;flex:1 1 100%;font-size:1.05em}
-  #supportersSection tbody tr td[data-label="ADDRESS"]{order:2;color:var(--gray-600)}
-  #supportersSection tbody tr td[data-label="POSTAL"]{order:2;color:var(--gray-500)}
-  #supportersSection tbody tr td[data-label="POSTAL"]::before{content:' · ';color:var(--gray-400)}
-  #supportersSection tbody tr td[data-label="RESULT"]{order:3;margin-left:auto}
-  #supportersSection tbody tr td[data-label="LEVEL"]{order:4;color:var(--gray-700)}
-  #supportersSection tbody tr td[data-label="SIGN"]{order:5;color:var(--gray-600);font-size:0.85em}
-  #supportersSection tbody tr td.loading{display:block;text-align:center;color:var(--gray-400);width:100%;padding:14px;font-size:0.9em}
-
-  /* ── Conservative Voters: card layout (like Advance Voters) ── */
-  #conservativeSection .table-scroll{overflow:visible}
-  #conservativeSection table{min-width:0 !important;width:100%;border-collapse:separate;border-spacing:0 8px}
-  #conservativeSection thead{display:none}
-  #conservativeSection tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;background:white;border:2px solid var(--gray-200);border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
-  #conservativeSection tbody tr td{display:inline-flex;align-items:center;border:none;padding:2px 0;font-size:0.95em}
-  #conservativeSection tbody tr td:first-child{position:static;display:none;background:transparent;box-shadow:none}
-  #conservativeSection tbody tr td::before{content:none}
-  #conservativeSection tbody tr td[data-label="POLL"]{order:0}
-  #conservativeSection tbody tr td[data-label="NAME"]{order:1;flex:1 1 100%;font-size:1.05em}
-  #conservativeSection tbody tr td[data-label="ADDRESS"]{order:2;color:var(--gray-600)}
-  #conservativeSection tbody tr td[data-label="POSTAL"]{order:2;color:var(--gray-500)}
-  #conservativeSection tbody tr td[data-label="POSTAL"]::before{content:' · ';color:var(--gray-400)}
-  #conservativeSection tbody tr td[data-label="RESULT"]{order:3;margin-left:auto}
-  #conservativeSection tbody tr td[data-label="SUPPORT"]{order:4;color:var(--gray-700)}
-  #conservativeSection tbody tr td.loading{display:block;text-align:center;color:var(--gray-400);width:100%;padding:14px;font-size:0.9em}
-
-  /* ── SMS Outbox: card layout (matches rendered data-labels) ── */
-  #smsOutboxPanel .table-scroll{overflow-y:auto !important}
-  #smsOutboxPanel table{min-width:0 !important;width:100% !important;border-collapse:separate !important;border-spacing:0 8px !important}
-  #smsOutboxPanel thead{display:none !important}
-  #smsOutboxPanel tbody tr{display:flex !important;flex-wrap:wrap !important;align-items:flex-start !important;gap:2px 8px !important;background:white !important;border:2px solid var(--gray-200) !important;border-radius:12px !important;padding:10px 12px !important;margin-bottom:8px !important;box-shadow:0 1px 4px rgba(0,0,0,0.05) !important}
-  #smsOutboxPanel tbody tr td{display:inline-flex !important;align-items:center !important;border:none !important;padding:2px 0 !important;font-size:0.95em !important}
-  #smsOutboxPanel tbody tr td:first-child{display:inline-flex !important;background:transparent !important;box-shadow:none !important}
-  #smsOutboxPanel tbody tr td::before{content:none !important}
-  #smsOutboxPanel tbody tr td[data-label="PHONE"]{order:0 !important;font-family:monospace;font-size:0.9em !important;color:var(--gray-600)}
-  #smsOutboxPanel tbody tr td[data-label="NAME"]{order:1 !important;flex:1 1 100% !important;display:block !important;font-size:1.05em !important;line-height:1.45}
-  #smsOutboxPanel tbody tr td[data-label="NAME"] .poll-badge{margin-left:4px}
-  #smsOutboxPanel tbody tr td[data-label="MESSAGE"]{order:3 !important;flex:1 1 100% !important;color:var(--gray-600) !important;font-size:0.85em !important;white-space:normal !important;word-break:break-word !important;max-width:100% !important;line-height:1.4}
-  #smsOutboxPanel tbody tr td[data-label="SEGMENTS"]{display:none !important}
-  #smsOutboxPanel tbody tr td[data-label="STATUS"]{order:2 !important;margin-left:auto !important}
-  #smsOutboxPanel tbody tr td[data-label="SENT"]{order:4 !important;color:var(--gray-500) !important;font-size:0.8em !important}
-  #smsOutboxPanel tbody tr td[data-label="ERROR"]{order:5 !important;flex:1 1 100% !important;color:var(--red) !important;font-size:0.75em !important}
-  #smsOutboxPanel tbody tr td.loading{display:block !important;text-align:center !important;color:var(--gray-400) !important;width:100% !important;padding:14px !important;font-size:0.9em !important}
-}
 /* Add user form */
 .add-user-form{display:flex;gap:8px;padding:14px;align-items:flex-end;flex-wrap:wrap;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
 .add-user-form input,.add-user-form select{padding:8px 12px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.85em;font-family:inherit}
@@ -290,8 +219,8 @@ tr:hover{background:var(--gray-50)}
       </div>
     </div>
     <div id="adminSearchTableWrap" class="table-wrap table-scroll" style="margin-bottom:24px">
-      <table id="adminSearchTable"><thead><tr><th>Name</th><th>Address</th><th>Phone</th><th>Email</th><th>Poll</th><th>Support</th><th>Result</th><th>Sign</th><th>Notes</th><th>Updated</th><th></th></tr></thead>
-      <tbody id="adminSearchResults"><tr><td colspan="11" style="text-align:center;color:var(--gray-400);padding:20px">Type a query above to search</td></tr></tbody></table>
+      <table id="adminSearchTable"><thead><tr><th>Name</th><th>Address</th><th>Phone</th><th>Email</th><th>Poll</th><th>Support</th><th>Sign</th><th>Notes</th><th>Updated</th><th></th></tr></thead>
+      <tbody id="adminSearchResults"><tr><td colspan="10" style="text-align:center;color:var(--gray-400);padding:20px">Type a query above to search</td></tr></tbody></table>
     </div>
 
     <!-- Record detail pane (opens when clicking a name) -->
@@ -323,63 +252,6 @@ tr:hover{background:var(--gray-50)}
           <tbody id="tasksBody">
             <tr><td colspan="9" class="loading">Loading tasks...</td></tr>
           </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 📱 SMS Outbox -->
-    <div class="section-title" style="cursor:pointer;user-select:none" onclick="adminToggleSmsOutbox()" id="smsOutboxSectionTitle">📱 SMS Outbox <span id="smsOutboxCount" style="font-size:0.6em;color:var(--gray-400);font-weight:normal"></span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span></div>
-    <div id="smsOutboxPanel" style="display:none;margin-bottom:24px">
-      <div style="display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap">
-        <button class="chart-toggle active" id="smsTabAll" onclick="adminLoadSmsOutbox('all')">📱 All</button>
-        <button class="chart-toggle" id="smsTabSent" onclick="adminLoadSmsOutbox('sent')">✅ Sent</button>
-        <button class="chart-toggle" id="smsTabFailed" onclick="adminLoadSmsOutbox('failed')">❌ Failed</button>
-      </div>
-      <div id="smsOutboxList" class="table-wrap table-scroll" style="max-height:600px">
-        <table style="font-size:0.82em">
-          <thead>
-            <tr>
-              <th>Phone</th>
-              <th>Supporter</th>
-              <th>Message</th>
-              <th>Segments</th>
-              <th>Status</th>
-              <th>Sent At</th>
-              <th>Error</th>
-            </tr>
-          </thead>
-          <tbody id="smsOutboxBody">
-            <tr><td colspan="7" class="loading">Loading...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 🌐 Keep Taxes Down Website Submissions -->
-    <div class="section-title" style="cursor:pointer;user-select:none" onclick="adminToggleWebSubmissions()" id="webSubmissionsSectionTitle">🌐 Keep Taxes Down Submissions <span id="webSubmissionsCount" style="font-size:0.6em;color:var(--gray-400);font-weight:normal"></span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span></div>
-    <div id="webSubmissionsPanel" style="display:none;margin-bottom:24px">
-      <div class="stats-grid" style="margin-bottom:12px">
-        <div class="stat-card"><div class="label">All Website Leads</div><div class="value" id="webCountAll">—</div></div>
-        <div class="stat-card green"><div class="label">Petition Signatures</div><div class="value" id="webCountPetition">—</div></div>
-        <div class="stat-card amber"><div class="label">Pocketbook / Town Hall</div><div class="value" id="webCountPocketbook">—</div></div>
-      </div>
-      <div style="display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap">
-        <button class="chart-toggle active" id="webTabAll" onclick="adminLoadWebSubmissions('all')">All</button>
-        <button class="chart-toggle" id="webTabPetition" onclick="adminLoadWebSubmissions('petition')">✍️ Petition</button>
-        <button class="chart-toggle" id="webTabPocketbook" onclick="adminLoadWebSubmissions('pocketbook')">📋 Pocketbook / Town Hall</button>
-        <button onclick="adminLoadWebSubmissions(_webSubmissionSource)" style="padding:6px 16px;background:var(--blue);color:white;border:none;border-radius:6px;font-size:0.82em;cursor:pointer;font-weight:600">🔄 Refresh</button>
-        <button onclick="adminExportWebSubmissions()" style="padding:6px 16px;background:var(--green);color:white;border:none;border-radius:6px;font-size:0.82em;cursor:pointer;font-weight:600">📥 Download CSV</button>
-        <span id="webSubmissionsTotal" style="font-size:0.78em;color:var(--gray-400)"></span>
-      </div>
-      <div class="table-wrap table-scroll" style="max-height:520px;overflow:auto">
-        <table style="min-width:1700px;font-size:0.8em">
-          <thead><tr>
-            <th style="position:sticky;left:0;background:var(--gray-100);z-index:4">Source</th>
-            <th>Name</th><th>Email</th><th>Phone</th><th>Address / Postal</th><th>Top Concern</th>
-            <th>Registered</th><th>Pledge</th><th>Town Hall</th><th>Volunteer</th><th>Lawn Sign</th>
-            <th>Email Consent</th><th>SMS Consent</th><th>Submitted</th>
-          </tr></thead>
-          <tbody id="webSubmissionsBody"><tr><td colspan="14" class="loading">Open to load website submissions...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -433,195 +305,10 @@ tr:hover{background:var(--gray-50)}
       </div>
     </div>
 
-    <!-- 🔎 Street Search (walk the street — pull every supporter on it) -->
-    <div class="section-title" style="cursor:pointer;user-select:none;margin-top:24px" onclick="toggleStreetSearch()" id="streetSearchTitle">
-      🔎 Street Search <span style="font-size:0.6em;color:var(--gray-400);font-weight:normal">find everyone on a street</span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span>
-    </div>
-    <div id="streetSearchSection" style="display:none">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
-        <input type="text" id="streetSearchInput" placeholder="🔍 Type a street (e.g. ROUGE HILLS DR)…" oninput="streetSearchDebounced()" style="flex:1;min-width:200px;padding:10px 12px;border:2px solid var(--blue);border-radius:8px;font-size:0.9em;font-family:inherit">
-        <button onclick="streetSearchRun()" style="padding:10px 18px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:0.9em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Search</button>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-        <span style="font-size:0.78em;color:var(--gray-500)">Search:</span>
-        <label style="font-size:0.8em;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px"><input type="checkbox" id="ssAdvance" checked> 🗳️ Advance</label>
-        <label style="font-size:0.8em;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px"><input type="checkbox" id="ssSupporters" checked> 👥 Supporters</label>
-        <label style="font-size:0.8em;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px"><input type="checkbox" id="ssConservative" checked> 🔵 Conservative</label>
-        <span id="streetSearchStatus" style="font-size:0.78em;color:var(--gray-400);margin-left:auto"></span>
-      </div>
-      <div id="streetSearchResults" style="display:flex;flex-direction:column;gap:14px"></div>
-      <div id="streetSearchDetailPane" style="display:none;margin-bottom:12px"></div>
-    </div>
-
-    <!-- 🗳️ Advance Voters (Sep 20, 2025 report) -->
-    <div class="section-title" style="cursor:pointer;user-select:none;margin-top:24px" onclick="toggleAdvanceSection()" id="advanceSectionTitle">
-      🗳️ Advance Voters <span id="advanceSummary" style="font-size:0.6em;color:var(--gray-400);font-weight:normal"></span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span>
-    </div>
-    <div id="advanceSection" style="display:none">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-        <select id="advPollFilter" onchange="advanceLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Polls</option>
-        </select>
-        <select id="advResultFilter" onchange="advanceLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Results</option>
-          <option value="Supporter">✅ Supporter</option>
-          <option value="Neutral">😐 Neutral</option>
-          <option value="Non-Supporter">❌ Non-Supporter</option>
-          <option value="No Answer">🚪 No Answer</option>
-          <option value="Moved">📦 Moved</option>
-          <option value="Refused">🚫 Refused</option>
-        </select>
-        <input type="text" id="advSearch" placeholder="🔍 Search name or address..." oninput="advanceLoad()" style="flex:1;min-width:180px;padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-        <button onclick="advanceLoad()" style="padding:8px 16px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Load</button>
-        <button onclick="advanceExport()" style="padding:8px 16px;background:#2563eb;color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">📥 Export CSV</button>
-      </div>
-      <div id="advanceDetailPane" style="display:none;margin-bottom:12px"></div>
-      <div class="table-wrap table-scroll" style="max-height:520px;overflow:auto">
-        <table style="min-width:820px;font-size:0.8em">
-          <thead>
-            <tr>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">#</th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">Poll</th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">Name</th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">Address</th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">Postal</th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4">Result</th>
-            </tr>
-          </thead>
-          <tbody id="advanceVotersList"><tr><td colspan="6" class="loading">Loading...</td></tr></tbody>
-        </table>
-      </div>
-      <div id="advancePagination" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 0 12px 0;font-size:0.82em">
-        <button id="btnAdvPrev" onclick="advancePrevPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">◀ Prev</button>
-        <span id="advPageInfo" style="color:var(--gray-700);font-weight:500">Page 1 of 1</span>
-        <button id="btnAdvNext" onclick="advanceNextPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">Next ▶</button>
-        <span id="advTotalInfo" style="font-size:0.78em;color:var(--gray-400);margin-left:8px"></span>
-      </div>
-    </div>
-
-    <!-- 🔵 Conservative Voters (uploaded list, Aug 12 2026) -->
-    <div class="section-title" style="cursor:pointer;user-select:none;margin-top:24px" onclick="toggleConservativeSection()" id="conservativeSectionTitle">
-      🔵 Conservative Voters <span id="conservativeSummary" style="font-size:0.6em;color:var(--gray-400);font-weight:normal"></span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span>
-    </div>
-    <div id="conservativeSection" style="display:none">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-        <select id="consPollFilter" onchange="conservativeLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Polls</option>
-        </select>
-        <select id="consResultFilter" onchange="conservativeLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Results</option>
-          <option value="Home">🏠 Home</option>
-          <option value="No Answer">🚪 No Answer</option>
-          <option value="Moved">📦 Moved</option>
-          <option value="Refused">🚫 Refused</option>
-        </select>
-        <select id="consLevelFilter" onchange="conservativeLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Support Levels</option>
-          <option value="Supporter">✅ Supporter</option>
-          <option value="Neutral">😐 Neutral</option>
-          <option value="Non-Supporter">❌ Non-Supporter</option>
-          <option value="UNKNOWN">❓ UNKNOWN</option>
-        </select>
-        <input type="text" id="consSearch" placeholder="🔍 Search name or address..." oninput="conservativeLoad()" style="flex:1;min-width:180px;padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-        <button onclick="conservativeLoad()" style="padding:8px 16px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Load</button>
-        <button onclick="conservativeExport()" style="padding:8px 16px;background:#2563eb;color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">📥 Export CSV</button>
-      </div>
-      <div id="conservativeDetailPane" style="display:none;margin-bottom:12px"></div>
-      <div class="table-wrap table-scroll" style="max-height:520px;overflow:auto">
-        <table style="min-width:820px;font-size:0.8em">
-          <thead>
-            <tr>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('id')"># <span id="consSortIcon-id" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('poll')">Poll <span id="consSortIcon-poll" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('full_name')">Name <span id="consSortIcon-full_name" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('street')">Address <span id="consSortIcon-street" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('postal_code')">Postal <span id="consSortIcon-postal_code" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('result')">Result <span id="consSortIcon-result" class="cons-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none" onclick="conservativeSort('support_level')">Support <span id="consSortIcon-support_level" class="cons-sort-icon"></span></th>
-            </tr>
-          </thead>
-          <tbody id="conservativeList"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody>
-        </table>
-      </div>
-      <div id="conservativePagination" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 0 12px 0;font-size:0.82em">
-        <button id="btnConsPrev" onclick="conservativePrevPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">◀ Prev</button>
-        <span id="consPageInfo" style="color:var(--gray-700);font-weight:500">Page 1 of 1</span>
-        <button id="btnConsNext" onclick="conservativeNextPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">Next ▶</button>
-        <span id="consTotalInfo" style="font-size:0.78em;color:var(--gray-400);margin-left:8px"></span>
-      </div>
-    </div>
-
-    <!-- 👥 Supporters (master list, same layout as Advance Voters) -->
-    <div class="section-title" style="cursor:pointer;user-select:none;margin-top:24px" onclick="toggleSupportersSection()" id="supportersSectionTitle">
-      👥 Supporters <span id="supportersSummary" style="font-size:0.6em;color:var(--gray-400);font-weight:normal"></span> <span style="font-size:0.7em;color:var(--gray-400)">▼</span>
-    </div>
-    <div id="supportersSection" style="display:none">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
-        <select id="supPollFilter" onchange="supportersLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Polls</option>
-        </select>
-        <select id="supLevelFilter" onchange="supportersLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Support Levels</option>
-          <option value="Supporter" selected>✅ Supporter</option>
-          <option value="Neutral">😐 Neutral</option>
-          <option value="Non-Supporter">❌ Non-Supporter</option>
-          <option value="UNKNOWN">❓ UNKNOWN</option>
-          <option value="Unknown">❓ Unknown</option>
-        </select>
-        <select id="supSignFilter" onchange="supportersLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Sign Requests</option>
-          <option value="Requested">📋 Requested</option>
-          <option value="Declined">🚫 Declined</option>
-        </select>
-        <select id="supResultFilter" onchange="supportersLoad()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-          <option value="">All Results</option>
-          <option value="Home">🏠 Home</option>
-          <option value="No Answer">🚪 No Answer</option>
-          <option value="Moved">📦 Moved</option>
-          <option value="Refused">🚫 Refused</option>
-        </select>
-        <input type="text" id="supSearch" placeholder="🔍 Search name, address or phone..." oninput="supportersLoad()" style="flex:1;min-width:180px;padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit">
-        <button onclick="supportersLoad()" style="padding:8px 16px;background:var(--red);color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">🔍 Load</button>
-        <button onclick="supportersExport()" style="padding:8px 16px;background:#2563eb;color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">📥 Export CSV</button>
-      </div>
-      <div id="supportersDetailPane" style="display:none;margin-bottom:12px"></div>
-      <div class="table-wrap table-scroll" style="max-height:520px;overflow:auto">
-        <table style="min-width:820px;font-size:0.8em">
-          <thead>
-            <tr>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('id')"># <span id="supSortIcon-id" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('poll')">Poll <span id="supSortIcon-poll" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('full_name')">Name <span id="supSortIcon-full_name" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('street')">Address <span id="supSortIcon-street" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('postal')">Postal <span id="supSortIcon-postal" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('result')">Result <span id="supSortIcon-result" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('support_level')">Support Level <span id="supSortIcon-support_level" class="sup-sort-icon"></span></th>
-              <th style="position:sticky;top:0;background:var(--gray-100);z-index:4;cursor:pointer;user-select:none;white-space:nowrap" onclick="supportersSort('sign_request')">Sign <span id="supSortIcon-sign_request" class="sup-sort-icon"></span></th>
-            </tr>
-          </thead>
-          <tbody id="supportersList"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody>
-        </table>
-      </div>
-      <div id="supportersPagination" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 0 12px 0;font-size:0.82em">
-        <button id="btnSupPrev" onclick="supportersPrevPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">◀ Prev</button>
-        <span id="supPageInfo" style="color:var(--gray-700);font-weight:500">Page 1 of 1</span>
-        <button id="btnSupNext" onclick="supportersNextPage()" style="padding:4px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-weight:600">Next ▶</button>
-        <span id="supTotalInfo" style="font-size:0.78em;color:var(--gray-400);margin-left:8px"></span>
-      </div>
-    </div>
-
     <div class="section-title" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
       <span>🕐 Changes</span>
       <button class="chart-toggle active" id="changesTabToday" onclick="loadChanges('today')">📋 Today</button>
       <button class="chart-toggle" id="changesTabArchive" onclick="loadChanges('archive')">🗄️ Archive</button>
-    </div>
-    <div id="changesFilterBar" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;padding:8px 0">
-      <input type="text" id="changesSearchInput" placeholder="🔍 Search by name, street, phone…" oninput="changesSearchChanged()" style="padding:7px 10px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.82em;font-family:inherit;min-width:200px;flex:1;max-width:280px">
-      <label style="font-size:0.78em;color:var(--gray-500)">From</label>
-      <input type="date" id="changesDateFrom" onchange="changesSearchChanged()" style="padding:6px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.82em;font-family:inherit">
-      <label style="font-size:0.78em;color:var(--gray-500)">To</label>
-      <input type="date" id="changesDateTo" onchange="changesSearchChanged()" style="padding:6px 8px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.82em;font-family:inherit">
-      <button onclick="changesClearFilters()" style="padding:6px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8em;font-weight:600">✕ Clear</button>
     </div>
     <div class="table-wrap table-scroll" style="max-height:500px;overflow:auto">
       <table style="min-width:700px;font-size:0.8em">
@@ -652,14 +339,13 @@ tr:hover{background:var(--gray-50)}
         <input type="text" id="newUsername" placeholder="Username">
         <input type="password" id="newPassword" placeholder="Password">
         <input type="text" id="newDisplayName" placeholder="Display name">
-        <input type="email" id="newUserEmail" placeholder="Recovery email">
         <select id="newRole"><option value="canvasser">Canvasser</option><option value="admin">Admin</option></select>
         <button onclick="createUser()">➕ Add User</button>
         <span id="userError" style="color:var(--red);font-size:0.8em;display:none"></span>
       </div>
       <div class="table-wrap table-scroll" style="border-radius:0 0 12px 12px">
-        <table><thead><tr><th>User</th><th>Role</th><th>Display Name</th><th>Recovery Email</th><th>Status</th><th>Created</th><th>Last Login</th><th>Actions</th></tr></thead>
-        <tbody id="usersList"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table>
+        <table><thead><tr><th>User</th><th>Role</th><th>Display Name</th><th>Status</th><th>Created</th><th>Last Login</th><th>Actions</th></tr></thead>
+        <tbody id="usersList"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
       </div>
     </div>
 
@@ -706,7 +392,6 @@ tr:hover{background:var(--gray-50)}
       <span style="font-weight:600;margin-right:4px">🎨 Poll Colors:</span>
       <span class="loading" style="font-size:0.85em">Loading...</span>
     </div>
-    <div id="adminElectionRankDetails" style="display:none;margin:0 0 14px;padding:12px;background:white;border:1px solid var(--gray-200);border-radius:10px;font-size:0.86em"></div>
 
     <!-- 🗳️ Poll Stats -->
     <div class="section-title" style="margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -788,17 +473,6 @@ tr:hover{background:var(--gray-50)}
       </div>
     </div>
 
-    <!-- Optimized Canvass Walks generated from route plan -->
-    <div class="section-title" style="margin-top:16px;font-size:0.9em;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span>🚶 Canvass Walks</span>
-      <span id="canvassWalksCount" style="font-size:0.75em;color:var(--gray-400);font-weight:normal"></span>
-      <button onclick="loadCanvassWalks()" style="padding:4px 10px;background:var(--blue);color:white;border:none;border-radius:6px;font-size:0.75em;cursor:pointer;font-weight:600">🔄 Refresh</button>
-    </div>
-    <div class="table-wrap table-scroll" style="margin-bottom:20px;max-height:420px;overflow:auto">
-      <table style="min-width:1080px;font-size:0.82em"><thead><tr><th>Walk</th><th>Schedule</th><th>Poll</th><th>Doors</th><th>Priority</th><th>Streets</th><th>Assigned</th><th style="min-width:190px">Assign / Reassign</th></tr></thead>
-      <tbody id="canvassWalksBody"><tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:20px">Loading walks...</td></tr></tbody></table>
-    </div>
-
     <!-- Active Assignments Table -->
     <div class="section-title" style="margin-top:16px;font-size:0.9em">📋 Active Assignments</div>
     <div class="table-wrap table-scroll" style="margin-bottom:24px">
@@ -866,7 +540,6 @@ var _pollData = [];           // cached poll data for sorting
 var _pollApiData = null;      // cached API response for without_poll etc.
 var _pollSortBy = 'num';      // current sort field
 var _pollSortDir = 'asc';     // asc or desc
-var electionPollsByPosition = {};  // rank -> [{poll, allen_votes, winner, winner_votes, total_votes}]
 
 function getPollColorIdx(pollNum) {
   return pollOrder.indexOf(String(pollNum));
@@ -984,48 +657,6 @@ function getOrdinal(n) {
   return s[(v-20)%10] || s[v] || s[0];
 }
 
-function adminShowElectionPositionPolls(pos) {
-  var box = document.getElementById('adminElectionRankDetails');
-  if (!box) return;
-  var rows = (electionPollsByPosition && electionPollsByPosition[String(pos)]) || [];
-  if (!rows.length) {
-    box.innerHTML = '<strong>No polls found for that position.</strong>';
-    box.style.display = 'block';
-    return;
-  }
-  var label = rows[0].label || (pos + getOrdinal(pos));
-  var totalVotes = rows.reduce(function(sum, r){ return sum + (parseInt(r.allen_votes || 0, 10) || 0); }, 0);
-  var pollNums = rows.map(function(r){ return r.poll; }).join(', ');
-  var html = '<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:10px">' +
-    '<div><strong style="color:var(--blue);font-size:1.05em">🗳️ Shawn placed '+label+' in '+rows.length+' poll'+(rows.length!==1?'s':'')+'</strong>' +
-    '<div style="color:var(--gray-500);font-size:0.9em;margin-top:2px">Polls: '+pollNums+' · Shawn votes: '+totalVotes.toLocaleString()+'</div></div>' +
-    '<button onclick="document.getElementById(\'adminElectionRankDetails\').style.display=\'none\'" style="background:none;border:none;font-size:1.2em;cursor:pointer;color:var(--gray-500)">✕</button></div>';
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px">';
-  html += rows.map(function(r) {
-    var safePoll = String(r.poll).replace(/'/g,'');
-    var winnerLine = (pos === 1) ? 'Won with '+(r.allen_votes || 0)+' votes' : 'Winner: '+(r.winner || '—')+' '+(r.winner_votes || '');
-    var gap = (pos > 1 && r.winner_votes && r.allen_votes) ? ' · gap '+(parseInt(r.winner_votes,10)-parseInt(r.allen_votes,10)) : '';
-    return '<button onclick="adminLoadCanvassPoll(\''+safePoll+'\')" title="Load Poll '+safePoll+' in Canvass Management" style="text-align:left;background:#f8fafc;border:1px solid var(--gray-200);border-radius:9px;padding:8px;cursor:pointer;font-family:inherit">' +
-      '<div style="font-weight:800;color:var(--blue);font-size:1.05em">Poll '+safePoll+'</div>' +
-      '<div style="font-size:0.85em;color:var(--gray-700)">'+winnerLine+gap+'</div>' +
-      '<div style="font-size:0.78em;color:var(--gray-500)">'+(r.total_votes || 0)+' total ballots · click to load</div>' +
-      '</button>';
-  }).join('');
-  html += '</div>';
-  box.innerHTML = html;
-  box.style.display = 'block';
-  box.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-function adminLoadCanvassPoll(poll) {
-  var sel = document.getElementById('canvassPollSelect');
-  if (sel) sel.value = poll;
-  if (typeof onCanvassPollChange === 'function') onCanvassPollChange();
-  if (typeof loadCanvassList === 'function') loadCanvassList();
-  var title = Array.from(document.querySelectorAll('.section-title')).find(function(el){ return el.textContent.indexOf('Canvass Management') !== -1; });
-  if (title) title.scrollIntoView({behavior:'smooth', block:'start'});
-}
-
 // Try auto-login
 if (token) {
   fetch('/api/auth/me', {headers:{'Authorization':'Bearer '+token}})
@@ -1098,10 +729,6 @@ function showDashboard() {
   fetch('/api/admin/tasks?status=open').then(function(r){return r.json()}).then(function(d){
     document.getElementById('tasksCount').textContent = '(' + d.count + ')';
   }).catch(function(){});
-  // Pre-fetch Keep Taxes Down website submission count
-  fetch('/api/admin/web-submissions?limit=1', authHeaders()).then(function(r){return r.json()}).then(function(d){
-    if (typeof d.total === 'number') document.getElementById('webSubmissionsCount').textContent = '(' + (d.counts.petition + d.counts.pocketbook) + ')';
-  }).catch(function(){});
 }
 
 function authHeaders() {
@@ -1139,7 +766,6 @@ async function loadDashboard() {
   loadCanvasserStats('daily');
   loadPollStats();
   loadSupportTrends(7);
-  loadCanvasserUsers().then(function(){ loadCanvassWalks(); });
   loadCanvassAssignments();
   loadChanges('today');
 }
@@ -1222,26 +848,16 @@ async function loadPollStats() {
       
       // ── Render rank summary ──
       var rankColors = {green:'#16a34a', yellow:'#d97706', blue:'#2563eb', orange:'#ea580c', purple:'#7c3aed'};
-      if (d.election && d.election.polls_by_position) electionPollsByPosition = d.election.polls_by_position;
-      // ── Render poll/election position legend dynamically ──
+      // ── Render poll color legend dynamically ──
       var colorLegend = document.getElementById('pollColorLegend');
       if (colorLegend && d.rank_summary) {
         var colorNames = {'green':'Green','yellow':'Yellow','blue':'Blue','orange':'Orange','purple':'Purple'};
-        if (d.election && d.election.available && d.election.allen_position_summary) {
-          colorLegend.innerHTML = '<span style="font-weight:600;margin-right:4px">🗳️ Actual Placement:</span>' +
-            d.election.allen_position_summary.map(function(p) {
-              var c = {'1':'#16a34a','2':'#d97706','3':'#2563eb','4':'#ea580c','5':'#7c3aed'}[p.position] || '#6b7280';
-              var colorName = {1:'Green',2:'Yellow',3:'Blue',4:'Orange',5:'Purple'}[p.position] || '';
-              return '<button onclick="adminShowElectionPositionPolls('+p.position+')" style="background:'+c+';color:white;padding:4px 10px;border:0;border-radius:10px;font-weight:700;white-space:nowrap;cursor:pointer;font-family:inherit;font-size:1em;'+(p.count===0?'opacity:0.4':'')+'">'+colorName+' = '+p.label+' ('+p.count+')</button>';
-            }).join(' ') + ' <span style="margin-left:6px">click to show polls</span>';
-        } else {
-          colorLegend.innerHTML = '<span style="font-weight:600;margin-right:4px">🎨 Poll Colors:</span>' +
-            d.rank_summary.map(function(r) {
-              var show = r.polls.slice(0,4).join(', ') + (r.polls.length > 4 ? '...' : '');
-              return '<span style="background:'+rankColors[r.color]+';color:white;padding:2px 10px;border-radius:10px;font-weight:600;white-space:nowrap">'+colorNames[r.color]+'</span>' +
-                ' <span style="font-size:0.85em">(' + show + ')</span>';
-            }).join(' ') + ' <span style="margin-left:6px">(repeats every 5)</span>';
-        }
+        colorLegend.innerHTML = '<span style="font-weight:600;margin-right:4px">🎨 Poll Colors:</span>' +
+          d.rank_summary.map(function(r) {
+            var show = r.polls.slice(0,4).join(', ') + (r.polls.length > 4 ? '...' : '');
+            return '<span style="background:'+rankColors[r.color]+';color:white;padding:2px 10px;border-radius:10px;font-weight:600;white-space:nowrap">'+colorNames[r.color]+'</span>' +
+              ' <span style="font-size:0.85em">(' + show + ')</span>';
+          }).join(' ') + ' <span style="margin-left:6px">(repeats every 5)</span>';
       }
       
       // ── Render canvass poll legend ──
@@ -1570,7 +1186,7 @@ async function loadUsers() {
   try {
     var r = await fetch('/api/admin/users', authHeaders());
     if (!r.ok) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--red);padding:16px">❌ Failed to load users (HTTP '+r.status+') — refresh and try again</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--red);padding:16px">❌ Failed to load users (HTTP '+r.status+') — refresh and try again</td></tr>';
       return;
     }
     var d = await r.json();
@@ -1588,14 +1204,13 @@ async function loadUsers() {
         var activateBtn = u.status === 'pending'
           ? '<button class="btn-sm" onclick="activateUser('+u.id+')" style="margin-left:3px;background:#16a34a;color:white">✅ Activate</button>'
           : '';
-        var emailField = '<div style="display:flex;gap:4px;min-width:220px"><input type="email" id="userEmail-'+u.id+'" value="'+esc(u.email||'')+'" placeholder="Add recovery email" style="min-width:170px;padding:5px;border:1px solid var(--gray-200);border-radius:5px"><button class="btn-sm" onclick="saveUserEmail('+u.id+')" title="Save recovery email">💾</button></div>';
-        return '<tr><td><strong>'+esc(u.username)+'</strong></td><td><span style="font-size:0.75em;padding:2px 6px;border-radius:4px;background:'+(u.role==='admin'?'#fee2e2;color:#991b1b':'var(--gray-100);color:var(--gray-700)')+'">'+esc(u.role)+'</span></td><td>'+esc(u.display_name||'')+'</td><td>'+emailField+'</td><td>'+statusBadge+'</td><td>'+esc(u.created_at||'')+'</td><td style="font-size:0.8em;color:var(--gray-500)">'+esc(lastLogin)+'</td><td>'+activateBtn+delBtn+resetBtn+'</td></tr>';
+        return '<tr><td><strong>'+esc(u.username)+'</strong></td><td><span style="font-size:0.75em;padding:2px 6px;border-radius:4px;background:'+(u.role==='admin'?'#fee2e2;color:#991b1b':'var(--gray-100);color:var(--gray-700)')+'">'+esc(u.role)+'</span></td><td>'+esc(u.display_name||'')+'</td><td>'+statusBadge+'</td><td>'+esc(u.created_at||'')+'</td><td style="font-size:0.8em;color:var(--gray-500)">'+esc(lastLogin)+'</td><td>'+activateBtn+delBtn+resetBtn+'</td></tr>';
       }).join('');
     } else {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:16px">No users found</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:16px">No users found</td></tr>';
     }
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--red);padding:16px">❌ Error loading users: '+esc(String(e))+'</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--red);padding:16px">❌ Error loading users: '+esc(String(e))+'</td></tr>';
   }
 }
 
@@ -1603,46 +1218,27 @@ async function createUser() {
   var u = document.getElementById('newUsername').value.trim();
   var p = document.getElementById('newPassword').value;
   var n = document.getElementById('newDisplayName').value.trim();
-  var e = document.getElementById('newUserEmail').value.trim();
   var r = document.getElementById('newRole').value;
   var err = document.getElementById('userError');
   err.style.display = 'none';
-  if (!u || !e || !p) { err.textContent = 'Username, email and password required'; err.style.display = 'inline'; return; }
+  if (!u || !p) { err.textContent = 'Username and password required'; err.style.display = 'inline'; return; }
   try {
     var resp = await fetch('/api/admin/users', {
       method:'POST',
       headers:{'Content-Type':'application/json', 'Authorization':'Bearer '+token},
-      body:JSON.stringify({username:u, email:e, password:p, role:r, display_name:n})
+      body:JSON.stringify({username:u, password:p, role:r, display_name:n})
     });
     var d = await resp.json();
     if (d.success) {
       document.getElementById('newUsername').value = '';
       document.getElementById('newPassword').value = '';
       document.getElementById('newDisplayName').value = '';
-      document.getElementById('newUserEmail').value = '';
       loadUsers();
     } else {
       err.textContent = '❌ ' + (d.error || 'Failed');
       err.style.display = 'inline';
     }
   } catch(e) { err.textContent = '❌ Network error'; err.style.display = 'inline'; }
-}
-
-async function saveUserEmail(uid) {
-  var input = document.getElementById('userEmail-'+uid);
-  var email = input.value.trim();
-  if (!email) { alert('Enter a recovery email'); return; }
-  try {
-    var r = await fetch('/api/admin/users/'+uid+'/email', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-      body:JSON.stringify({email:email})
-    });
-    var d = await r.json();
-    if (!r.ok || !d.success) { alert('❌ '+(d.error||'Failed')); return; }
-    input.value = d.email;
-    showAdminToast('✅ Recovery email saved');
-  } catch(e) { alert('❌ Network error'); }
 }
 
 async function deleteUser(uid) {
@@ -1742,9 +1338,9 @@ async function adminSearch() {
   var pollFilter = document.getElementById('adminPollFilter').value;
   if (q.length < 2 && !supportFilter && !signFilter && !pollFilter) return;
   var tbody = document.getElementById('adminSearchResults');
-  tbody.innerHTML = '<tr><td colspan="11" class="loading">Searching...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="10" class="loading">Searching...</td></tr>';
   try {
-    var url = '/api/search?q='+encodeURIComponent(q)+'&limit=200';
+    var url = '/api/search?q='+encodeURIComponent(q)+'&limit=50';
     if (supportFilter) url += '&support_level='+encodeURIComponent(supportFilter);
     if (signFilter) url += '&sign_request='+encodeURIComponent(signFilter);
     if (pollFilter) url += '&poll='+encodeURIComponent(pollFilter);
@@ -1755,8 +1351,7 @@ async function adminSearch() {
       // Show name sub-filter
       var nfRow = document.getElementById('adminNameFilterRow');
       nfRow.style.display = 'block';
-      // Keep keyboard focus in the main search field while live results update.
-      // The user can select the name filter when needed.
+      document.getElementById('adminNameFilter').focus();
       tbody.innerHTML = d.results.map(function(s){
         var addr = [s.street_number, s.street].filter(Boolean).join(' ');
         var badge = getSupportBadgeLabel(s.support_level);
@@ -1764,23 +1359,22 @@ async function adminSearch() {
         return '<tr id="'+rowId+'">'+
           '<td id="ar-'+s.id+'-name"><strong style="cursor:pointer" onclick="adminOpenRecord('+s.id+')" title="Click to open full record view">'+esc(s.full_name||'—')+'</strong></td>'+
           '<td id="ar-'+s.id+'-addr">'+esc(addr)+(s.apartment?', Apt '+esc(s.apartment):'')+'</td>'+
-          '<td id="ar-'+s.id+'-phone"><a href="https://www.google.com/maps/search/'+encodeURIComponent(esc(s.phone||''))+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--blue);text-decoration:underline" title="Search on Google Maps">'+esc(s.phone||'—')+'</a></td>'+
+          '<td id="ar-'+s.id+'-phone">'+esc(s.phone||'—')+'</td>'+
           '<td id="ar-'+s.id+'-email" style="font-size:0.85em;color:var(--gray-600)">'+esc(s.email||'—')+'</td>'+
-          '<td id="ar-'+s.id+'-poll" style="font-weight:600"><a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none" title="View map" class="'+getPollBadgeClass(s.poll)+'" style="padding:1px 8px;border-radius:8px;font-size:0.85em">🗺 '+(s.poll||'—')+'</a></td>'+
+          '<td id="ar-'+s.id+'-poll" style="font-weight:600"><a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" style="text-decoration:none" title="View map" class="'+getPollBadgeClass(s.poll)+'" style="padding:1px 8px;border-radius:8px;font-size:0.85em">🗺 '+(s.poll||'—')+'</a></td>'+
           '<td id="ar-'+s.id+'-level">'+badge+'</td>'+
-          '<td id="ar-'+s.id+'-result">'+(s.result ? advanceBadgeChip(s.result) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>')+'</td>'+
           '<td id="ar-'+s.id+'-sign">'+esc(s.sign_request||'—')+'</td>'+
           '<td id="ar-'+s.id+'-notes" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.85em;color:var(--gray-600)">'+esc(s.notes||'—')+'</td>'+
           '<td id="ar-'+s.id+'-updated" style="font-size:0.75em;color:var(--gray-400)">'+esc(s.updated_at||'—')+'</td>'+
           '<td id="ar-'+s.id+'-actions" style="white-space:nowrap"><button class="btn-sm" onclick="adminEditRow('+s.id+')" title="Edit">✏️</button> <button class="btn-sm" onclick="adminToggleHistory('+s.id+')" title="View change history">📜</button><br><span id="ar-'+s.id+'-status" style="font-size:0.7em;color:var(--amber);margin-top:2px;display:inline-block"></span></td>'+
           '</tr>';
       }).join('');
-      tbody.innerHTML += '<tr><td colspan="11" style="text-align:center;color:var(--gray-400);font-size:0.8em">'+d.total+' results · showing first '+d.results.length+'</td></tr>';
+      tbody.innerHTML += '<tr><td colspan="10" style="text-align:center;color:var(--gray-400);font-size:0.8em">'+d.total+' results · showing first '+d.results.length+'</td></tr>';
     } else {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--gray-400);padding:20px">No results</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--gray-400);padding:20px">No results</td></tr>';
     }
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--red);padding:16px">Search failed</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--red);padding:16px">Search failed</td></tr>';
   }
 }
 
@@ -2014,17 +1608,17 @@ async function adminToggleHistory(id) {
   // Insert a history row below the current row
   var tr = document.createElement('tr');
   tr.id = 'ahistory-'+id;
-  tr.innerHTML = '<td colspan="11" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:4px"><div style="font-size:0.82em;color:var(--gray-400)">Loading history...</div></td>';
+  tr.innerHTML = '<td colspan="10" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a;border-radius:4px"><div style="font-size:0.82em;color:var(--gray-400)">Loading history...</div></td>';
   row.parentNode.insertBefore(tr, row.nextSibling);
 
   try {
     var r = await fetch('/api/supporter/'+id+'/history');
     var d = await r.json();
     if (!d.history || d.history.length === 0) {
-      tr.innerHTML = '<td colspan="11" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a"><div style="font-size:0.82em;color:var(--gray-400)">No changes yet.</div></td>';
+      tr.innerHTML = '<td colspan="10" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a"><div style="font-size:0.82em;color:var(--gray-400)">No changes yet.</div></td>';
       return;
     }
-    var html = '<td colspan="11" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a">';
+    var html = '<td colspan="10" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a">';
     html += '<div style="font-weight:700;font-size:0.85em;margin-bottom:6px;color:var(--amber)">📜 Change History</div>';
     d.history.forEach(function(h) {
       html += '<div style="font-size:0.78em;padding:4px 0;border-bottom:1px solid #fde68a">'+
@@ -2036,7 +1630,7 @@ async function adminToggleHistory(id) {
     html += '</td>';
     tr.innerHTML = html;
   } catch(e) {
-    tr.innerHTML = '<td colspan="11" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a"><div style="font-size:0.82em;color:var(--red)">Failed to load history</div></td>';
+    tr.innerHTML = '<td colspan="10" style="padding:12px 16px;background:#fffbeb;border:1px solid #fde68a"><div style="font-size:0.82em;color:var(--red)">Failed to load history</div></td>';
   }
 }
 function getSupportBadgeLabel(l) {
@@ -2099,8 +1693,6 @@ async function adminOpenRecord(id) {
         hd.members.forEach(function(m) { _adminDetailNav.push(m.id); });
       }
     } catch(e) {}
-    _adminDetailNavIdx = _adminDetailNav.indexOf(id);
-    if (_adminDetailNavIdx < 0) _adminDetailNavIdx = 0;
     // Also merge any from current search results that the API might miss
     if (_lastAdminResults && _lastAdminResults.length) {
       var addrKey = (s.street_number||'')+'|'+(s.street||'');
@@ -2110,9 +1702,6 @@ async function adminOpenRecord(id) {
         }
       });
     }
-    // Ensure index is still correct after merge
-    _adminDetailNavIdx = _adminDetailNav.indexOf(id);
-    if (_adminDetailNavIdx < 0) _adminDetailNavIdx = 0;
     var navHtml = '';
     if (_adminDetailNav.length > 1) {
       var navItems = '';
@@ -2147,8 +1736,9 @@ async function adminOpenRecord(id) {
           adminFld('📞','Phone',s.phone,id,'phone')+
           adminFld('✉️','Email',s.email,id,'email')+
           adminFld('🏠','Apt',s.apartment,id,'apartment')+
-          adminFld('✅','Result',s.result,id,'result')+
+          adminFld('📋','Support',s.support_level,id,'support_level')+
           adminFld('🪧','Sign',s.sign_request,id,'sign_request')+
+          adminFld('💬','Conv',s.candidate_conversation_request,id,'candidate_conversation_request')+
           adminFld('📝','Notes',s.notes,id,'notes')+
           adminFld('🕐','Updated',adminFmtDate(s.updated_at),id,'updated_at')+
         '</div>'+
@@ -2203,8 +1793,6 @@ function adminFld(emoji,label,val,id,field) {
     '<span class="field-value" id="afv-'+id+'-'+field+'">'+esc(val||'—')+'</span></div>';
 }
 function adminCloseRecord() {
-  _adminDetailEditing = false;
-  _adminDetailOrig = {};
   document.getElementById('adminRecordDetail').style.display = 'none';
   _adminDetailId = null;
   _adminDetailInfo = null;
@@ -2310,17 +1898,15 @@ async function adminAddResident(id) {
 
 // ── Detail card editing (canvass-style) ──
 var _adminDetailEditing = false;
-var _adminDetailInputs = ['full_name','first_name','last_name','phone','email','apartment','result','sign_request','notes'];
-var _adminDetailSelects = {'result':['','Supporter','Neutral','Non-Supporter','No Answer','Moved','Refused'],'sign_request':['','Requested','Declined']};
+var _adminDetailInputs = ['full_name','first_name','last_name','phone','email','apartment','support_level','sign_request','candidate_conversation_request','notes'];
+var _adminDetailSelects = {'support_level':['Supporter','Neutral','Non-Supporter','Unknown','Survey Refused'],'sign_request':['','Requested','Declined'],'candidate_conversation_request':['','Requested','Declined']};
 
 async function adminDetailEdit(id) {
-  // Self-heal: if a previous edit session was interrupted (flag stuck,
-  // e.g. user closed the record without Cancel/Save), reset it so Edit All always works.
-  _adminDetailEditing = false;
+  if (_adminDetailEditing) return;
+  _adminDetailEditing = true;
   _adminDetailOrig = {};
   document.getElementById('aedit-actions-'+id).style.display = 'flex';
   document.getElementById('aedit-status-'+id).textContent = '✏️ Editing...';
-  try {
   _adminDetailInputs.forEach(function(field) {
     var el = document.getElementById('afv-'+id+'-'+field);
     if (!el) return;
@@ -2336,12 +1922,6 @@ async function adminDetailEdit(id) {
       el.innerHTML = '<input type="text" id="ainput-'+id+'-'+field+'" value="'+esc(val)+'">';
     }
   });
-  _adminDetailEditing = true;
-  } catch(e) {
-    _adminDetailEditing = false;
-    var st = document.getElementById('aedit-status-'+id);
-    if (st) st.textContent = '❌ ' + (e && e.message ? e.message : 'Edit failed');
-  }
 }
 async function adminDetailSave(id) {
   var updates = {};
@@ -2521,89 +2101,6 @@ async function adminReopenTask(taskId) {
   } catch(e) { showAdminToast('❌ Network error'); }
 }
 
-// ── Keep Taxes Down Website Submissions ──
-var _webSubmissionsLoaded = false;
-var _webSubmissionSource = 'all';
-
-async function adminToggleWebSubmissions() {
-  var panel = document.getElementById('webSubmissionsPanel');
-  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-  if (panel.style.display === 'block' && !_webSubmissionsLoaded) {
-    _webSubmissionsLoaded = true;
-    await adminLoadWebSubmissions('all');
-  }
-}
-
-function webYesNo(value) {
-  return Number(value) === 1 ? '<span style="color:var(--green);font-weight:700">Yes</span>' : '<span style="color:var(--gray-400)">No</span>';
-}
-
-async function adminLoadWebSubmissions(source) {
-  _webSubmissionSource = source || 'all';
-  ['All','Petition','Pocketbook'].forEach(function(name){
-    var btn = document.getElementById('webTab' + name);
-    if (btn) btn.classList.toggle('active', name.toLowerCase() === _webSubmissionSource);
-  });
-  var tbody = document.getElementById('webSubmissionsBody');
-  tbody.innerHTML = '<tr><td colspan="14" class="loading">Loading website submissions...</td></tr>';
-  try {
-    var r = await fetch('/api/admin/web-submissions?limit=500&source=' + encodeURIComponent(_webSubmissionSource), authHeaders());
-    var d = await r.json();
-    if (!r.ok) throw new Error(d.error || 'Unable to load submissions');
-    var allCount = (d.counts.petition || 0) + (d.counts.pocketbook || 0);
-    document.getElementById('webSubmissionsCount').textContent = '(' + allCount + ')';
-    document.getElementById('webCountAll').textContent = allCount;
-    document.getElementById('webCountPetition').textContent = d.counts.petition || 0;
-    document.getElementById('webCountPocketbook').textContent = d.counts.pocketbook || 0;
-    document.getElementById('webSubmissionsTotal').textContent = d.total + ' record' + (d.total === 1 ? '' : 's') + ' shown';
-    if (!d.submissions || d.submissions.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--gray-400);padding:20px">No website submissions yet</td></tr>';
-      return;
-    }
-    tbody.innerHTML = d.submissions.map(function(s){
-      var petition = s.source === 'keeptaxesdown-petition';
-      var sourceLabel = petition ? '✍️ Petition' : '📋 Pocketbook';
-      var sourceColor = petition ? '#dcfce7;color:#166534' : '#fef3c7;color:#92400e';
-      var name = [s.first_name, s.last_name].filter(Boolean).join(' ');
-      var address = [s.address, s.postal].filter(Boolean).join(' · ');
-      return '<tr>' +
-        '<td style="position:sticky;left:0;background:white;z-index:3"><span style="display:inline-block;padding:3px 8px;border-radius:999px;background:' + sourceColor + ';font-weight:700;white-space:nowrap">' + sourceLabel + '</span></td>' +
-        '<td><strong>' + esc(name) + '</strong></td>' +
-        '<td><a href="mailto:' + encodeURIComponent(s.email || '') + '">' + esc(s.email) + '</a></td>' +
-        '<td>' + esc(s.phone) + '</td>' +
-        '<td>' + esc(address) + '</td>' +
-        '<td>' + esc(s.top_issue) + '</td>' +
-        '<td>' + esc(s.registration_status) + '</td>' +
-        '<td>' + webYesNo(s.pledge) + '</td>' +
-        '<td>' + webYesNo(s.town_hall) + '</td>' +
-        '<td>' + webYesNo(s.volunteer) + '</td>' +
-        '<td>' + webYesNo(s.lawn_sign) + '</td>' +
-        '<td>' + webYesNo(s.email_consent) + '</td>' +
-        '<td>' + webYesNo(s.sms_consent) + '</td>' +
-        '<td style="white-space:nowrap">' + esc(s.submitted_at) + '</td>' +
-      '</tr>';
-    }).join('');
-  } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;color:var(--red);padding:20px">' + esc(e.message) + '</td></tr>';
-  }
-}
-
-async function adminExportWebSubmissions() {
-  try {
-    var r = await fetch('/api/admin/web-submissions/export?source=' + encodeURIComponent(_webSubmissionSource), authHeaders());
-    if (!r.ok) throw new Error('Export failed');
-    var blob = await r.blob();
-    var disposition = r.headers.get('Content-Disposition') || '';
-    var match = disposition.match(/filename="?([^";]+)"?/i);
-    var filename = match ? match[1] : 'keeptaxesdown_submissions.csv';
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
-    showAdminToast('📥 Website submissions downloaded');
-  } catch(e) { showAdminToast('❌ ' + e.message); }
-}
-
 // ── Survey Responses ──
 var _surveysLoaded = false;
 async function adminToggleSurveys() {
@@ -2679,1261 +2176,6 @@ var _changesMode = 'today';
 var _changesPage = 1;
 var _changesTotalPages = 1;
 
-/* ── 🗳️ Advance Voters (Sep 20, 2025) ── */
-let advancePage = 0;
-const ADV_PAGE_SIZE = 100;
-
-async function toggleAdvanceSection() {
-  const sec = document.getElementById('advanceSection');
-  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-  if (sec.style.display === 'block') {
-    await advanceLoadStats();
-    advanceLoadPolls();
-    advanceLoad();
-  }
-}
-
-async function advanceLoadStats() {
-  try {
-    const res = await fetch('/api/admin/advance-voters/stats', authHeaders());
-    const data = await res.json();
-    const el = document.getElementById('advanceSummary');
-    if (el) el.textContent = `(${data.total} voters · ${data.contacted} recorded · ${data.remaining} to visit)`;
-  } catch(e) { /* silent */ }
-}
-
-async function advanceLoadPolls() {
-  try {
-    const res = await fetch('/api/admin/advance-voters/stats', authHeaders());
-    const data = await res.json();
-    const sel = document.getElementById('advPollFilter');
-    const current = sel.value;
-    sel.innerHTML = '<option value="">All Polls</option>';
-    for (const poll of Object.keys(data.by_poll || {}).sort((a,b) => a-b)) {
-      const opt = document.createElement('option');
-      opt.value = poll;
-      opt.textContent = `Poll ${poll} (${data.by_poll[poll]})`;
-      sel.appendChild(opt);
-    }
-    sel.value = current || '';
-  } catch(e) { /* silent */ }
-}
-
-async function advanceLoad() {
-  const poll = document.getElementById('advPollFilter').value;
-  const result = document.getElementById('advResultFilter').value;
-  const search = document.getElementById('advSearch').value.trim();
-  const qs = new URLSearchParams({ limit: ADV_PAGE_SIZE, offset: advancePage * ADV_PAGE_SIZE });
-  if (poll) qs.set('poll', poll);
-  if (result) qs.set('result', result);
-  if (search) qs.set('search', search);
-  const tbody = document.getElementById('advanceVotersList');
-  tbody.innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
-  try {
-    const res = await fetch('/api/admin/advance-voters?' + qs, authHeaders());
-    const data = await res.json();
-    const rows = data.voters || [];
-    tbody.innerHTML = '';
-    if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="loading">No advance voters found.</td></tr>';
-    }
-    for (const v of rows) {
-      const tr = document.createElement('tr');
-      const resultClass = v.result === 'Supporter' ? 'poll-green' : (v.result === 'Non-Supporter' ? 'poll-orange' : (v.result === 'Neutral' ? 'poll-yellow' : ''));
-      tr.innerHTML = `
-        <td data-label="${v.walk_num}">${v.walk_num}</td>
-        <td data-label="POLL"><span class="poll-badge poll-badge-blue">${v.poll}</span></td>
-        <td data-label="NAME" style="font-weight:700;cursor:pointer;color:var(--blue);text-decoration:underline" onclick="advanceOpenDetail(${v.id})" title="Tap to open record">${esc(v.full_name)}</td>
-        <td data-label="ADDRESS">${esc(v.address)}</td>
-        <td data-label="POSTAL">${esc(v.postal_code)}</td>
-        <td data-label="RESULT" class="${resultClass}">${v.result ? advanceBadgeChip(v.result) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>'}</td>`;
-      tbody.appendChild(tr);
-    }
-    const pages = Math.max(1, Math.ceil(data.total / ADV_PAGE_SIZE));
-    document.getElementById('advPageInfo').textContent = `Page ${advancePage + 1} of ${pages}`;
-    document.getElementById('btnAdvPrev').disabled = advancePage <= 0;
-    document.getElementById('btnAdvNext').disabled = advancePage >= pages - 1;
-    document.getElementById('advTotalInfo').textContent = `${data.total} voters`;
-  } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="6" class="loading">Failed to load.</td></tr>';
-  }
-}
-
-async function advanceUpdate(id, result, notes, phone, email) {
-  const body = { id };
-  if (result !== null) body.result = result;
-  if (notes !== null) body.notes = notes;
-  if (phone !== null) body.phone = phone;
-  if (email !== null) body.email = email;
-  try {
-    await fetch('/api/admin/advance-voters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(body)
-    });
-    advanceLoadStats();
-  } catch(e) { /* silent */ }
-}
-
-// ── Advance Voter detail card (canvass-style, like supporter records) ──
-let _advDetailId = null;
-
-function advanceResultBadge(result) {
-  const r = String(result || '').toLowerCase();
-  if (r === 'supporter') return {label:'✓ Supporter', cls:'badge-supporter'};
-  if (r === 'neutral') return {label:'Neutral', cls:'badge-neutral'};
-  if (r === 'non-supporter') return {label:'✗ Non-Supporter', cls:'badge-nonsupporter'};
-  if (r === 'refused') return {label:'🚫 Refused', cls:'badge-refused'};
-  if (r === 'moved') return {label:'📦 Moved', cls:'badge-refused'};
-  if (r === 'no answer') return {label:'🚪 No Answer', cls:'badge-refused'};
-  return {label:'— Uncontacted', cls:'badge-unknown'};
-}
-
-function advanceBadgeChip(result) {
-  const b = advanceResultBadge(result);
-  return '<span class="support-badge ' + b.cls + '" style="font-size:0.68em">' + b.label + '</span>';
-}
-
-async function advanceOpenDetail(id) {
-  const pane = document.getElementById('advanceDetailPane');
-  pane.style.display = 'block';
-  pane.innerHTML = '<div class="loading" style="padding:24px">Loading voter…</div>';
-  pane.scrollIntoView({behavior:'smooth', block:'nearest'});
-  _advDetailId = id;
-  try {
-    const res = await fetch('/api/admin/advance-voters?id=' + id, authHeaders());
-    const data = await res.json();
-    const v = (data.voters || [])[0];
-    if (!v) { pane.innerHTML = '<div class="error">Voter not found</div>'; return; }
-    const badge = advanceResultBadge(v.result);
-    const pollHtml = v.poll ? '<span class="poll-badge poll-badge-blue" style="white-space:nowrap">🗺 Poll ' + esc(v.poll) + '</span>' : '';
-    pane.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
-        '<span style="font-size:0.78em;color:var(--gray-400)">🗳️ Advance Voter · ID:' + id + '</span>' +
-        '<button class="detail-close" onclick="advanceCloseDetail()">✕ Close</button>' +
-      '</div>' +
-      '<div class="detail-card">' +
-        '<div class="card-header"><div>' +
-          '<div class="name">' + esc(v.full_name || 'Unknown') + '</div>' +
-          '<div class="address-line">📍 ' + esc(v.address || '') + (v.postal_code ? ' · ' + esc(v.postal_code) : '') + '</div>' +
-          pollHtml +
-        '</div><span class="support-badge ' + badge.cls + '" id="advdetail-badge">' + badge.label + '</span></div>' +
-        '<div class="card-fields">' +
-          '<div class="field-row"><span class="field-label">🗳 Poll</span><span class="field-value">' + esc(v.poll || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 Name</span><span class="field-value">' + esc(v.full_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 First</span><span class="field-value" id="advdetail-first_name" data-orig="' + escAttr(v.first_name || '') + '">' + esc(v.first_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👥 Last</span><span class="field-value" id="advdetail-last_name" data-orig="' + escAttr(v.last_name || '') + '">' + esc(v.last_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🏠 Address</span><span class="field-value">' + esc(v.address || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🚪 Apt</span><span class="field-value" id="advdetail-apartment" data-orig="' + escAttr(v.apartment || '') + '">' + esc(v.apartment || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📮 Postal</span><span class="field-value">' + esc(v.postal_code || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">✅ Result</span><span class="field-value" id="advdetail-result">' +
-            '<select onchange="advanceDetailResult(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!v.result ? 'selected' : '') + '>—</option>' +
-              '<option value="Supporter" ' + (v.result === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-              '<option value="Neutral" ' + (v.result === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-              '<option value="Non-Supporter" ' + (v.result === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-              '<option value="No Answer" ' + (v.result === 'No Answer' ? 'selected' : '') + '>🚪 No Answer</option>' +
-              '<option value="Moved" ' + (v.result === 'Moved' ? 'selected' : '') + '>📦 Moved</option>' +
-              '<option value="Refused" ' + (v.result === 'Refused' ? 'selected' : '') + '>🚫 Refused</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">✅ Support</span><span class="field-value" id="advdetail-support_level">' +
-            '<select onchange="advanceDetailSupport(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!v.support_level ? 'selected' : '') + '>—</option>' +
-              '<option value="Supporter" ' + (v.support_level === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-              '<option value="Neutral" ' + (v.support_level === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-              '<option value="Non-Supporter" ' + (v.support_level === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-              '<option value="UNKNOWN" ' + (v.support_level === 'UNKNOWN' ? 'selected' : '') + '>❓ UNKNOWN</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📋 Sign</span><span class="field-value" id="advdetail-sign_request">' +
-            '<select onchange="advanceDetailSign(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!v.sign_request ? 'selected' : '') + '>—</option>' +
-              '<option value="Requested" ' + (v.sign_request === 'Requested' ? 'selected' : '') + '>📋 Requested</option>' +
-              '<option value="Declined" ' + (v.sign_request === 'Declined' ? 'selected' : '') + '>🚫 Declined</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📞 Phone</span><span class="field-value" id="advdetail-phone" data-orig="' + escAttr(v.phone || '') + '">' + esc(v.phone || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">✉️ Email</span><span class="field-value" id="advdetail-email" data-orig="' + escAttr(v.email || '') + '">' + esc(v.email || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📝 Notes</span><span class="field-value" id="advdetail-notes" data-orig="' + escAttr(v.notes || '') + '">' + esc(v.notes || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🕐 Contacted</span><span class="field-value">' + (v.contacted_at ? adminFmtDate(v.contacted_at) : '—') + '</span></div>' +
-        '</div>' +
-        '<div class="card-actions">' +
-          '<button class="btn-sm" onclick="advanceDetailEdit(' + id + ')" style="background:var(--gray-100);color:var(--gray-700);font-size:0.85em">✏️ Edit All</button>' +
-          '<button class="btn-sm" onclick="advanceDetailSave(' + id + ')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-size:0.85em">💾 Save</button>' +
-          '<button class="btn-sm" onclick="advanceHistory(' + id + ')" style="background:#fffbeb;color:#92400e;border-color:#fde68a;font-size:0.85em">📜 History</button>' +
-          '<span id="advdetail-status" style="font-size:0.75em;color:var(--gray-400);margin-left:auto"></span>' +
-        '</div>' +
-      '</div>';
-  } catch(e) {
-    pane.innerHTML = '<div class="error">Failed to load voter</div>';
-  }
-}
-
-function advanceCloseDetail() {
-  document.getElementById('advanceDetailPane').style.display = 'none';
-  _advDetailId = null;
-}
-
-function advanceDetailEdit(id) {
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('advdetail-' + field);
-    if (!el) return;
-    const val = el.textContent === '—' ? '' : el.textContent;
-    el.classList.add('editing');
-    if (field === 'notes') {
-      el.innerHTML = '<textarea id="adv-input-' + id + '-' + field + '" rows="2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none;resize:vertical">' + esc(val) + '</textarea>';
-    } else {
-      el.innerHTML = '<input type="text" id="adv-input-' + id + '-' + field + '" value="' + escAttr(val) + '" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none">';
-    }
-  });
-}
-
-async function advanceDetailSave(id) {
-  const updates = {};
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('adv-input-' + id + '-' + field);
-    if (!el) return;
-    const val = el.value;
-    if (val !== (document.getElementById('advdetail-' + field).dataset.orig || '')) updates[field] = val;
-  });
-  if (!Object.keys(updates).length) { showAdminToast('ℹ️ No changes'); advanceOpenDetail(id); return; }
-  const statusEl = document.getElementById('advdetail-status');
-  statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(Object.assign({id}, updates))
-    });
-    const d = await res.json();
-    if (d.ok) {
-      showAdminToast('✅ Saved');
-      advanceOpenDetail(id);
-      advanceLoad();
-    } else {
-      statusEl.textContent = '❌ ' + (d.error || 'Save failed');
-    }
-  } catch(e) { statusEl.textContent = '❌ Network error'; }
-}
-
-async function advanceDetailSupport(id, val) {
-  const statusEl = document.getElementById('advdetail-status');
-  if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST', headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, support_level: val})
-    });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ Failed';
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-async function advanceDetailSign(id, val) {
-  const statusEl = document.getElementById('advdetail-status');
-  if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST', headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, sign_request: val})
-    });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ Failed';
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-async function advanceDetailResult(id, val) {
-  const statusEl = document.getElementById('advdetail-status');
-  if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, result: val})
-    });
-    const d = await res.json();
-    if (d.ok) {
-      const badge = advanceResultBadge(val);
-      const b = document.getElementById('advdetail-badge');
-      if (b) { b.className = 'support-badge ' + badge.cls; b.textContent = badge.label; }
-      let msg = '✅ Saved ✓';
-      if (d.cascaded && d.cascaded > 0) msg += ' · ' + d.cascaded + ' household marked No Answer';
-      if (statusEl) statusEl.textContent = msg;
-      advanceLoadStats();
-      advanceLoad();
-    } else if (statusEl) { statusEl.textContent = '❌ Failed'; }
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-async function advanceHistory(id) {
-  const statusEl = document.getElementById('advdetail-status');
-  if (!statusEl) return;
-  if (statusEl.textContent === '📜 Loading…') { statusEl.textContent = ''; return; }
-  statusEl.textContent = '📜 Loading…';
-  try {
-    const res = await fetch('/api/admin/advance-voters?id=' + id, authHeaders());
-    const data = await res.json();
-    const v = (data.voters || [])[0];
-    if (!v) { statusEl.textContent = '❌ Not found'; return; }
-    statusEl.textContent = '📜 Result:' + (v.result || '—') + ' · Ph:' + (v.phone || '—') + ' · Em:' + (v.email || '—') + ' · Updated:' + (v.contacted_at ? adminFmtDate(v.contacted_at) : '—');
-  } catch(e) { statusEl.textContent = '❌ Failed'; }
-}
-
-function advancePrevPage() { if (advancePage > 0) { advancePage--; advanceLoad(); } }
-function advanceNextPage() { advancePage++; advanceLoad(); }
-
-async function advanceExport() {
-  const poll = document.getElementById('advPollFilter').value;
-  const result = document.getElementById('advResultFilter').value;
-  const qs = new URLSearchParams();
-  if (poll) qs.set('poll', poll);
-  if (result) qs.set('result', result);
-  const url = '/api/admin/advance-voters/export?' + qs.toString();
-  try {
-    const res = await fetch(url, {headers: {'Authorization': 'Bearer ' + (localStorage.getItem('ward25_token') || '')}});
-    if (!res.ok) { alert('Export failed (HTTP ' + res.status + '). Sign in again.'); return; }
-    const blob = await res.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    const ts = new Date().toISOString().slice(0,10);
-    a.download = 'ward25_advance_voters_' + ts + '.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(a.href);
-  } catch(e) {
-    alert('Export failed: ' + e.message);
-  }
-}
-
-/* ── 👥 Supporters (master list, same layout as Advance Voters) ── */
-let supportersPage = 0;
-const SUP_PAGE_SIZE = 100;
-let supSort = { by: 'poll', dir: 'asc' };
-
-function supportersSort(col) {
-  if (supSort.by === col) {
-    supSort.dir = supSort.dir === 'asc' ? 'desc' : 'asc';
-  } else {
-    supSort.by = col;
-    supSort.dir = col === 'id' ? 'desc' : 'asc';
-  }
-  supportersPage = 0;
-  supportersLoad();
-  supportersUpdateSortIcons();
-}
-
-function supportersUpdateSortIcons() {
-  document.querySelectorAll('.sup-sort-icon').forEach(function(el) { el.textContent = ''; });
-  const icon = document.getElementById('supSortIcon-' + supSort.by);
-  if (icon) icon.textContent = supSort.dir === 'asc' ? '▲' : '▼';
-}
-
-async function toggleSupportersSection() {
-  const sec = document.getElementById('supportersSection');
-  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-  if (sec.style.display === 'block') {
-    await supportersLoadStats();
-    supportersLoadPolls();
-    supportersLoad();
-    supportersUpdateSortIcons();
-  }
-}
-
-async function supportersLoadStats() {
-  try {
-    const res = await fetch('/api/admin/supporters/stats', authHeaders());
-    const data = await res.json();
-    const el = document.getElementById('supportersSummary');
-    if (el) {
-      const sup = data.by_support_level && data.by_support_level['Supporter'] ? data.by_support_level['Supporter'] : 0;
-      el.textContent = `(${data.total} total · ${sup} supporters)`;
-    }
-  } catch(e) { /* silent */ }
-}
-
-async function supportersLoadPolls() {
-  try {
-    const res = await fetch('/api/admin/supporters/stats', authHeaders());
-    const data = await res.json();
-    const sel = document.getElementById('supPollFilter');
-    const current = sel.value;
-    sel.innerHTML = '<option value="">All Polls</option>';
-    for (const poll of Object.keys(data.by_poll || {}).sort((a,b) => a-b)) {
-      const opt = document.createElement('option');
-      opt.value = poll;
-      opt.textContent = `Poll ${poll} (${data.by_poll[poll]})`;
-      sel.appendChild(opt);
-    }
-    sel.value = current || '';
-  } catch(e) { /* silent */ }
-}
-
-async function supportersLoad() {
-  const poll = document.getElementById('supPollFilter').value;
-  const level = document.getElementById('supLevelFilter').value || 'Supporter';  // default to Supporter
-  const sign = document.getElementById('supSignFilter').value;
-  const result = document.getElementById('supResultFilter').value;
-  const search = document.getElementById('supSearch').value.trim();
-  const qs = new URLSearchParams({ limit: SUP_PAGE_SIZE, offset: supportersPage * SUP_PAGE_SIZE, sort_by: supSort.by, sort_dir: supSort.dir });
-  if (poll) qs.set('poll', poll);
-  if (level) qs.set('support_level', level);
-  if (sign) qs.set('sign_request', sign);
-  if (result) qs.set('result', result);
-  if (search) qs.set('search', search);
-  const tbody = document.getElementById('supportersList');
-  tbody.innerHTML = '<tr><td colspan="8" class="loading">Loading...</td></tr>';
-  try {
-    const res = await fetch('/api/admin/supporters?' + qs, authHeaders());
-    const data = await res.json();
-    const rows = data.supporters || [];
-    tbody.innerHTML = '';
-    if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="8" class="loading">No supporters found.</td></tr>';
-    }
-    for (const s of rows) {
-      const tr = document.createElement('tr');
-      const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-      const levelClass = s.support_level === 'Supporter' ? 'poll-green' : (s.support_level === 'Non-Supporter' ? 'poll-orange' : (s.support_level === 'Neutral' ? 'poll-yellow' : ''));
-      tr.innerHTML = `
-        <td data-label="#">${s.id}</td>
-        <td data-label="POLL"><span class="poll-badge poll-badge-blue">${esc(s.poll || '—')}</span></td>
-        <td data-label="NAME" style="font-weight:700;cursor:pointer;color:var(--blue);text-decoration:underline" onclick="supportersOpenDetail(${s.id})" title="Tap to open record">${esc(s.full_name || '—')}</td>
-        <td data-label="ADDRESS">${esc(addr || '—')}</td>
-        <td data-label="POSTAL">${esc(s.postal_code || '—')}</td>
-        <td data-label="RESULT" class="${s.result === 'Home' ? 'poll-green' : (s.result === 'No Answer' ? 'poll-yellow' : (s.result === 'Moved' || s.result === 'Refused' ? 'poll-orange' : ''))}">${s.result ? supportersResultChip(s.result) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>'}</td>
-        <td data-label="LEVEL" class="${levelClass}">${s.support_level ? supportersBadgeChip(s.support_level) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>'}</td>
-        <td data-label="SIGN">${s.sign_request ? esc(s.sign_request) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>'}</td>`;
-      tbody.appendChild(tr);
-    }
-    const pages = Math.max(1, Math.ceil(data.total / SUP_PAGE_SIZE));
-    document.getElementById('supPageInfo').textContent = `Page ${supportersPage + 1} of ${pages}`;
-    document.getElementById('btnSupPrev').disabled = supportersPage <= 0;
-    document.getElementById('btnSupNext').disabled = supportersPage >= pages - 1;
-    document.getElementById('supTotalInfo').textContent = `${data.total} supporters`;
-  } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="7" class="loading">Failed to load.</td></tr>';
-  }
-}
-
-function supportersBadgeChip(level) {
-  const l = String(level || '').toLowerCase();
-  if (l === 'supporter') return '<span class="support-badge badge-supporter" style="font-size:0.68em">✓ Supporter</span>';
-  if (l === 'neutral') return '<span class="support-badge badge-neutral" style="font-size:0.68em">Neutral</span>';
-  if (l === 'non-supporter') return '<span class="support-badge badge-nonsupporter" style="font-size:0.68em">✗ Non-Supporter</span>';
-  return '<span class="support-badge badge-unknown" style="font-size:0.68em">' + esc(level) + '</span>';
-}
-
-function supportersResultChip(result) {
-  const r = String(result || '').toLowerCase();
-  if (r === 'home') return '<span class="support-badge badge-supporter" style="font-size:0.68em">🏠 Home</span>';
-  if (r === 'no answer') return '<span class="support-badge badge-refused" style="font-size:0.68em">🚪 No Answer</span>';
-  if (r === 'moved') return '<span class="support-badge badge-refused" style="font-size:0.68em">📦 Moved</span>';
-  if (r === 'refused') return '<span class="support-badge badge-refused" style="font-size:0.68em">🚫 Refused</span>';
-  return '<span class="support-badge badge-unknown" style="font-size:0.68em">' + esc(result) + '</span>';
-}
-
-async function supportersOpenDetail(id) {
-  const pane = document.getElementById('supportersDetailPane');
-  pane.style.display = 'block';
-  pane.innerHTML = '<div class="loading" style="padding:24px">Loading supporter…</div>';
-  pane.scrollIntoView({behavior:'smooth', block:'nearest'});
-  try {
-    const res = await fetch('/api/supporter/' + id, authHeaders());
-    const data = await res.json();
-    const s = data.supporter;
-    if (!s) { pane.innerHTML = '<div class="error">Supporter not found</div>'; return; }
-    const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-    const badge = supportersBadgeChip(s.support_level);
-    const resultBadge = s.result ? supportersResultChip(s.result) : '<span class="support-badge badge-unknown" style="font-size:0.68em">— Not Contacted</span>';
-    pane.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
-        '<span style="font-size:0.78em;color:var(--gray-400)">Supporter · ID:' + id + '</span>' +
-        '<button class="detail-close" onclick="supportersCloseDetail()">✕ Close</button>' +
-      '</div>' +
-      '<div class="detail-card">' +
-        '<div class="card-header"><div>' +
-          '<div class="name">' + esc(s.full_name || 'Unknown') + '</div>' +
-          '<div class="address-line">📍 ' + esc(addr || '') + (s.postal_code ? ' · ' + esc(s.postal_code) : '') + '</div>' +
-          (s.poll ? '<span class="poll-badge poll-badge-blue" style="white-space:nowrap">🗺 Poll ' + esc(s.poll) + '</span>' : '') +
-        '</div><span class="support-badge badge-unknown" id="supdetail-badge">' + badge.replace(/<[^>]+>/g, '') + '</span></div>' +
-        '<div class="card-fields">' +
-          '<div class="field-row"><span class="field-label">🗳 Poll</span><span class="field-value">' + esc(s.poll || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 Name</span><span class="field-value">' + esc(s.full_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 First Name</span><span class="field-value" id="supdetail-first_name" data-orig="' + escAttr(s.first_name || '') + '">' + esc(s.first_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👥 Last Name</span><span class="field-value" id="supdetail-last_name" data-orig="' + escAttr(s.last_name || '') + '">' + esc(s.last_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🏠 Address</span><span class="field-value">' + esc(addr || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📮 Postal</span><span class="field-value">' + esc(s.postal_code || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🏢 Apartment</span><span class="field-value" id="supdetail-apartment" data-orig="' + escAttr(s.apartment || '') + '">' + esc(s.apartment || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🚪 Canvass</span><span class="field-value" id="supdetail-result">' +
-            '<select onchange="supportersDetailResult(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.result ? 'selected' : '') + '>— Not Contacted</option>' +
-              '<option value="Home" ' + (s.result === 'Home' ? 'selected' : '') + '>🏠 Home</option>' +
-              '<option value="No Answer" ' + (s.result === 'No Answer' ? 'selected' : '') + '>🚪 No Answer</option>' +
-              '<option value="Moved" ' + (s.result === 'Moved' ? 'selected' : '') + '>📦 Moved</option>' +
-              '<option value="Refused" ' + (s.result === 'Refused' ? 'selected' : '') + '>🚫 Refused</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">✅ Support Level</span><span class="field-value" id="supdetail-level">' +
-            '<select onchange="supportersDetailLevel(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.support_level ? 'selected' : '') + '>—</option>' +
-              '<option value="Supporter" ' + (s.support_level === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-              '<option value="Neutral" ' + (s.support_level === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-              '<option value="Non-Supporter" ' + (s.support_level === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-              '<option value="UNKNOWN" ' + (s.support_level === 'UNKNOWN' ? 'selected' : '') + '>❓ UNKNOWN</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📋 Sign Request</span><span class="field-value" id="supdetail-sign">' +
-            '<select onchange="supportersDetailSign(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.sign_request ? 'selected' : '') + '>—</option>' +
-              '<option value="Requested" ' + (s.sign_request === 'Requested' ? 'selected' : '') + '>📋 Requested</option>' +
-              '<option value="Declined" ' + (s.sign_request === 'Declined' ? 'selected' : '') + '>🚫 Declined</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📞 Phone</span><span class="field-value" id="supdetail-phone" data-orig="' + escAttr(s.phone || '') + '">' + esc(s.phone || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">✉️ Email</span><span class="field-value" id="supdetail-email" data-orig="' + escAttr(s.email || '') + '">' + esc(s.email || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📝 Notes</span><span class="field-value" id="supdetail-notes" data-orig="' + escAttr(s.notes || '') + '">' + esc(s.notes || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🕐 Updated</span><span class="field-value">' + (s.updated_at ? adminFmtDate(s.updated_at) : '—') + '</span></div>' +
-        '</div>' +
-        '<div class="card-actions">' +
-          '<button class="btn-sm" onclick="supportersDetailEdit(' + id + ')" style="background:var(--gray-100);color:var(--gray-700);font-size:0.85em">✏️ Edit All</button>' +
-          '<button class="btn-sm" onclick="supportersDetailSave(' + id + ')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-size:0.85em">💾 Save</button>' +
-          '<button class="btn-sm" onclick="supportersHistory(' + id + ')" style="background:#fffbeb;color:#92400e;border-color:#fde68a;font-size:0.85em">📜 History</button>' +
-          '<span id="supdetail-status" style="font-size:0.75em;color:var(--gray-400);margin-left:auto"></span>' +
-        '</div>' +
-      '</div>';
-  } catch(e) {
-    pane.innerHTML = '<div class="error">Failed to load supporter.</div>';
-  }
-}
-
-async function supportersDetailLevel(id, val) {
-  const statusEl = document.getElementById('supdetail-status');
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, support_level: val})
-    });
-    const d = await res.json();
-    if (d.ok) { showAdminToast('✅ Support level saved'); supportersLoad(); }
-  } catch(e) { showAdminToast('❌ Save failed'); }
-}
-
-async function supportersDetailSign(id, val) {
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, sign_request: val})
-    });
-    const d = await res.json();
-    if (d.ok) { showAdminToast('✅ Sign request saved'); supportersLoad(); }
-  } catch(e) { showAdminToast('❌ Save failed'); }
-}
-
-async function supportersDetailResult(id, val) {
-  const statusEl = document.getElementById('supdetail-status');
-  if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, result: val})
-    });
-    const d = await res.json();
-    if (d.ok) {
-      if (statusEl) statusEl.textContent = '✅ Saved ✓';
-      showAdminToast('✅ Canvass result saved');
-      supportersLoad();
-    } else if (statusEl) { statusEl.textContent = '❌ ' + (d.error || 'Save failed'); }
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-function supportersDetailEdit(id) {
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('supdetail-' + field);
-    if (!el) return;
-    const val = el.textContent === '—' ? '' : el.textContent;
-    el.classList.add('editing');
-    if (field === 'notes') {
-      el.innerHTML = '<textarea id="sup-input-' + id + '-' + field + '" rows="2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none;resize:vertical">' + esc(val) + '</textarea>';
-    } else {
-      el.innerHTML = '<input type="text" id="sup-input-' + id + '-' + field + '" value="' + escAttr(val) + '" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none">';
-    }
-  });
-}
-
-async function supportersDetailSave(id) {
-  const updates = {};
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('sup-input-' + id + '-' + field);
-    if (!el) return;
-    const val = el.value;
-    if (val !== (document.getElementById('supdetail-' + field).dataset.orig || '')) updates[field] = val;
-  });
-  if (!Object.keys(updates).length) { showAdminToast('ℹ️ No changes'); supportersOpenDetail(id); return; }
-  const statusEl = document.getElementById('supdetail-status');
-  statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(Object.assign({id}, updates))
-    });
-    const d = await res.json();
-    if (d.ok) {
-      showAdminToast('✅ Saved');
-      supportersOpenDetail(id);
-      supportersLoad();
-    } else {
-      statusEl.textContent = '❌ ' + (d.error || 'Save failed');
-    }
-  } catch(e) { statusEl.textContent = '❌ Network error'; }
-}
-
-async function supportersHistory(id) {
-  const statusEl = document.getElementById('supdetail-status');
-  if (!statusEl) return;
-  if (statusEl.textContent === '📜 Loading…') { statusEl.textContent = ''; return; }
-  statusEl.textContent = '📜 Loading…';
-  try {
-    const res = await fetch('/api/supporter/' + id + '/history', authHeaders());
-    const d = await res.json();
-    const hist = d.history || [];
-    if (!hist.length) { statusEl.textContent = '📜 No changes yet'; return; }
-    statusEl.innerHTML = '<span style="display:block;margin-top:8px;padding:8px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:0.75em;max-height:200px;overflow-y:auto">' +
-      hist.map(function(h) {
-        const t = h.changed_at || h.created_at || '';
-        const by = h.changed_by || '';
-        return '<div><b>' + esc(t) + '</b> · ' + esc(by) + ' · <b>' + esc(h.field_name || h.field || '') + '</b>: ' + esc(h.old_value || '∅') + ' → ' + esc(h.new_value || '∅') + '</div>';
-      }).join('') +
-      '</span>';
-  } catch(e) { statusEl.textContent = '❌ History failed'; }
-}
-
-function supportersCloseDetail() {
-  document.getElementById('supportersDetailPane').style.display = 'none';
-}
-
-function supportersPrevPage() { if (supportersPage > 0) { supportersPage--; supportersLoad(); } }
-function supportersNextPage() { supportersPage++; supportersLoad(); }
-
-async function supportersExport() {
-  const poll = document.getElementById('supPollFilter').value;
-  const level = document.getElementById('supLevelFilter').value;
-  const sign = document.getElementById('supSignFilter').value;
-  const result = document.getElementById('supResultFilter').value;
-  const search = document.getElementById('supSearch').value.trim();
-  const qs = new URLSearchParams();
-  if (poll) qs.set('poll', poll);
-  if (level) qs.set('support_level', level);
-  if (sign) qs.set('sign_request', sign);
-  if (result) qs.set('result', result);
-  if (search) qs.set('search', search);
-  const url = '/api/admin/supporters/export?' + qs.toString();
-  try {
-    const res = await fetch(url, {headers: {'Authorization': 'Bearer ' + (localStorage.getItem('ward25_token') || '')}});
-    if (!res.ok) { alert('Export failed (HTTP ' + res.status + '). Sign in again.'); return; }
-    const blob = await res.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    const ts = new Date().toISOString().slice(0,10);
-    a.download = 'ward25_supporters_' + ts + '.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(a.href);
-  } catch(e) {
-    alert('Export failed: ' + e.message);
-  }
-}
-
-
-/* ── 🔎 Street Search (unified across Advance / Supporters / Conservative) ── */
-let _ssTimer = null;
-function toggleStreetSearch() {
-  const sec = document.getElementById('streetSearchSection');
-  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-  if (sec.style.display === 'block') setTimeout(function(){ const i = document.getElementById('streetSearchInput'); if (i) i.focus(); }, 50);
-}
-function streetSearchDebounced() {
-  clearTimeout(_ssTimer);
-  _ssTimer = setTimeout(streetSearchRun, 350);
-}
-function streetSearchLists() {
-  const lists = [];
-  if (document.getElementById('ssAdvance').checked) lists.push('advance');
-  if (document.getElementById('ssSupporters').checked) lists.push('supporters');
-  if (document.getElementById('ssConservative').checked) lists.push('conservative');
-  return lists.join(',');
-}
-async function streetSearchRun() {
-  const q = document.getElementById('streetSearchInput').value.trim();
-  const status = document.getElementById('streetSearchStatus');
-  const results = document.getElementById('streetSearchResults');
-  if (!q) { results.innerHTML = '<div style="color:var(--gray-400);font-size:0.85em;padding:8px">Type a street name to find everyone on it.</div>'; return; }
-  const lists = streetSearchLists();
-  if (!lists) { results.innerHTML = '<div style="color:var(--red);font-size:0.85em;padding:8px">Select at least one list to search.</div>'; return; }
-  status.textContent = 'Searching…';
-  results.innerHTML = '<div class="loading" style="padding:16px">Searching all lists for "' + esc(q) + '"…</div>';
-  try {
-    const res = await fetch('/api/admin/street-search?q=' + encodeURIComponent(q) + '&lists=' + encodeURIComponent(lists), authHeaders());
-    const d = await res.json();
-    if (!d.ok) { results.innerHTML = '<div class="error">Search failed.</div>'; status.textContent = ''; return; }
-    const groups = [
-      { key: 'advance', label: '🗳️ Advance Voters', color: '#1d4ed8' },
-      { key: 'supporters', label: '👥 Supporters', color: '#16a34a' },
-      { key: 'conservative', label: '🔵 Conservative', color: '#7c3aed' },
-    ];
-    let html = '';
-    let grand = 0;
-    for (const g of groups) {
-      const rows = d.results[g.key] || [];
-      grand += rows.length;
-      if (!rows.length) continue;
-      html += '<div style="border:1px solid var(--gray-200);border-radius:10px;overflow:hidden">' +
-        '<div style="background:' + g.color + ';color:white;padding:6px 12px;font-size:0.85em;font-weight:600;display:flex;justify-content:space-between">' +
-          '<span>' + g.label + '</span><span>' + rows.length + '</span></div>' +
-        '<div style="padding:6px 10px;display:flex;flex-direction:column;gap:4px">';
-      for (const r of rows) {
-        const addr = g.key === 'advance'
-          ? (r.address || '')
-          : [r.street_number, r.street].filter(Boolean).join(' ');
-        const poll = r.poll ? '<span class="poll-badge poll-badge-blue" style="font-size:0.7em">' + esc(r.poll) + '</span>' : '';
-        const lvl = r.support_level ? supportersBadgeChip(r.support_level) : '';
-        const res2 = r.result ? supportersResultChip(r.result) : '';
-        html += '<div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-bottom:1px solid var(--gray-100);font-size:0.85em;flex-wrap:wrap;cursor:pointer" onclick="streetSearchOpenDetail(\'' + g.key + '\', ' + r.id + ')">' +
-          poll +
-          '<span style="font-weight:600">' + esc(r.full_name || '—') + '</span>' +
-          '<span style="color:var(--gray-600)">' + esc(addr || '') + '</span>' +
-          (r.postal_code ? '<span style="color:var(--gray-400);font-size:0.85em">' + esc(r.postal_code) + '</span>' : '') +
-          (lvl ? lvl : '') + (res2 ? res2 : '') +
-          (r.phone ? '<a href="tel:' + escAttr(r.phone) + '" onclick="event.stopPropagation()" style="color:var(--blue);margin-left:auto">📞</a>' : '<span style="margin-left:auto;color:var(--gray-300);font-size:0.9em">✎</span>') +
-        '</div>';
-      }
-      html += '</div></div>';
-    }
-    status.textContent = grand + ' total matches';
-    results.innerHTML = grand ? html : '<div style="color:var(--gray-400);font-size:0.85em;padding:10px">No matches in the selected lists.</div>';
-  } catch(e) {
-    results.innerHTML = '<div class="error">Search failed: ' + esc(e.message) + '</div>';
-    status.textContent = '';
-  }
-}
-
-// Open an editable detail card from a street-search result.
-// Renders directly inside #streetSearchDetailPane so it's always visible
-// (the Advance/Conservative section panes may be inside collapsed sections).
-async function streetSearchOpenDetail(listKey, id) {
-  const pane = document.getElementById('streetSearchDetailPane');
-  pane.style.display = 'block';
-  pane.innerHTML = '<div class="loading" style="padding:24px">Loading record…</div>';
-  pane.scrollIntoView({behavior:'smooth', block:'nearest'});
-  try {
-    let data, label, color;
-    if (listKey === 'advance') {
-      const res = await fetch('/api/admin/advance-voters?id=' + id, authHeaders());
-      data = await res.json();
-      const v = (data.voters || [])[0];
-      if (!v) { pane.innerHTML = '<div class="error">Voter not found</div>'; return; }
-      label = '🗳️ Advance Voter'; color = '#1d4ed8';
-      pane.innerHTML = streetSearchAdvanceCard(v, id);
-    } else {
-      const res = await fetch('/api/supporter/' + id, authHeaders());
-      data = await res.json();
-      const s = data.supporter;
-      if (!s) { pane.innerHTML = '<div class="error">Voter not found</div>'; return; }
-      label = listKey === 'conservative' ? '🔵 Conservative Voter' : '👥 Supporter';
-      color = listKey === 'conservative' ? '#7c3aed' : '#16a34a';
-      pane.innerHTML = streetSearchSupporterCard(s, id, label, color);
-    }
-  } catch(e) {
-    pane.innerHTML = '<div class="error">Failed to load record.</div>';
-  }
-}
-
-function streetSearchAdvanceCard(v, id) {
-  const badge = advanceResultBadge(v.result);
-  const pollHtml = v.poll ? '<span class="poll-badge poll-badge-blue" style="white-space:nowrap">🗺 Poll ' + esc(v.poll) + '</span>' : '';
-  return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
-    '<span style="font-size:0.78em;color:var(--gray-400)">🗳️ Advance Voter · ID:' + id + '</span>' +
-    '<button class="detail-close" onclick="streetSearchCloseDetail()">✕ Close</button>' +
-  '</div>' +
-  '<div class="detail-card">' +
-    '<div class="card-header"><div>' +
-      '<div class="name">' + esc(v.full_name || 'Unknown') + '</div>' +
-      '<div class="address-line">📍 ' + esc(v.address || '') + (v.postal_code ? ' · ' + esc(v.postal_code) : '') + '</div>' +
-      pollHtml +
-    '</div><span class="support-badge ' + badge.cls + '" id="ssadv-badge">' + badge.label + '</span></div>' +
-    '<div class="card-fields">' +
-      '<div class="field-row"><span class="field-label">🗳 Poll</span><span class="field-value">' + esc(v.poll || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">👤 Name</span><span class="field-value">' + esc(v.full_name || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">👤 First</span><span class="field-value">' + esc(v.first_name || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">👥 Last</span><span class="field-value">' + esc(v.last_name || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🏠 Address</span><span class="field-value">' + esc(v.address || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🚪 Apt</span><span class="field-value">' + esc(v.apartment || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">📮 Postal</span><span class="field-value">' + esc(v.postal_code || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">✅ Result</span><span class="field-value" id="ssadv-result">' +
-        '<select onchange="streetSearchAdvanceResult(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!v.result ? 'selected' : '') + '>—</option>' +
-          '<option value="Supporter" ' + (v.result === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-          '<option value="Neutral" ' + (v.result === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-          '<option value="Non-Supporter" ' + (v.result === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-          '<option value="No Answer" ' + (v.result === 'No Answer' ? 'selected' : '') + '>🚪 No Answer</option>' +
-          '<option value="Moved" ' + (v.result === 'Moved' ? 'selected' : '') + '>📦 Moved</option>' +
-          '<option value="Refused" ' + (v.result === 'Refused' ? 'selected' : '') + '>🚫 Refused</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">✅ Support</span><span class="field-value" id="ssadv-level">' +
-        '<select onchange="streetSearchAdvanceSupport(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!v.support_level ? 'selected' : '') + '>—</option>' +
-          '<option value="Supporter" ' + (v.support_level === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-          '<option value="Neutral" ' + (v.support_level === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-          '<option value="Non-Supporter" ' + (v.support_level === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-          '<option value="UNKNOWN" ' + (v.support_level === 'UNKNOWN' ? 'selected' : '') + '>❓ UNKNOWN</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">📋 Sign</span><span class="field-value" id="ssadv-sign">' +
-        '<select onchange="streetSearchAdvanceSign(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!v.sign_request ? 'selected' : '') + '>—</option>' +
-          '<option value="Requested" ' + (v.sign_request === 'Requested' ? 'selected' : '') + '>📋 Requested</option>' +
-          '<option value="Declined" ' + (v.sign_request === 'Declined' ? 'selected' : '') + '>🚫 Declined</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">📞 Phone</span><span class="field-value" id="ssadv-phone" data-orig="' + escAttr(v.phone || '') + '">' + esc(v.phone || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">✉️ Email</span><span class="field-value" id="ssadv-email" data-orig="' + escAttr(v.email || '') + '">' + esc(v.email || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">📝 Notes</span><span class="field-value" id="ssadv-notes" data-orig="' + escAttr(v.notes || '') + '">' + esc(v.notes || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🕐 Contacted</span><span class="field-value">' + (v.contacted_at ? adminFmtDate(v.contacted_at) : '—') + '</span></div>' +
-    '</div>' +
-    '<div class="card-actions">' +
-      '<button class="btn-sm" onclick="streetSearchAdvanceEdit(' + id + ')" style="background:var(--gray-100);color:var(--gray-700);font-size:0.85em">✏️ Edit All</button>' +
-      '<button class="btn-sm" onclick="streetSearchAdvanceSave(' + id + ')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-size:0.85em">💾 Save</button>' +
-      '<span id="ssadv-status" style="font-size:0.75em;color:var(--gray-400);margin-left:auto"></span>' +
-    '</div>' +
-  '</div>';
-}
-
-function streetSearchSupporterCard(s, id, label, color) {
-  const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-  const levelBadge = supportersBadgeChip(s.support_level);
-  return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
-    '<span style="font-size:0.78em;color:var(--gray-400)">' + label + ' · ID:' + id + '</span>' +
-    '<button class="detail-close" onclick="streetSearchCloseDetail()">✕ Close</button>' +
-  '</div>' +
-  '<div class="detail-card">' +
-    '<div class="card-header"><div>' +
-      '<div class="name">' + esc(s.full_name || 'Unknown') + '</div>' +
-      '<div class="address-line">📍 ' + esc(addr || '') + (s.postal_code ? ' · ' + esc(s.postal_code) : '') + '</div>' +
-      (s.poll ? '<span class="poll-badge poll-badge-blue" style="white-space:nowrap">🗺 Poll ' + esc(s.poll) + '</span>' : '') +
-    '</div><span class="support-badge badge-unknown">' + levelBadge.replace(/<[^>]+>/g, '') + '</span></div>' +
-    '<div class="card-fields">' +
-      '<div class="field-row"><span class="field-label">🗳 Poll</span><span class="field-value">' + esc(s.poll || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">👤 Name</span><span class="field-value">' + esc(s.full_name || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🏠 Address</span><span class="field-value">' + esc(addr || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">📮 Postal</span><span class="field-value">' + esc(s.postal_code || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🚪 Canvass</span><span class="field-value" id="sssup-result">' +
-        '<select onchange="streetSearchSupporterResult(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!s.result ? 'selected' : '') + '>— Not Contacted</option>' +
-          '<option value="Home" ' + (s.result === 'Home' ? 'selected' : '') + '>🏠 Home</option>' +
-          '<option value="No Answer" ' + (s.result === 'No Answer' ? 'selected' : '') + '>🚪 No Answer</option>' +
-          '<option value="Moved" ' + (s.result === 'Moved' ? 'selected' : '') + '>📦 Moved</option>' +
-          '<option value="Refused" ' + (s.result === 'Refused' ? 'selected' : '') + '>🚫 Refused</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">✅ Support</span><span class="field-value" id="sssup-level">' +
-        '<select onchange="streetSearchSupporterLevel(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!s.support_level ? 'selected' : '') + '>—</option>' +
-          '<option value="Supporter" ' + (s.support_level === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-          '<option value="Neutral" ' + (s.support_level === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-          '<option value="Non-Supporter" ' + (s.support_level === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-          '<option value="UNKNOWN" ' + (s.support_level === 'UNKNOWN' ? 'selected' : '') + '>❓ UNKNOWN</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">📋 Sign</span><span class="field-value" id="sssup-sign">' +
-        '<select onchange="streetSearchSupporterSign(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-          '<option value="" ' + (!s.sign_request ? 'selected' : '') + '>—</option>' +
-          '<option value="Requested" ' + (s.sign_request === 'Requested' ? 'selected' : '') + '>📋 Requested</option>' +
-          '<option value="Declined" ' + (s.sign_request === 'Declined' ? 'selected' : '') + '>🚫 Declined</option>' +
-        '</select></span></div>' +
-      '<div class="field-row"><span class="field-label">📞 Phone</span><span class="field-value" id="sssup-phone" data-orig="' + escAttr(s.phone || '') + '">' + esc(s.phone || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">✉️ Email</span><span class="field-value" id="sssup-email" data-orig="' + escAttr(s.email || '') + '">' + esc(s.email || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">📝 Notes</span><span class="field-value" id="sssup-notes" data-orig="' + escAttr(s.notes || '') + '">' + esc(s.notes || '—') + '</span></div>' +
-      '<div class="field-row"><span class="field-label">🕐 Updated</span><span class="field-value">' + (s.updated_at ? adminFmtDate(s.updated_at) : '—') + '</span></div>' +
-    '</div>' +
-    '<div class="card-actions">' +
-      '<button class="btn-sm" onclick="streetSearchSupporterEdit(' + id + ')" style="background:var(--gray-100);color:var(--gray-700);font-size:0.85em">✏️ Edit All</button>' +
-      '<button class="btn-sm" onclick="streetSearchSupporterSave(' + id + ')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-size:0.85em">💾 Save</button>' +
-      '<span id="sssup-status" style="font-size:0.75em;color:var(--gray-400);margin-left:auto"></span>' +
-    '</div>' +
-  '</div>';
-}
-
-// ── Advance edit/save (street-search pane) ──
-function streetSearchAdvanceEdit(id) {
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('ssadv-' + field);
-    if (!el) return;
-    const val = el.textContent === '—' ? '' : el.textContent;
-    el.classList.add('editing');
-    if (field === 'notes') {
-      el.innerHTML = '<textarea id="ssadv-input-' + id + '-' + field + '" rows="2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none;resize:vertical">' + esc(val) + '</textarea>';
-    } else {
-      el.innerHTML = '<input type="text" id="ssadv-input-' + id + '-' + field + '" value="' + escAttr(val) + '" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none">';
-    }
-  });
-}
-async function streetSearchAdvanceSave(id) {
-  const updates = {};
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('ssadv-input-' + id + '-' + field);
-    if (!el) return;
-    const val = el.value;
-    if (val !== (document.getElementById('ssadv-' + field).dataset.orig || '')) updates[field] = val;
-  });
-  const statusEl = document.getElementById('ssadv-status');
-  if (!Object.keys(updates).length) { showAdminToast('ℹ️ No changes'); return; }
-  statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(Object.assign({id}, updates))
-    });
-    const d = await res.json();
-    if (d.ok) { showAdminToast('✅ Saved'); streetSearchOpenDetail('advance', id); }
-    else statusEl.textContent = '❌ ' + (d.error || 'Save failed');
-  } catch(e) { statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchAdvanceResult(id, val) {
-  const statusEl = document.getElementById('ssadv-status');
-  if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', {
-      method: 'POST', headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify({id, result: val})
-    });
-    const d = await res.json();
-    if (d.ok) {
-      const badge = advanceResultBadge(val);
-      const b = document.getElementById('ssadv-badge');
-      if (b) { b.className = 'support-badge ' + badge.cls; b.textContent = badge.label; }
-      if (statusEl) statusEl.textContent = d.cascaded > 0 ? '✅ Saved · ' + d.cascaded + ' household No Answer' : '✅ Saved ✓';
-    } else if (statusEl) statusEl.textContent = '❌ Failed';
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchAdvanceSupport(id, val) {
-  const statusEl = document.getElementById('ssadv-status'); if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', { method:'POST', headers: Object.assign({'Content-Type':'application/json'}, authHeaders().headers), body: JSON.stringify({id, support_level: val}) });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ Failed';
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchAdvanceSign(id, val) {
-  const statusEl = document.getElementById('ssadv-status'); if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/advance-voters/update', { method:'POST', headers: Object.assign({'Content-Type':'application/json'}, authHeaders().headers), body: JSON.stringify({id, sign_request: val}) });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ Failed';
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-// ── Supporter/conservative edit/save (street-search pane) ──
-function streetSearchSupporterEdit(id) {
-  ['phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('sssup-' + field);
-    if (!el) return;
-    const val = el.textContent === '—' ? '' : el.textContent;
-    el.classList.add('editing');
-    if (field === 'notes') {
-      el.innerHTML = '<textarea id="sssup-input-' + id + '-' + field + '" rows="2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none;resize:vertical">' + esc(val) + '</textarea>';
-    } else {
-      el.innerHTML = '<input type="text" id="sssup-input-' + id + '-' + field + '" value="' + escAttr(val) + '" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none">';
-    }
-  });
-}
-async function streetSearchSupporterSave(id) {
-  const updates = {};
-  ['phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('sssup-input-' + id + '-' + field);
-    if (!el) return;
-    const val = el.value;
-    if (val !== (document.getElementById('sssup-' + field).dataset.orig || '')) updates[field] = val;
-  });
-  const statusEl = document.getElementById('sssup-status');
-  if (!Object.keys(updates).length) { showAdminToast('ℹ️ No changes'); return; }
-  statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST', headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(Object.assign({id}, updates))
-    });
-    const d = await res.json();
-    if (d.ok) { showAdminToast('✅ Saved'); streetSearchOpenDetail('supporters', id); }
-    else statusEl.textContent = '❌ ' + (d.error || 'Save failed');
-  } catch(e) { statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchSupporterResult(id, val) {
-  const statusEl = document.getElementById('sssup-status'); if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', { method:'POST', headers: Object.assign({'Content-Type':'application/json'}, authHeaders().headers), body: JSON.stringify({id, result: val}) });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ ' + (d.error || 'Failed');
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchSupporterLevel(id, val) {
-  const statusEl = document.getElementById('sssup-status'); if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', { method:'POST', headers: Object.assign({'Content-Type':'application/json'}, authHeaders().headers), body: JSON.stringify({id, support_level: val}) });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ ' + (d.error || 'Failed');
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-async function streetSearchSupporterSign(id, val) {
-  const statusEl = document.getElementById('sssup-status'); if (statusEl) statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', { method:'POST', headers: Object.assign({'Content-Type':'application/json'}, authHeaders().headers), body: JSON.stringify({id, sign_request: val}) });
-    const d = await res.json();
-    if (d.ok && statusEl) statusEl.textContent = '✅ Saved ✓';
-    else if (statusEl) statusEl.textContent = '❌ ' + (d.error || 'Failed');
-  } catch(e) { if (statusEl) statusEl.textContent = '❌ Network error'; }
-}
-
-function streetSearchCloseDetail() {
-  document.getElementById('streetSearchDetailPane').style.display = 'none';
-}
-
-
-let conservativePage = 0;
-const CONS_PAGE_SIZE = 100;
-let consSort = { by: 'poll', dir: 'asc' };
-
-function toggleConservativeSection() {
-  const sec = document.getElementById('conservativeSection');
-  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-  if (sec.style.display === 'block') {
-    conservativeLoadStats();
-    conservativeLoadPolls();
-    conservativeLoad();
-    conservativeUpdateSortIcons();
-  }
-}
-
-async function conservativeLoadStats() {
-  try {
-    const res = await fetch('/api/admin/supporters?conservative=1&limit=1', authHeaders());
-    const d = await res.json();
-    const el = document.getElementById('conservativeSummary');
-    if (el) el.textContent = '(' + d.total + ' voters)';
-  } catch(e) {}
-}
-
-async function conservativeLoadPolls() {
-  try {
-    const data = await (await fetch('/api/admin/supporters?conservative=1&limit=2000', authHeaders())).json();
-    const all = {};
-    for (const r of (data.supporters || [])) { if (r.poll) all[r.poll] = (all[r.poll] || 0) + 1; }
-    const sel = document.getElementById('consPollFilter');
-    const current = sel.value;
-    sel.innerHTML = '<option value="">All Polls</option>';
-    Object.keys(all).sort((a,b) => (parseInt(a)||0) - (parseInt(b)||0)).forEach(function(p) {
-      const opt = document.createElement('option');
-      opt.value = p; opt.textContent = 'Poll ' + p + ' (' + all[p] + ')';
-      sel.appendChild(opt);
-    });
-    sel.value = current || '';
-  } catch(e) {}
-}
-
-function conservativeSort(col) {
-  if (consSort.by === col) consSort.dir = consSort.dir === 'asc' ? 'desc' : 'asc';
-  else { consSort.by = col; consSort.dir = col === 'id' ? 'desc' : 'asc'; }
-  conservativePage = 0; conservativeLoad(); conservativeUpdateSortIcons();
-}
-
-function conservativeUpdateSortIcons() {
-  document.querySelectorAll('.cons-sort-icon').forEach(function(el) { el.textContent = ''; });
-  const icon = document.getElementById('consSortIcon-' + consSort.by);
-  if (icon) icon.textContent = consSort.dir === 'asc' ? '▲' : '▼';
-}
-
-async function conservativeLoad() {
-  const poll = document.getElementById('consPollFilter').value;
-  const level = document.getElementById('consLevelFilter').value;
-  const result = document.getElementById('consResultFilter').value;
-  const search = document.getElementById('consSearch').value.trim();
-  const qs = new URLSearchParams({ conservative: '1', limit: CONS_PAGE_SIZE, offset: conservativePage * CONS_PAGE_SIZE, sort_by: consSort.by, sort_dir: consSort.dir });
-  if (poll) qs.set('poll', poll);
-  if (level) qs.set('support_level', level);
-  if (result) qs.set('result', result);
-  if (search) qs.set('search', search);
-  const tbody = document.getElementById('conservativeList');
-  tbody.innerHTML = '<tr><td colspan="7" class="loading">Loading...</td></tr>';
-  try {
-    const res = await fetch('/api/admin/supporters?' + qs.toString(), authHeaders());
-    const data = await res.json();
-    const rows = data.supporters || [];
-    tbody.innerHTML = '';
-    if (!rows.length) tbody.innerHTML = '<tr><td colspan="7" class="loading">No voters found.</td></tr>';
-    for (const s of rows) {
-      const tr = document.createElement('tr');
-      const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-      const levelClass = s.support_level === 'Supporter' ? 'poll-green' : (s.support_level === 'Non-Supporter' ? 'poll-orange' : (s.support_level === 'Neutral' ? 'poll-yellow' : ''));
-      tr.innerHTML =
-        '<td data-label="#">' + s.id + '</td>' +
-        '<td data-label="POLL"><span class="poll-badge poll-badge-blue">' + esc(s.poll || '—') + '</span></td>' +
-        '<td data-label="NAME" style="font-weight:700;cursor:pointer;color:var(--blue);text-decoration:underline" onclick="conservativeOpenDetail(' + s.id + ')" title="Tap to open record">' + esc(s.full_name || '—') + '</td>' +
-        '<td data-label="ADDRESS">' + esc(addr || '—') + '</td>' +
-        '<td data-label="POSTAL">' + esc(s.postal_code || '—') + '</td>' +
-        '<td data-label="RESULT" class="' + (s.result === 'Home' ? 'poll-green' : (s.result === 'No Answer' ? 'poll-yellow' : (s.result === 'Moved' || s.result === 'Refused' ? 'poll-orange' : ''))) + '">' + (s.result ? supportersResultChip(s.result) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>') + '</td>' +
-        '<td data-label="SUPPORT" class="' + levelClass + '">' + (s.support_level ? supportersBadgeChip(s.support_level) : '<span style="color:var(--gray-400);font-size:0.75em">—</span>') + '</td>';
-      tbody.appendChild(tr);
-    }
-    const total = data.total || 0;
-    const pages = Math.max(1, Math.ceil(total / CONS_PAGE_SIZE));
-    document.getElementById('consPageInfo').textContent = 'Page ' + (conservativePage + 1) + ' of ' + pages;
-    document.getElementById('consTotalInfo').textContent = total + ' voters';
-    document.getElementById('btnConsPrev').disabled = conservativePage <= 0;
-    document.getElementById('btnConsPrev').style.opacity = conservativePage <= 0 ? '0.4' : '1';
-    document.getElementById('btnConsNext').disabled = (conservativePage + 1) >= pages;
-    document.getElementById('btnConsNext').style.opacity = (conservativePage + 1) >= pages ? '0.4' : '1';
-  } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="7" class="error">Failed to load.</td></tr>';
-  }
-}
-
-function conservativePrevPage() { if (conservativePage > 0) { conservativePage--; conservativeLoad(); } }
-function conservativeNextPage() { conservativePage++; conservativeLoad(); }
-
-async function conservativeOpenDetail(id) {
-  const pane = document.getElementById('conservativeDetailPane');
-  pane.style.display = 'block';
-  pane.innerHTML = '<div class="loading" style="padding:24px">Loading voter…</div>';
-  pane.scrollIntoView({behavior:'smooth', block:'nearest'});
-  try {
-    const res = await fetch('/api/supporter/' + id, authHeaders());
-    const data = await res.json();
-    const s = data.supporter;
-    if (!s) { pane.innerHTML = '<div class="error">Voter not found</div>'; return; }
-    const addr = [s.street_number, s.street].filter(Boolean).join(' ');
-    const badge = supportersBadgeChip(s.support_level);
-    pane.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
-        '<span style="font-size:0.78em;color:var(--gray-400)">🔵 Conservative Voter · ID:' + id + '</span>' +
-        '<button class="detail-close" onclick="conservativeCloseDetail()">✕ Close</button>' +
-      '</div>' +
-      '<div class="detail-card">' +
-        '<div class="card-header"><div>' +
-          '<div class="name">' + esc(s.full_name || 'Unknown') + '</div>' +
-          '<div class="address-line">📍 ' + esc(addr || '') + (s.postal_code ? ' · ' + esc(s.postal_code) : '') + '</div>' +
-          (s.poll ? '<span class="poll-badge poll-badge-blue" style="white-space:nowrap">🗺 Poll ' + esc(s.poll) + '</span>' : '') +
-        '</div><span class="support-badge badge-unknown">' + badge.replace(/<[^>]+>/g, '') + '</span></div>' +
-        '<div class="card-fields">' +
-          '<div class="field-row"><span class="field-label">🗳 Poll</span><span class="field-value">' + esc(s.poll || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 Name</span><span class="field-value">' + esc(s.full_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👤 First Name</span><span class="field-value" id="consdetail-first_name" data-orig="' + escAttr(s.first_name || '') + '">' + esc(s.first_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">👥 Last Name</span><span class="field-value" id="consdetail-last_name" data-orig="' + escAttr(s.last_name || '') + '">' + esc(s.last_name || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🏠 Address</span><span class="field-value">' + esc(addr || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📮 Postal</span><span class="field-value">' + esc(s.postal_code || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🏢 Apartment</span><span class="field-value" id="consdetail-apartment" data-orig="' + escAttr(s.apartment || '') + '">' + esc(s.apartment || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🚪 Canvass</span><span class="field-value" id="consdetail-result">' +
-            '<select onchange="supportersDetailResult(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.result ? 'selected' : '') + '>— Not Contacted</option>' +
-              '<option value="Home" ' + (s.result === 'Home' ? 'selected' : '') + '>🏠 Home</option>' +
-              '<option value="No Answer" ' + (s.result === 'No Answer' ? 'selected' : '') + '>🚪 No Answer</option>' +
-              '<option value="Moved" ' + (s.result === 'Moved' ? 'selected' : '') + '>📦 Moved</option>' +
-              '<option value="Refused" ' + (s.result === 'Refused' ? 'selected' : '') + '>🚫 Refused</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">✅ Support Level</span><span class="field-value" id="consdetail-level">' +
-            '<select onchange="supportersDetailLevel(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.support_level ? 'selected' : '') + '>—</option>' +
-              '<option value="Supporter" ' + (s.support_level === 'Supporter' ? 'selected' : '') + '>✅ Supporter</option>' +
-              '<option value="Neutral" ' + (s.support_level === 'Neutral' ? 'selected' : '') + '>😐 Neutral</option>' +
-              '<option value="Non-Supporter" ' + (s.support_level === 'Non-Supporter' ? 'selected' : '') + '>❌ Non-Supporter</option>' +
-              '<option value="UNKNOWN" ' + (s.support_level === 'UNKNOWN' ? 'selected' : '') + '>❓ UNKNOWN</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📋 Sign Request</span><span class="field-value" id="consdetail-sign">' +
-            '<select onchange="supportersDetailSign(' + id + ', this.value)" style="padding:4px 6px;border:1px solid var(--gray-200);border-radius:5px;font-size:0.85em;font-family:inherit;width:100%">' +
-              '<option value="" ' + (!s.sign_request ? 'selected' : '') + '>—</option>' +
-              '<option value="Requested" ' + (s.sign_request === 'Requested' ? 'selected' : '') + '>📋 Requested</option>' +
-              '<option value="Declined" ' + (s.sign_request === 'Declined' ? 'selected' : '') + '>🚫 Declined</option>' +
-            '</select></span></div>' +
-          '<div class="field-row"><span class="field-label">📞 Phone</span><span class="field-value" id="consdetail-phone" data-orig="' + escAttr(s.phone || '') + '">' + esc(s.phone || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">✉️ Email</span><span class="field-value" id="consdetail-email" data-orig="' + escAttr(s.email || '') + '">' + esc(s.email || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">📝 Notes</span><span class="field-value" id="consdetail-notes" data-orig="' + escAttr(s.notes || '') + '">' + esc(s.notes || '—') + '</span></div>' +
-          '<div class="field-row"><span class="field-label">🕐 Updated</span><span class="field-value">' + (s.updated_at ? adminFmtDate(s.updated_at) : '—') + '</span></div>' +
-        '</div>' +
-        '<div class="card-actions">' +
-          '<button class="btn-sm" onclick="conservativeDetailEdit(' + id + ')" style="background:var(--gray-100);color:var(--gray-700);font-size:0.85em">✏️ Edit All</button>' +
-          '<button class="btn-sm" onclick="conservativeDetailSave(' + id + ')" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-size:0.85em">💾 Save</button>' +
-          '<button class="btn-sm" onclick="supportersHistory(' + id + ')" style="background:#fffbeb;color:#92400e;border-color:#fde68a;font-size:0.85em">📜 History</button>' +
-          '<span id="consdetail-status" style="font-size:0.75em;color:var(--gray-400);margin-left:auto"></span>' +
-        '</div>' +
-      '</div>';
-  } catch(e) { pane.innerHTML = '<div class="error">Failed to load voter.</div>'; }
-}
-
-function conservativeDetailEdit(id) {
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('consdetail-' + field);
-    if (!el) return;
-    const val = el.textContent === '—' ? '' : el.textContent;
-    el.classList.add('editing');
-    if (field === 'notes') {
-      el.innerHTML = '<textarea id="cons-input-' + id + '-' + field + '" rows="2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none;resize:vertical">' + esc(val) + '</textarea>';
-    } else {
-      el.innerHTML = '<input type="text" id="cons-input-' + id + '-' + field + '" value="' + escAttr(val) + '" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:0.85em;padding:2px 4px;outline:none">';
-    }
-  });
-}
-
-async function conservativeDetailSave(id) {
-  const updates = {};
-  ['first_name','last_name','apartment','phone','email','notes'].forEach(function(field) {
-    const el = document.getElementById('cons-input-' + id + '-' + field);
-    if (!el) return;
-    const val = el.value;
-    if (val !== (document.getElementById('consdetail-' + field).dataset.orig || '')) updates[field] = val;
-  });
-  if (!Object.keys(updates).length) { showAdminToast('ℹ️ No changes'); conservativeOpenDetail(id); return; }
-  const statusEl = document.getElementById('consdetail-status');
-  statusEl.textContent = 'Saving…';
-  try {
-    const res = await fetch('/api/admin/supporters/update', {
-      method: 'POST',
-      headers: Object.assign({'Content-Type': 'application/json'}, authHeaders().headers),
-      body: JSON.stringify(Object.assign({id}, updates))
-    });
-    const d = await res.json();
-    if (d.ok) { showAdminToast('✅ Saved'); conservativeOpenDetail(id); conservativeLoad(); }
-    else statusEl.textContent = '❌ ' + (d.error || 'Save failed');
-  } catch(e) { statusEl.textContent = '❌ Network error'; }
-}
-
-function conservativeCloseDetail() { document.getElementById('conservativeDetailPane').style.display = 'none'; }
-
-async function conservativeExport() {
-  const poll = document.getElementById('consPollFilter').value;
-  const level = document.getElementById('consLevelFilter').value;
-  const result = document.getElementById('consResultFilter').value;
-  const search = document.getElementById('consSearch').value.trim();
-  const qs = new URLSearchParams();
-  qs.set('conservative', '1');
-  if (poll) qs.set('poll', poll);
-  if (level) qs.set('support_level', level);
-  if (result) qs.set('result', result);
-  if (search) qs.set('search', search);
-  const url = '/api/admin/supporters/export?' + qs.toString();
-  try {
-    const res = await fetch(url, {headers: {'Authorization': 'Bearer ' + (localStorage.getItem('ward25_token') || '')}});
-    if (!res.ok) { alert('Export failed (HTTP ' + res.status + '). Sign in again.'); return; }
-    const blob = await res.blob();
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    const ts = new Date().toISOString().slice(0,10);
-    a.download = 'ward25_conservative_voters_' + ts + '.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(a.href);
-  } catch(e) { alert('Export failed: ' + e.message); }
-}
-
-function escAttr(s) {
-  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
 async function loadChanges(mode) {
   _changesMode = mode || 'today';
   _changesPage = 1;
@@ -3947,15 +2189,8 @@ async function changesFetchPage() {
   var tbody = document.getElementById('recentChanges');
   tbody.innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
   var endpoint = _changesMode === 'archive' ? '/api/admin/changes/archive' : '/api/admin/changes';
-  var qs = '?page=' + _changesPage + '&per_page=10';
-  var q = document.getElementById('changesSearchInput') ? document.getElementById('changesSearchInput').value.trim() : '';
-  var d1 = document.getElementById('changesDateFrom') ? document.getElementById('changesDateFrom').value : '';
-  var d2 = document.getElementById('changesDateTo') ? document.getElementById('changesDateTo').value : '';
-  if (q) qs += '&search=' + encodeURIComponent(q);
-  if (d1) qs += '&date_from=' + encodeURIComponent(d1);
-  if (d2) qs += '&date_to=' + encodeURIComponent(d2);
   try {
-    var r = await fetch(endpoint + qs, authHeaders());
+    var r = await fetch(endpoint + '?page=' + _changesPage + '&per_page=10');
     var d = await r.json();
     _changesTotalPages = d.total_pages || 1;
     document.getElementById('changesPageInfo').textContent = 'Page ' + d.page + ' of ' + _changesTotalPages;
@@ -3971,8 +2206,6 @@ async function changesFetchPage() {
     tbody.innerHTML = d.changes.map(function(c) {
       var userLabel = c.changed_by ? esc(c.changed_by) : (c.user_id ? '#'+c.user_id : '—');
       var summary = c.changes_summary || '';
-      // Nicer display for creation entries
-      summary = summary.replace(/^created:\s*→\s*/, '➕ Added: ').replace(/; created:\s*→\s*/, '; ➕ Added: ');
       var countBadge = c.field_count > 1 ? ' <span style="font-size:0.7em;color:var(--gray-400)">('+c.field_count+' fields)</span>' : '';
       return '<tr><td style="position:sticky;left:0;background:white;z-index:3;box-shadow:2px 0 4px rgba(0,0,0,0.05);white-space:nowrap">'+esc(c.changed_at)+'</td><td>'+userLabel+'</td><td>'+esc(c.full_name)+'</td><td>'+esc(c.address)+'</td><td style="white-space:nowrap">'+esc(summary)+countBadge+'</td></tr>';
     }).join('');
@@ -3989,19 +2222,6 @@ function changesNextPage() {
   if (_changesPage < _changesTotalPages) { _changesPage++; changesFetchPage(); }
 }
 
-var _changesSearchTimer = null;
-function changesSearchChanged() {
-  clearTimeout(_changesSearchTimer);
-  _changesSearchTimer = setTimeout(function() { _changesPage = 1; changesFetchPage(); }, 350);
-}
-function changesClearFilters() {
-  var q = document.getElementById('changesSearchInput'); if (q) q.value = '';
-  var d1 = document.getElementById('changesDateFrom'); if (d1) d1.value = '';
-  var d2 = document.getElementById('changesDateTo'); if (d2) d2.value = '';
-  _changesPage = 1;
-  changesFetchPage();
-}
-
 // ── Stat-card drill-down ──
 async function adminDrilldown(type) {
   var tbody = document.getElementById('adminSearchResults');
@@ -4009,7 +2229,7 @@ async function adminDrilldown(type) {
   document.getElementById('adminSignFilter').value = '';
   document.getElementById('adminPollFilter').value = '';
   document.getElementById('adminSearchInput').value = '';
-  tbody.innerHTML = '<tr><td colspan="11" class="loading">Loading details...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="10" class="loading">Loading details...</td></tr>';
   document.getElementById('adminSearchInput').scrollIntoView({behavior:'smooth',block:'center'});
 
   try {
@@ -4018,10 +2238,10 @@ async function adminDrilldown(type) {
     if (!r.ok || d.error) throw new Error(d.error || 'Failed');
     var rows = d.rows || [];
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--gray-400);padding:20px">No records found for '+esc(d.title||'this item')+'</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--gray-400);padding:20px">No records found for '+esc(d.title||'this item')+'</td></tr>';
       return;
     }
-    tbody.innerHTML = '<tr style="background:#eff6ff"><td colspan="11" style="font-weight:700;color:var(--blue)">Showing '+rows.length.toLocaleString()+' of '+Number(d.total||rows.length).toLocaleString()+' — '+esc(d.title||'Details')+'</td></tr>' +
+    tbody.innerHTML = '<tr style="background:#eff6ff"><td colspan="10" style="font-weight:700;color:var(--blue)">Showing '+rows.length.toLocaleString()+' of '+Number(d.total||rows.length).toLocaleString()+' — '+esc(d.title||'Details')+'</td></tr>' +
       rows.map(function(s){
         var id = s.id || s.supporter_id;
         var addr = [s.street_number, s.street].filter(Boolean).join(' ');
@@ -4034,7 +2254,7 @@ async function adminDrilldown(type) {
           '<td id="ar-'+id+'-addr">'+esc(addr)+(s.apartment?', Apt '+esc(s.apartment):'')+'</td>'+
           '<td id="ar-'+id+'-phone">'+esc(s.phone||'—')+'</td>'+
           '<td id="ar-'+id+'-email" style="font-size:0.85em;color:var(--gray-600)">'+esc(s.email||'—')+'</td>'+
-          '<td id="ar-'+id+'-poll" style="font-weight:600">'+(s.poll ? '<a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none" title="View map">🗺 '+esc(s.poll)+'</a>' : '—')+'</td>'+
+          '<td id="ar-'+id+'-poll" style="font-weight:600">'+(s.poll ? '<a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" style="text-decoration:none" title="View map">🗺 '+esc(s.poll)+'</a>' : '—')+'</td>'+
           '<td id="ar-'+id+'-level">'+badge+'</td>'+
           '<td id="ar-'+id+'-sign" style="max-width:260px;white-space:normal;font-size:0.8em">'+esc(signOrChanges)+'</td>'+
           '<td id="ar-'+id+'-updated" style="font-size:0.75em;color:var(--gray-400)">'+esc(when)+'</td>'+
@@ -4042,7 +2262,7 @@ async function adminDrilldown(type) {
           '</tr>';
       }).join('');
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--red);padding:16px">Failed to load details: '+esc(e.message||e)+'</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--red);padding:16px">Failed to load details: '+esc(e.message||e)+'</td></tr>';
   }
 }
 
@@ -4087,7 +2307,7 @@ function clearAdminFilters() {
   document.getElementById('adminPollFilter').value = '';
   document.getElementById('adminSearchInput').value = '';
   document.getElementById('adminSearchInput').focus();
-  document.getElementById('adminSearchResults').innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--gray-400);padding:20px">Filters cleared — enter a search or select filters</td></tr>';
+  document.getElementById('adminSearchResults').innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--gray-400);padding:20px">Filters cleared — enter a search or select filters</td></tr>';
   document.getElementById('adminNameFilter').value = '';
   document.getElementById('adminNameFilterRow').style.display = 'none';
   _lastAdminResults = [];
@@ -4121,7 +2341,7 @@ function adminFilterByName() {
 function renderAdminResults(data) {
   var tbody = document.getElementById('adminSearchResults');
   if (!data || data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--gray-400);padding:20px">No names match the filter</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--gray-400);padding:20px">No names match the filter</td></tr>';
     return;
   }
   tbody.innerHTML = data.map(function(s){
@@ -4131,9 +2351,9 @@ function renderAdminResults(data) {
     return '<tr id="'+rowId+'">'+
       '<td id="ar-'+s.id+'-name"><strong style="cursor:pointer" onclick="adminOpenRecord('+s.id+')" title="Click to open full record view">'+esc(s.full_name||'—')+'</strong></td>'+
       '<td id="ar-'+s.id+'-addr">'+esc(addr)+(s.apartment?', Apt '+esc(s.apartment):'')+'</td>'+
-      '<td id="ar-'+s.id+'-phone"><a href="https://www.google.com/maps/search/'+encodeURIComponent(esc(s.phone||''))+'" target="_blank" onclick="event.stopPropagation()" style="color:var(--blue);text-decoration:underline" title="Search on Google Maps">'+esc(s.phone||'—')+'</a></td>'+
+      '<td id="ar-'+s.id+'-phone">'+esc(s.phone||'—')+'</td>'+
       '<td id="ar-'+s.id+'-email" style="font-size:0.85em;color:var(--gray-600)">'+esc(s.email||'—')+'</td>'+
-      '<td id="ar-'+s.id+'-poll" style="font-weight:600"><a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none" title="View map" class="'+getPollBadgeClass(s.poll)+'" style="padding:1px 8px;border-radius:8px;font-size:0.85em">🗺 '+(s.poll||'—')+'</a></td>'+
+      '<td id="ar-'+s.id+'-poll" style="font-weight:600"><a href="/poll_maps/normalized/poll_'+esc(s.poll)+'.png" target="_blank" style="text-decoration:none" title="View map" class="'+getPollBadgeClass(s.poll)+'" style="padding:1px 8px;border-radius:8px;font-size:0.85em">🗺 '+(s.poll||'—')+'</a></td>'+
       '<td id="ar-'+s.id+'-level">'+badge+'</td>'+
       '<td id="ar-'+s.id+'-sign">'+esc(s.sign_request||'—')+'</td>'+
       '<td id="ar-'+s.id+'-notes" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.85em;color:var(--gray-600)">'+esc(s.notes||'—')+'</td>'+
@@ -4268,108 +2488,21 @@ function canvassNextPage() {
   if (canvassPage < totalPages) { canvassPage++; renderCanvassTable(); }
 }
 
-var _canvasserUsers = [];
 async function loadCanvasserUsers() {
   try {
     var r = await fetch('/api/admin/users', {
       headers: {'Authorization': 'Bearer ' + (token || '')}
     });
     var d = await r.json();
-    _canvasserUsers = (d.users||[]).filter(function(u){ return u.role === 'canvasser'; });
     var sel = document.getElementById('canvassAssignUser');
-    if (sel) {
-      sel.innerHTML = '<option value="">— Select canvasser —</option>';
-      _canvasserUsers.forEach(function(u) {
+    sel.innerHTML = '<option value="">— Select canvasser —</option>';
+    (d.users||[]).forEach(function(u) {
+      if (u.role === 'canvasser') {
         sel.innerHTML += '<option value="'+esc(u.username)+'">'+esc(u.display_name||u.username)+'</option>';
-      });
-    }
-    return _canvasserUsers;
-  } catch(e) { return []; }
-}
-
-var _canvassWalks = [];
-
-function canvassWalkUserOptions(selected) {
-  var html = '<option value="">— Select —</option>';
-  (_canvasserUsers||[]).forEach(function(u){
-    var label = u.display_name || u.username;
-    html += '<option value="'+esc(u.username)+'" '+(selected === u.username ? 'selected' : '')+'>'+esc(label)+'</option>';
-  });
-  return html;
-}
-
-async function loadCanvassWalks() {
-  var body = document.getElementById('canvassWalksBody');
-  if (!body) return;
-  body.innerHTML = '<tr><td colspan="8" class="loading">Loading canvass walks...</td></tr>';
-  if (!_canvasserUsers || _canvasserUsers.length === 0) await loadCanvasserUsers();
-  try {
-    var r = await fetch('/api/canvass/walks', {headers:{'Authorization':'Bearer '+(token||'')}});
-    var d = await r.json();
-    _canvassWalks = d.walks || [];
-    document.getElementById('canvassWalksCount').textContent = '('+_canvassWalks.length+')';
-    renderCanvassWalks();
-  } catch(e) {
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--red);padding:20px">Error loading walks</td></tr>';
-  }
-}
-
-function renderCanvassWalks() {
-  var body = document.getElementById('canvassWalksBody');
-  if (!_canvassWalks.length) {
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:20px">No canvass walks loaded</td></tr>';
-    return;
-  }
-  body.innerHTML = _canvassWalks.map(function(w){
-    var a = w.assignment || null;
-    var assigned = a ? (esc(a.assigned_to)+'<br><span style="font-size:0.78em;color:var(--gray-500)">'+esc(a.status||'')+'</span>') : '<span style="color:var(--gray-400)">Unassigned</span>';
-    var streets = (w.streets||[]).slice(0,4).join(', ');
-    if ((w.streets||[]).length > 4) streets += '…';
-    return '<tr>'+
-      '<td><strong>Walk '+esc(w.seq)+'</strong><br><span style="font-size:0.78em;color:var(--gray-500)">'+esc(w.route||w.walk_id)+'</span></td>'+
-      '<td>'+esc(w.date||'')+'<br><span style="font-size:0.78em;color:var(--gray-500)">'+esc(w.time||'')+'</span></td>'+
-      '<td><strong>Poll '+esc(w.poll||'')+'</strong></td>'+
-      '<td>'+esc(w.doors||0)+' doors<br><span style="font-size:0.78em;color:var(--gray-500)">'+esc(w.people_count||0)+' people</span></td>'+
-      '<td style="color:'+(w.priority_doors>0?'var(--red)':'var(--gray-500)')+';font-weight:600">'+esc(w.priority_doors||0)+'</td>'+
-      '<td style="max-width:260px;white-space:normal">'+esc(streets||'—')+'</td>'+
-      '<td>'+assigned+'</td>'+
-      '<td style="white-space:nowrap"><select id="walkAssign-'+esc(w.walk_id)+'" style="padding:6px;border:1px solid var(--gray-200);border-radius:6px;font-size:0.85em;max-width:118px">'+canvassWalkUserOptions(a && a.assigned_to)+'</select> '+
-      '<button onclick="assignOptimizedWalk(\''+esc(w.walk_id)+'\')" style="padding:6px 8px;background:#7c3aed;color:white;border:none;border-radius:6px;font-size:0.8em;font-weight:600;cursor:pointer">Assign</button> <span id="walkMsg-'+esc(w.walk_id)+'" style="font-size:0.78em;color:var(--green)"></span></td>'+
-      '</tr>';
-  }).join('');
-}
-
-async function assignOptimizedWalk(walkId) {
-  var sel = document.getElementById('walkAssign-'+walkId);
-  var canvasser = sel ? sel.value : '';
-  var msg = document.getElementById('walkMsg-'+walkId);
-  if (!canvasser) { if (msg) msg.textContent = 'Select canvasser'; return; }
-  if (msg) msg.textContent = 'Saving...';
-  try {
-    var r = await fetch('/api/canvass/assign-walk', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+(token||'')},
-      body:JSON.stringify({walk_id:walkId, canvasser:canvasser})
+      }
     });
-    var d = await r.json();
-    if (d.success) {
-      if (msg) msg.textContent = '✅ Assigned';
-      await loadCanvassWalks();
-      loadCanvassAssignments();
-    } else {
-      if (msg) msg.textContent = '❌ '+(d.error||'Failed');
-    }
-  } catch(e) { if (msg) msg.textContent = '❌ Error'; }
-}
-
-function assignmentWalkLabel(a) {
-  try {
-    var meta = JSON.parse(a.notes || '{}');
-    if (meta && meta.type === 'canvass_walk') return 'Walk '+esc(meta.seq)+'<br><span style="font-size:0.78em;color:var(--gray-500)">'+esc(meta.route||meta.walk_id)+' · '+esc(meta.doors||'')+' doors</span>';
   } catch(e) {}
-  return '<strong>Poll '+esc(a.poll)+'</strong>';
 }
-
 
 async function assignCanvassWalk() {
   var poll = document.getElementById('canvassPollSelect').value;
@@ -4413,7 +2546,7 @@ async function loadCanvassAssignments() {
       var statusColor = a.status === 'completed' ? 'var(--green)' : 'var(--orange)';
       var statusIcon = a.status === 'completed' ? '✅' : '⏳';
       return '<tr>'+
-        '<td>'+assignmentWalkLabel(a)+'</td>'+
+        '<td><strong>Poll '+esc(a.poll)+'</strong></td>'+
         '<td>'+esc(a.assigned_to)+'</td>'+
         '<td>'+esc(a.streets||'All')+'</td>'+
         '<td style="color:'+statusColor+';font-weight:600">'+statusIcon+' '+esc(a.status)+'</td>'+
@@ -4570,85 +2703,6 @@ document.addEventListener('keydown', function(e) {
     else if (e.key === 'ArrowRight') { e.preventDefault(); canvassNextPage(); }
   }
 });
-
-// ── 📱 SMS Outbox ──
-function adminToggleSmsOutbox() {
-    var panel = document.getElementById('smsOutboxPanel');
-    var title = document.getElementById('smsOutboxSectionTitle');
-    if (panel.style.display === 'none') {
-        panel.style.display = 'block';
-        title.querySelector('span:last-child').innerHTML = '▲';
-        adminLoadSmsOutbox('all');
-    } else {
-        panel.style.display = 'none';
-        title.querySelector('span:last-child').innerHTML = '▼';
-    }
-}
-
-function adminLoadSmsOutbox(filter) {
-    // Update active tab styling
-    var tabs = ['smsTabAll', 'smsTabSent', 'smsTabFailed'];
-    tabs.forEach(function(id) {
-        var btn = document.getElementById(id);
-        if (btn) btn.classList.remove('active');
-    });
-    var activeTab = document.getElementById(filter === 'sent' ? 'smsTabSent' : filter === 'failed' ? 'smsTabFailed' : 'smsTabAll');
-    if (activeTab) activeTab.classList.add('active');
-
-    fetch('/api/sms-outbox?limit=500', authHeaders())
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-            if (!d.ok) throw new Error(d.error);
-            var rows = d.rows;
-            var total = d.total;
-
-            // Filter
-            if (filter === 'sent') rows = rows.filter(function(r) { return r.status === 'queued' || r.status === 'sent' || r.status === 'delivered'; });
-            else if (filter === 'failed') rows = rows.filter(function(r) { return r.status === 'error' || r.status === 'failed' || r.status === 'undelivered'; });
-
-            document.getElementById('smsOutboxCount').innerHTML = '(' + total + ' total)';
-
-            var tbody = document.getElementById('smsOutboxBody');
-            if (rows.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400)">No messages yet</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = rows.map(function(r) {
-                var statusBadge = r.status === 'delivered' ? '<span style="color:var(--green);font-weight:600">✓ Delivered</span>' :
-                                  r.status === 'sent' || r.status === 'queued' ? '<span style="color:var(--blue);font-weight:600">📤 ' + r.status + '</span>' :
-                                  r.status === 'error' || r.status === 'failed' ? '<span style="color:var(--red);font-weight:600">✗ ' + r.status + '</span>' :
-                                  '<span style="color:var(--gray-400)">' + (r.status || '?') + '</span>';
-
-                var supporterLink = r.supporter_id
-                    ? '<a href="javascript:adminOpenRecord(' + r.supporter_id + ')" style="color:var(--blue);text-decoration:underline">' + (r.supporter_id) + '</a>'
-                    : '—';
-
-                var name = r.supporter_name || '';
-                var addr = r.supporter_address || '';
-                var poll = r.poll || '';
-                var nameDisplay = name
-                    ? '<a href="javascript:adminOpenRecord(' + r.supporter_id + ')" style="color:var(--blue);text-decoration:underline;font-weight:700">' + esc(name) + '</a>'
-                    : '<span style="color:var(--gray-400)">Unknown</span>';
-                var addrDisplay = addr ? '<span style="color:var(--gray-600);font-size:0.85em">' + esc(addr) + '</span>' : '';
-                var pollDisplay = poll ? '<span class="poll-badge poll-badge-blue" style="font-size:0.75em;margin-left:4px">' + esc(poll) + '</span>' : '';
-
-                return '<tr>' +
-                    '<td data-label="PHONE">' + esc(r.phone) + '</td>' +
-                    '<td data-label="NAME">' + nameDisplay + pollDisplay + '<br>' + addrDisplay + '</td>' +
-                    '<td data-label="MESSAGE" title="' + escAttr(r.message_preview || '') + '">' + esc(r.message_preview || '—') + '</td>' +
-                    '<td data-label="SEGMENTS" style="display:none">' + (r.num_segments || '—') + '</td>' +
-                    '<td data-label="STATUS">' + statusBadge + '</td>' +
-                    '<td data-label="SENT">' + esc(r.sent_at || '—') + '</td>' +
-                    '<td data-label="ERROR">' + esc(r.error_msg || '') + '</td>' +
-                    '</tr>';
-            }).join('');
-        })
-        .catch(function(e) {
-            document.getElementById('smsOutboxBody').innerHTML = '<tr><td colspan="7" style="color:var(--red)">Error: ' + esc(e.message) + '</td></tr>';
-        });
-}
-
 </script>
 </body>
 </html>

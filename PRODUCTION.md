@@ -23,7 +23,9 @@
 ### Setup (one time)
 1. Push to GitHub:
    ```bash
-   git remote add origin https://github.com/your-username/ward25-supporter-db.git
+   git remote add origin https://github.com/matrixshawn/Electshawnallen.git
+   # Clone the canvass-server branch:
+   git clone -b canvass-server https://github.com/matrixshawn/Electshawnallen.git
    git push -u origin main
    ```
 2. On Railway or Render:

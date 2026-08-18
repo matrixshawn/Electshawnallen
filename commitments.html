@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commit to Vote — Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #1a1a1a; }
+.header { background: #1a237e; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+.header h1 { font-size: 20px; }
+.header a { color: rgba(255,255,255,.8); text-decoration: none; font-size: 14px; }
+.header a:hover { color: white; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.stat-card .num { font-size: 32px; font-weight: 700; color: #1a237e; }
+.stat-card .label { font-size: 13px; color: #666; margin-top: 4px; }
+.filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.filters input, .filters select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+.filters input { flex: 1; min-width: 200px; }
+table { width: 100%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+th { background: #1a237e; color: white; padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; white-space: nowrap; }
+td { padding: 10px 16px; border-bottom: 1px solid #eee; font-size: 14px; }
+tr:hover td { background: #f8f9ff; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-vol { background: #e3f2fd; color: #1565c0; }
+.badge-sign { background: #fce4ec; color: #c62828; }
+.email-cell { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 14px; color: #666; }
+.pagination button { padding: 6px 14px; border: 1px solid #ddd; border-radius: 6px; background: white; cursor: pointer; }
+.pagination button:disabled { opacity: .5; cursor: default; }
+.export-btn { background: #1a237e; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+.export-btn:hover { background: #283593; }
+.loading { text-align: center; padding: 40px; color: #888; }
+.error { background: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🗳️ Commit to Vote — Dashboard</h1>
+  <div>
+    <a href="/admin">← Back to Admin</a>
+  </div>
+</div>
+<div class="container">
+  <div class="stats" id="stats"></div>
+  <div class="filters">
+    <input type="text" id="search" placeholder="Search name, email, address..." oninput="loadData()">
+    <select id="volFilter" onchange="loadData()">
+      <option value="">All</option>
+      <option value="1">Volunteers Only</option>
+      <option value="0">Non-Volunteers</option>
+    </select>
+    <select id="signFilter" onchange="loadData()">
+      <option value="">All</option>
+      <option value="1">Lawn Signs Only</option>
+      <option value="0">No Sign</option>
+    </select>
+    <button class="export-btn" onclick="exportCSV()">📥 Export CSV</button>
+  </div>
+  <div id="error" class="error" style="display:none"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Postal</th><th>Status</th><th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr><td colspan="8" class="loading">Loading...</td></tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <span id="pageInfo">Page 1 of 1</span>
+    <div>
+      <button id="prevBtn" onclick="changePage(-1)" disabled>← Prev</button>
+      <button id="nextBtn" onclick="changePage(1)" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let page = 0, totalPages = 1, allData = [];
+
+async function loadData() {
+  const search = document.getElementById('search').value;
+  const vol = document.getElementById('volFilter').value;
+  const sign = document.getElementById('signFilter').value;
+  try {
+    let url = '/api/admin/commitments?page=' + page + '&limit=50';
+    if (search) url += '&search=' + encodeURIComponent(search);
+    if (vol) url += '&volunteer=' + vol;
+    if (sign) url += '&sign=' + sign;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    allData = data.records || [];
+    totalPages = Math.max(1, Math.ceil((data.total || 0) / 50));
+    render();
+  } catch(e) {
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="8" class="loading">Error: ' + e.message + '</td></tr>';
+  }
+}
+
+function render() {
+  // Stats
+  const total = allData.length;
+  const volunteers = allData.filter(r => r.volunteer).length;
+  const signs = allData.filter(r => r.sign).length;
+  const emails = allData.filter(r => r.email).length;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-card"><div class="num">${total}</div><div class="label">Total on this page</div></div>
+    <div class="stat-card"><div class="num">${volunteers}</div><div class="label">Volunteers</div></div>
+    <div class="stat-card"><div class="num">${signs}</div><div class="label">Lawn Signs</div></div>
+    <div class="stat-card"><div class="num">${emails}</div><div class="label">Emails Sent</div></div>
+  `;
+  // Table rows
+  let html = '';
+  allData.forEach(r => {
+    const badges = [];
+    if (r.volunteer) badges.push('<span class="badge badge-vol">🤝 Volunteer</span>');
+    if (r.sign) badges.push('<span class="badge badge-sign">🏠 Sign</span>');
+    const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : '-';
+    html += `<tr>
+      <td>${r.id}</td>
+      <td><strong>${esc(r.first)} ${esc(r.last)}</strong></td>
+      <td class="email-cell"><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></td>
+      <td>${esc(r.phone || '-')}</td>
+      <td>${esc(r.address)}</td>
+      <td>${esc(r.postal)}</td>
+      <td>${badges.join(' ') || '-'}</td>
+      <td>${date}</td>
+    </tr>`;
+  });
+  if (!html) html = '<tr><td colspan="8" class="loading">No records found</td></tr>';
+  document.getElementById('tableBody').innerHTML = html;
+  // Pagination
+  document.getElementById('pageInfo').textContent = `Page ${page + 1} of ${totalPages}`;
+  document.getElementById('prevBtn').disabled = page <= 0;
+  document.getElementById('nextBtn').disabled = page >= totalPages - 1;
+}
+
+function changePage(delta) {
+  page = Math.max(0, Math.min(totalPages - 1, page + delta));
+  loadData();
+}
+
+function exportCSV() {
+  window.location.href = '/api/admin/commitments/export' +
+    (document.getElementById('search').value ? '?search=' + encodeURIComponent(document.getElementById('search').value) : '');
+}
+
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+
+loadData();
+setInterval(loadData, 15000); // Refresh every 15s
+</script>
+</body>
+</html>

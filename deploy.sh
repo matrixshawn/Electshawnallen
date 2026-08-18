@@ -24,8 +24,8 @@ fi
 
 # Step 2: Push to git
 echo ""
-echo "🚀 Pushing to GitHub..."
-git push origin main 2>/dev/null && echo "   ✓ Pushed to origin/main" || echo "   ⚠️  Push failed — check remote"
+echo "🚀 Pushing to GitHub (canvass-server branch)..."
+git push origin main:canvass-server 2>/dev/null && echo "   ✓ Pushed" || echo "   ⚠️  Push failed — check remote"
 
 echo ""
 echo "✅ Dev code saved to git."

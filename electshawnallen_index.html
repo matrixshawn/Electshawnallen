@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shawn Allen — City Council, Ward 25 Scarborough–Rouge Park</title>
+<meta name="description" content="Shawn Allen for Toronto City Council, Ward 25 Scarborough–Rouge Park. Born here. Built here. All in for Scarborough–Rouge Park. Election Day: Monday, October 26, 2026.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Elect Shawn Allen — City Council, Ward 25">
+<meta property="og:description" content="Born here. Built here. All in for Scarborough–Rouge Park.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://electshawnallen.ca">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!--
+============================================================
+  STRIPE INTEGRATION NOTES (READ BEFORE DEPLOYMENT)
+============================================================
+  This frontend does NOT process payments directly.
+  Stripe payments require a server-side endpoint that:
+    1. Validates the contributor against the MEA (residency,
+       contribution caps, aggregate caps).
+    2. Creates a Stripe Checkout Session with the validated
+       contribution and metadata.
+    3. Returns the Checkout URL for redirect.
+    4. Receives the Stripe webhook to record the contribution
+       and trigger receipts.
+
+  Set CONFIG.STRIPE_PUBLISHABLE_KEY and CONFIG.BACKEND_URL
+  in the <script> block at the bottom of this file once your
+  backend is deployed.
+
+  REFERENCE BACKEND (Node.js / Vercel Function):
+  ----------------------------------------------
+    import Stripe from 'stripe';
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+    export default async function handler(req, res) {
+      const { amount, donor, attestations } = req.body;
+
+      // 1. MEA compliance gate
+      if (!attestations.individual)        return res.status(400).json({error: 'Must be an individual'});
+      if (!attestations.ontarioResident)   return res.status(400).json({error: 'Must reside in Ontario'});
+      if (!attestations.notCorporateFunds) return res.status(400).json({error: 'Funds must be personal'});
+      if (amount < 25 || amount > 1200)    return res.status(400).json({error: 'Outside legal range'});
+
+      // 2. Check aggregate against your campaign database for prior contributions
+      //    (left as exercise — query by donor email + name)
+
+      // 3. Create Checkout Session
+      const session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'cad',
+            product_data: { name: 'Contribution — Shawn Allen Campaign, Ward 25' },
+            unit_amount: amount * 100,
+          },
+          quantity: 1,
+        }],
+        customer_email: donor.email,
+        metadata: {
+          donor_name:    donor.name,
+          donor_address: donor.address,
+          donor_city:    donor.city,
+          donor_postal:  donor.postal,
+          donor_phone:   donor.phone,
+        },
+        success_url: 'https://electshawnallen.ca/thank-you?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url:  'https://electshawnallen.ca/donate-cancelled',
+      });
+
+      return res.status(200).json({ url: session.url });
+    }
+============================================================
+-->
+
+<style>
+  /* ========== RESET ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+  input, textarea, select { font: inherit; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ========== TOKENS ========== */
+  :root {
+    --navy:        #003F7F;
+    --navy-deep:   #002A55;
+    --navy-soft:   #1F5598;
+    --red:         #D71920;
+    --red-deep:    #B01218;
+    --red-soft:    rgba(215, 25, 32, 0.08);
+    --cream:       #FAF6EE;
+    --cream-warm:  #F3EEE3;
+    --paper:       #FFFFFF;
+    --ink:         #1A1A1A;
+    --ink-muted:   #4A4A4A;
+    --rule:        #003F7F;
+    --rule-soft:   rgba(0, 63, 127, 0.14);
+
+    --serif:  'Fraunces', 'Times New Roman', serif;
+    --sans:   'IBM Plex Sans', system-ui, sans-serif;
+    --mono:   'IBM Plex Mono', ui-monospace, monospace;
+
+    --container: 1240px;
+    --gutter:    clamp(20px, 4vw, 56px);
+  }
+
+  /* ========== BASE TYPE ========== */
+  body {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+  }
+
+  .display-xl {
+    font-family: var(--serif);
+    font-size: clamp(54px, 11vw, 168px);
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .display-l {
+    font-family: var(--serif);
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+  }
+  .display-m {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4.2vw, 56px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .kicker::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .body-lead {
+    font-size: clamp(19px, 1.7vw, 23px);
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* ========== LAYOUT ========== */
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  section { position: relative; }
+
+  /* ========== NAV ========== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule-soft);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 16px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .nav-brand {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .nav-brand .surname { color: var(--red); }
+  .nav-brand .ward {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-left: 6px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--ink);
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--red); }
+
+  .btn-donate {
+    background: var(--red);
+    color: white;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-donate:hover { background: var(--red-deep); transform: translateY(-1px); }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+  }
+  .nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    transition: transform 0.3s;
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav.is-open .nav-links {
+      display: flex;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--paper);
+      padding: 24px var(--gutter);
+      gap: 18px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 140px 0 100px;
+    position: relative;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "2026";
+    position: absolute;
+    right: -3vw;
+    bottom: -4vw;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(280px, 38vw, 540px);
+    line-height: 0.85;
+    color: var(--cream);
+    z-index: 0;
+    pointer-events: none;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  @media (max-width: 880px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero::before { font-size: 220px; bottom: -20px; right: -30px; opacity: 0.6; }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--ink-muted);
+  }
+
+  .hero-title {
+    margin-bottom: 28px;
+  }
+  .hero-title .elect-line {
+    display: block;
+    font-size: clamp(18px, 1.6vw, 22px);
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .hero-title .shawn-line {
+    color: var(--red);
+    display: block;
+  }
+  .hero-title .allen-line {
+    color: var(--navy);
+    display: block;
+  }
+
+  .hero-tag {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2vw, 26px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 36px;
+    max-width: 560px;
+    line-height: 1.4;
+  }
+  .hero-tag em {
+    color: var(--red);
+    font-style: italic;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 16px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: var(--navy-deep);
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--navy);
+    border: 1px solid var(--navy);
+  }
+  .btn-secondary:hover {
+    background: var(--navy);
+    color: white;
+  }
+  .btn-primary svg, .btn-secondary svg { width: 14px; height: 14px; }
+
+  /* Hero right column — election day card */
+  .election-card {
+    background: var(--red);
+    color: white;
+    padding: 40px;
+    position: relative;
+    border-radius: 2px;
+    box-shadow: 0 24px 48px -16px rgba(176, 18, 24, 0.4);
+  }
+  .election-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--navy);
+  }
+  .election-card-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .election-card-day {
+    font-family: var(--serif);
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 1;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .election-card-month {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+    color: white;
+    margin-bottom: 24px;
+  }
+  .election-card-rule {
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    margin: 24px 0;
+  }
+  .election-card-countdown {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.05em;
+  }
+  .election-card-countdown strong {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  /* ========== SECTION CHROME ========== */
+  .section {
+    padding: clamp(80px, 12vw, 160px) 0;
+  }
+  .section-warm { background: var(--cream); }
+  .section-navy { background: var(--navy); color: white; }
+  .section-navy h1, .section-navy h2, .section-navy h3 { color: white; }
+  .section-navy .kicker { color: #FF7E8A; }
+  .section-navy .kicker::before { background: #FF7E8A; }
+
+  .section-head {
+    margin-bottom: 64px;
+    max-width: 760px;
+  }
+  .section-head .kicker { margin-bottom: 24px; }
+  .section-head h2 { margin-bottom: 20px; }
+  .section-head p { color: var(--ink-muted); }
+  .section-navy .section-head p { color: rgba(255,255,255,0.78); }
+
+  /* ========== MEET SHAWN ========== */
+  .meet {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .meet { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  .meet-portrait {
+    aspect-ratio: 3/4;
+    background-color: var(--cream-warm);
+    background-image: url('images/portrait-shawn.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .meet-copy h2 { margin-bottom: 32px; }
+
+  .meet-prose p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .meet-prose p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 0.85;
+    float: left;
+    margin: 6px 12px 0 0;
+    color: var(--red);
+  }
+  .meet-prose strong {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .meet-credentials {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 28px;
+  }
+  .meet-credential {
+    border-left: 2px solid var(--red);
+    padding-left: 16px;
+  }
+  .meet-credential dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .meet-credential dd {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  /* ========== PILLARS ========== */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  @media (max-width: 880px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+  .pillar {
+    padding: 56px 40px 56px 0;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+  }
+  .pillar:last-child { border-right: none; }
+  .pillar:not(:first-child) { padding-left: 40px; }
+  @media (max-width: 880px) {
+    .pillar { border-right: none; padding-left: 0 !important; padding-right: 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .pillar:last-child { border-bottom: none; }
+  }
+  .pillar-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    margin-bottom: 32px;
+  }
+  .pillar-icon {
+    margin-bottom: 28px;
+    color: var(--red);
+  }
+  .pillar h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: white;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  .pillar p {
+    color: rgba(255,255,255,0.78);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ========== WARD ========== */
+  .ward-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .ward-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .ward-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 40px;
+    margin-top: 40px;
+  }
+  .ward-stat dt {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--red);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .ward-stat dd {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+
+  .ward-neighbourhoods {
+    list-style: none;
+    columns: 2;
+    column-gap: 32px;
+  }
+  .ward-neighbourhoods li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: var(--serif);
+    font-size: 19px;
+    color: var(--navy);
+    break-inside: avoid;
+  }
+  .ward-neighbourhoods li::before {
+    content: "→ ";
+    color: var(--red);
+    font-family: var(--sans);
+    font-weight: 600;
+  }
+
+  /* ========== GALLERY ========== */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 200px;
+    gap: 12px;
+  }
+  .gallery-item {
+    background-color: var(--cream-warm);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    position: relative;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.4s, box-shadow 0.4s;
+  }
+  .gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -16px rgba(0, 63, 127, 0.35);
+  }
+  .gallery-item::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: linear-gradient(to top,
+      rgba(0, 42, 85, 0.85) 0%,
+      rgba(0, 42, 85, 0.55) 25%,
+      rgba(0, 42, 85, 0.0) 55%);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+  .gallery-item--lg { grid-column: span 3; grid-row: span 2; }
+  .gallery-item--md { grid-column: span 3; grid-row: span 1; }
+  .gallery-item--sm { grid-column: span 2; grid-row: span 1; }
+  .gallery-item--wide { grid-column: span 4; grid-row: span 1; }
+  @media (max-width: 880px) {
+    .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+    .gallery-item--lg { grid-column: span 2; grid-row: span 2; }
+    .gallery-item--md, .gallery-item--sm, .gallery-item--wide { grid-column: span 2; grid-row: span 1; }
+  }
+  @media (max-width: 480px) {
+    .gallery { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+    .gallery-item--lg, .gallery-item--md, .gallery-item--sm, .gallery-item--wide {
+      grid-column: span 1; grid-row: span 1;
+    }
+    .gallery-item--lg { grid-row: span 1; min-height: 300px; }
+  }
+
+  /* ========== COMMIT-TO-VOTE ========== */
+  .commit {
+    background: var(--red);
+    color: white;
+    padding: clamp(60px, 9vw, 100px);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .commit::before {
+    content: "✓";
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    font-size: 320px;
+    font-family: var(--serif);
+    color: rgba(255, 255, 255, 0.1);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .commit-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+  .commit .kicker { color: white; }
+  .commit .kicker::before { background: white; }
+  .commit h2 { margin-bottom: 16px; color: white; }
+  .commit-lead {
+    font-size: 19px;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 40px;
+    line-height: 1.55;
+  }
+
+  .commit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .commit-form .full { grid-column: 1 / -1; }
+  @media (max-width: 600px) {
+    .commit-form { grid-template-columns: 1fr; }
+  }
+  .commit-form .field label { color: white; }
+  .commit-form .field input,
+  .commit-form .field select,
+  .commit-form .field textarea {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: transparent;
+  }
+  .commit-form .field input:focus,
+  .commit-form .field select:focus {
+    background: white;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+  }
+  .commit-form .checkbox-row label { color: rgba(255,255,255,0.95); }
+  .commit-form .checkbox-row input[type="checkbox"] {
+    accent-color: white;
+    background: white;
+  }
+  .commit-form .btn-primary {
+    background: white;
+    color: var(--red);
+    border: none;
+  }
+  .commit-form .btn-primary:hover {
+    background: var(--navy);
+    color: white;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .field input, .field select, .field textarea {
+    padding: 14px 16px;
+    background: white;
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: 16px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(0, 63, 127, 0.12);
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--red);
+    flex-shrink: 0;
+  }
+  .checkbox-row label {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* ========== DONATE ========== */
+  .donate-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .donate-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .donate-form {
+    background: var(--paper);
+    padding: 48px;
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+  }
+  .donate-form h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .donate-form-sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-bottom: 32px;
+  }
+
+  .amount-chips {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .amount-chip {
+    padding: 14px 4px;
+    background: var(--cream);
+    border: 1px solid transparent;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--navy);
+    text-align: center;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+  .amount-chip:hover { background: var(--cream-warm); }
+  .amount-chip.active {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+  }
+
+  .amount-custom {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+    padding: 0 16px;
+    margin-bottom: 24px;
+  }
+  .amount-custom-prefix {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink-muted);
+    margin-right: 8px;
+  }
+  .amount-custom input {
+    border: none;
+    background: transparent;
+    padding: 14px 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    flex: 1;
+    outline: none;
+  }
+
+  .rebate-preview {
+    background: var(--cream);
+    padding: 24px;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--red);
+  }
+  .rebate-preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .rebate-preview-row:last-child { margin-bottom: 0; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+  .rebate-preview-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .rebate-preview-value {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .rebate-preview-value.highlight { color: var(--red); }
+  .rebate-preview-note {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 12px;
+    line-height: 1.4;
+  }
+
+  .donate-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .donate-fields .full-w { grid-column: 1 / -1; }
+  @media (max-width: 500px) {
+    .donate-fields { grid-template-columns: 1fr; }
+  }
+
+  .attestations {
+    background: rgba(200, 16, 46, 0.04);
+    padding: 24px;
+    margin-bottom: 28px;
+    border-radius: 2px;
+  }
+  .attestations-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .attestations .checkbox-row { margin-top: 0; margin-bottom: 14px; }
+  .attestations .checkbox-row:last-child { margin-bottom: 0; }
+  .attestations .checkbox-row label { font-size: 13px; color: var(--ink); }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--red);
+    color: white;
+    padding: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--red-deep); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-square {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 12px;
+    padding: 16px;
+    background: #003F7F;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-square:hover { background: #002c59; transform: translateY(-1px); }
+
+  .donate-fineprint {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 18px;
+    line-height: 1.5;
+  }
+
+  /* DONATE — left column: rebate schedule */
+  .rebate-schedule {
+    padding-left: 8px;
+  }
+  .rebate-schedule h3 {
+    font-family: var(--serif);
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .rebate-schedule-lead {
+    font-size: 16px;
+    color: var(--ink-muted);
+    margin-bottom: 32px;
+    line-height: 1.55;
+  }
+
+  .rebate-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+  .rebate-table th {
+    text-align: left;
+    padding: 12px 0;
+    border-bottom: 2px solid var(--navy);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .rebate-table td {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    color: var(--ink);
+  }
+  .rebate-table tr:last-child td { border-bottom: 2px solid var(--navy); }
+
+  .rebate-note {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+    padding: 16px 18px;
+    background: var(--cream);
+    border-left: 2px solid var(--navy);
+  }
+
+  /* ========== PRESS ========== */
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 880px) {
+    .press-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+  .press-card {
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    padding: 36px 32px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    position: relative;
+  }
+  .press-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -16px rgba(0, 63, 127, 0.18);
+    border-color: var(--navy);
+  }
+  .press-outlet {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .press-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
+  }
+  .press-headline {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: -0.015em;
+  }
+  .press-excerpt {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .press-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--navy);
+    padding-bottom: 4px;
+    align-self: flex-start;
+    transition: color 0.2s, border-color 0.2s, gap 0.2s;
+  }
+  .press-link:hover {
+    color: var(--red);
+    border-color: var(--red);
+    gap: 12px;
+  }
+  .press-link svg { width: 12px; height: 12px; }
+
+  /* ========== VOLUNTEER ========== */
+  .volunteer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 72px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .volunteer-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .volunteer-intro h3 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .volunteer-intro p {
+    color: var(--ink-muted);
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .volunteer-roles {
+    list-style: none;
+    margin-top: 24px;
+  }
+  .volunteer-roles li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .volunteer-roles li:last-child { border-bottom: none; }
+  .volunteer-roles strong {
+    color: var(--navy);
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 17px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .volunteer-roles span {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+  .volunteer-role-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .volunteer-form {
+    background: var(--navy);
+    color: white;
+    padding: 48px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .volunteer-form::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--red);
+  }
+  .volunteer-form h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .volunteer-form-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 32px;
+  }
+  .volunteer-form .field label { color: white; }
+  .volunteer-form .field input,
+  .volunteer-form .field select,
+  .volunteer-form .field textarea {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: transparent;
+    color: var(--ink);
+  }
+  .volunteer-form .field input:focus,
+  .volunteer-form .field select:focus,
+  .volunteer-form .field textarea:focus {
+    background: white;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  }
+  .volunteer-form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .volunteer-form-fields .v-full { grid-column: 1 / -1; }
+  @media (max-width: 500px) {
+    .volunteer-form-fields { grid-template-columns: 1fr; }
+  }
+  .volunteer-form .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    margin-bottom: 18px;
+  }
+  @media (max-width: 500px) {
+    .volunteer-form .checkbox-grid { grid-template-columns: 1fr; }
+  }
+  .volunteer-form .checkbox-row {
+    margin-top: 0;
+  }
+  .volunteer-form .checkbox-row label {
+    color: rgba(255,255,255,0.92);
+    font-size: 14px;
+  }
+  .volunteer-form .checkbox-row input[type="checkbox"] {
+    accent-color: var(--red);
+  }
+  .volunteer-form-group-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .volunteer-form .btn-submit {
+    background: var(--red);
+  }
+  .volunteer-form .btn-submit:hover:not(:disabled) {
+    background: var(--red-deep);
+  }
+
+  /* ========== MODAL ========== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 27, 54, 0.7);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: white;
+    padding: 48px;
+    max-width: 520px;
+    width: 100%;
+    border-radius: 2px;
+    position: relative;
+  }
+  .modal::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--red);
+  }
+  .modal h3 {
+    font-family: var(--serif);
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .modal p {
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .modal-close {
+    margin-top: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.78);
+    padding: 80px 0 32px;
+    font-size: 14px;
+  }
+  .footer a { color: white; transition: color 0.2s; }
+  .footer a:hover { color: #FF7E8A; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 56px;
+    margin-bottom: 56px;
+  }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .footer-brand {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  .footer-brand .red { color: #FF7E8A; }
+  .footer-tag {
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+  }
+  .footer h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .footer ul { list-style: none; }
+  .footer li { margin-bottom: 10px; }
+
+  .footer-legal {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 32px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+  .footer-legal p { margin-bottom: 14px; max-width: 920px; }
+  .footer-legal strong { color: rgba(255,255,255,0.9); }
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+
+  /* ========== UTILITY ========== */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .scroll-reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ========== MOBILE COMPLIANCE ========== */
+  /* All form inputs ≥16px to prevent iOS Safari from zooming on focus.
+     Touch targets meet WCAG 2.5.5 (Level AAA) minimum 44×44 CSS pixels.
+     Viewport tested down to 320px wide (iPhone SE 1st gen). */
+
+  /* iOS form fix: ensure all inputs render base 16px */
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+    font-size: 16px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 2px;
+  }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--navy) 50%),
+                      linear-gradient(135deg, var(--navy) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  /* Buttons: min 44×44 touch target */
+  button, .btn-primary, .btn-secondary, .btn-donate, .btn-submit,
+  .nav-toggle, .modal-close, .amount-chip, .press-link {
+    min-height: 44px;
+  }
+
+  /* Nav-link tap targets on mobile */
+  @media (max-width: 880px) {
+    .nav-links a {
+      display: block;
+      padding: 12px 0;
+      min-height: 44px;
+      font-size: 16px;
+    }
+    .nav-links a.btn-donate { padding: 14px 18px; }
+  }
+
+  /* Tablet — between 600 and 880px */
+  @media (max-width: 880px) {
+    .nav-inner { padding: 14px var(--gutter); }
+    .section { padding: 64px 0; }
+    .section-head { margin-bottom: 40px; }
+    .meet-credentials { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Phone — 600px and below */
+  @media (max-width: 600px) {
+    :root { --gutter: 20px; }
+    .hero { padding: 110px 0 64px; }
+    .hero::before { font-size: 180px; bottom: 0; right: -20px; opacity: 0.55; }
+    .hero-eyebrow { font-size: 11px; margin-bottom: 20px; }
+    .hero-eyebrow::before { width: 24px; }
+    .hero-title .elect-line { font-size: 14px; margin-bottom: 12px; }
+    .hero-tag { font-size: 18px; margin-bottom: 28px; }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .btn-primary, .hero-cta .btn-secondary {
+      width: 100%;
+      justify-content: center;
+      padding: 16px 20px;
+    }
+    .election-card { padding: 32px 24px; }
+    .election-card-day { font-size: 56px; }
+    .election-card-month { font-size: 24px; }
+
+    .meet-credentials { grid-template-columns: 1fr; }
+    .meet-prose p:first-of-type::first-letter { font-size: 56px; }
+
+    .ward-neighbourhoods { columns: 1; }
+    .ward-stats { grid-template-columns: 1fr 1fr; gap: 24px 20px; }
+    .ward-stat dt { font-size: 36px; }
+
+    .commit { padding: 48px 24px; }
+    .commit::before { font-size: 220px; top: -20px; right: -10px; }
+
+    .donate-form { padding: 28px 20px; }
+    .rebate-schedule { padding-left: 0; }
+    .amount-chips { grid-template-columns: repeat(2, 1fr); }
+    .amount-chip { font-size: 18px; padding: 14px 8px; }
+
+    .volunteer-form { padding: 28px 22px; }
+
+    .press-card { padding: 28px 24px; }
+    .press-headline { font-size: 20px; }
+
+    /* Rebate table — make it readable narrow */
+    .rebate-table { font-size: 12px; }
+    .rebate-table th, .rebate-table td { padding: 10px 4px; }
+
+    /* Modal — phone */
+    .modal { padding: 32px 24px; }
+    .modal h3 { font-size: 26px; }
+
+    /* Footer */
+    .footer { padding: 56px 0 28px; }
+    .footer-brand { font-size: 28px; }
+
+    .kicker { font-size: 11px; gap: 10px; }
+    .kicker::before { width: 24px; }
+
+    /* Tighten section heads on phone */
+    .section-head { margin-bottom: 32px; }
+
+    /* Pillars (in navy section) on phone */
+    .pillar { padding: 40px 0; }
+    .pillar:first-child { padding-top: 20px; }
+    .pillar-num { margin-bottom: 24px; }
+    .pillar-icon { margin-bottom: 20px; }
+    .pillar h3 { font-size: 24px; }
+  }
+
+  /* Extra-small phones — 380px and below (iPhone SE class) */
+  @media (max-width: 380px) {
+    :root { --gutter: 16px; }
+    .nav-brand { font-size: 17px; }
+    .nav-brand .ward { display: none; }
+    .hero { padding: 100px 0 56px; }
+    .hero-title .elect-line { font-size: 12px; letter-spacing: 0.18em; }
+    .ward-stats { grid-template-columns: 1fr; }
+    .meet-portrait { aspect-ratio: 4/5; }
+    .pillar h3 { font-size: 22px; }
+  }
+
+  /* Landscape orientation on phones — tighten vertical padding */
+  @media (max-width: 880px) and (orientation: landscape) and (max-height: 500px) {
+    .hero { padding: 88px 0 40px; }
+    .section { padding: 56px 0; }
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .scroll-reveal { opacity: 1; transform: none; }
+  }
+
+  /* High contrast / forced colors */
+  @media (forced-colors: active) {
+    .btn-primary, .btn-secondary, .btn-donate, .btn-submit, .amount-chip {
+      border: 2px solid currentColor;
+    }
+  }
+
+  /* Print styles — clean any visual chrome that doesn't print well */
+  @media print {
+    .nav, .hero::before, .commit::before, .modal-backdrop,
+    .gallery, .scroll-reveal { display: none !important; }
+    .section { padding: 24px 0; page-break-inside: avoid; }
+    body { font-size: 12pt; color: black; background: white; }
+    a { color: black; text-decoration: underline; }
+  }
+
+  ::selection { background: var(--red); color: white; }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">
+      Shawn <span class="surname">Allen</span>
+      <span class="ward">Ward 25</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#meet">Meet Shawn</a></li>
+      <li><a href="#priorities">Priorities</a></li>
+      <li><a href="#press">Press</a></li>
+      <li><a href="#commit">Vote</a></li>
+      <li><a href="#volunteer">Volunteer</a></li>
+      <li><a href="#donate" class="btn-donate">Donate</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('is-open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Toronto City Council · Ward 25 · Scarborough–Rouge Park</div>
+        <h1 class="hero-title display-xl">
+          <span class="elect-line">Elect</span>
+          <span class="shawn-line">Shawn</span>
+          <span class="allen-line">Allen.</span>
+        </h1>
+        <p class="hero-tag">
+          Born here. Built here. <em>All in for Scarborough–Rouge Park.</em>
+        </p>
+        <div class="hero-cta">
+          <a href="#commit" class="btn-primary">
+            Commit to Vote
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#donate" class="btn-secondary">
+            Donate
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <aside class="election-card">
+        <div class="election-card-label">Election Day</div>
+        <div class="election-card-day">26</div>
+        <div class="election-card-month">October 2026</div>
+        <div class="election-card-rule"></div>
+        <div class="election-card-countdown">
+          <strong id="countdown">—</strong><br>
+          until polls open across Ward 25.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MEET SHAWN ========== -->
+<section class="section section-warm" id="meet">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">01 — Meet Shawn</div>
+      <h2 class="display-l">A neighbour, not a stranger.</h2>
+    </div>
+    <div class="meet">
+      <div class="meet-portrait" role="img" aria-label="Portrait of Shawn Allen"></div>
+      <div class="meet-copy">
+        <div class="meet-prose">
+          <p>I grew up here. One of six children in Scarborough–Rouge Park, raised in a neighbourhood where we looked out for one another and where hard work was rewarded.</p>
+          <p>In 2008, I founded <strong>Matrix Mortgage Global</strong>, building it into Canada's largest private lending brokerage and creating jobs for dozens of our neighbours.</p>
+          <p>As <strong>former President of the Scarborough Business Association</strong>, I earned the trust of thousands of residents and business owners across Scarborough–Rouge Park.</p>
+          <p>I established the <strong>Shawn Allen Award</strong> for students in the Faculty of Management and International Business at UTSC — because a community that invests in its young people is building its own future.</p>
+          <p>My wife and I have raised five children here. When thousands of neighbours trusted me to represent our community in 2025, I stepped forward, and continued to build something very special.</p>
+          <p>Now, I am asking that we finish what we started together — and send someone to City Hall who is committed to staying there, and relentlessly fighting for our community.</p>
+        </div>
+
+        <dl class="meet-credentials">
+          <div class="meet-credential">
+            <dt>Founder</dt>
+            <dd>Matrix Mortgage Global</dd>
+          </div>
+          <div class="meet-credential">
+            <dt>Former President</dt>
+            <dd>Scarborough Business Association</dd>
+          </div>
+          <div class="meet-credential">
+            <dt>Established</dt>
+            <dd>Shawn Allen Award, UTSC</dd>
+          </div>
+          <div class="meet-credential">
+            <dt>Family</dt>
+            <dd>Husband, father of five</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRIORITIES / PILLARS ========== -->
+<section class="section section-navy" id="priorities">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">02 — My Priorities</div>
+      <h2 class="display-l">Three commitments to&nbsp;Scarborough–Rouge&nbsp;Park.</h2>
+      <p class="body-lead">A councillor's job is not to be everywhere on every issue — it is to deliver on the things that decide whether this community thrives. Here is where I am focused.</p>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 3v18h18"/>
+            <path d="M7 14l4-4 4 4 5-5" stroke-width="2"/>
+            <path d="M16 9h4v4"/>
+          </svg>
+        </div>
+        <h3>Accountable, transparent spending on what residents actually need.</h3>
+        <p>Every dollar at City Hall belongs to the people of Toronto. Residents deserve to see where their property taxes go, why projects cost what they cost, and what the measurable return is for our community. I will push for line-item transparency on every capital project that touches Ward 25, and I will say no when the numbers don't justify the spend.</p>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="6" width="18" height="13" rx="2"/>
+            <path d="M3 12h18M7 19v2M17 19v2"/>
+            <circle cx="8" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="16" cy="15.5" r="1.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Real, measurable improvements to the connections our community depends on.</h3>
+        <p>Our families need a transit system that actually works — buses that run on time, the Eglinton East LRT delivered to Malvern, and roads that don't strand commuters. I will measure progress in trip times and reliability, not announcements. Connectivity is the difference between an opportunity reached and an opportunity lost.</p>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 3c-3 4-4 7-4 10a4 4 0 008 0c0-3-1-6-4-10z"/>
+            <path d="M12 17v4M9 21h6"/>
+          </svg>
+        </div>
+        <h3>The Rouge National Urban Park is ours to safeguard — for our children's generation.</h3>
+        <p>The Rouge is the largest urban park in North America, and it sits in our backyard. Protecting it means more than a name on a map — it means active stewardship of its watersheds, its trails, and the communities that border it. I will be a councillor who shows up for the Rouge, not one who treats it as scenery.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== THE WARD ========== -->
+<section class="section" id="ward">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">03 — The Ward</div>
+      <h2 class="display-l">Scarborough–Rouge&nbsp;Park.</h2>
+      <p class="body-lead">Toronto's easternmost ward. Home to over 100,000 residents across some of the city's most distinct neighbourhoods — and to the largest urban national park on the continent.</p>
+    </div>
+
+    <div class="ward-grid">
+      <div>
+        <h3 class="display-m" style="margin-bottom: 24px;">A community of communities.</h3>
+        <p style="color: var(--ink-muted); margin-bottom: 24px;">Ward 25 is not one neighbourhood. It is a collection of distinct, deeply rooted communities — each with its own character, leadership, and needs.</p>
+        <ul class="ward-neighbourhoods">
+          <li>Centennial</li>
+          <li>Highland Creek</li>
+          <li>Malvern</li>
+          <li>Morningside Heights</li>
+          <li>Port Union</li>
+          <li>Rouge / Staines</li>
+          <li>West Hill</li>
+          <li>West Rouge</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="display-m" style="margin-bottom: 24px;">By the numbers.</h3>
+        <p style="color: var(--ink-muted);">A snapshot of the ward we call home.</p>
+        <dl class="ward-stats">
+          <div class="ward-stat">
+            <dt>100K+</dt>
+            <dd>Residents across Ward 25</dd>
+          </div>
+          <div class="ward-stat">
+            <dt>8</dt>
+            <dd>Distinct neighbourhoods, from West Hill to West Rouge</dd>
+          </div>
+          <div class="ward-stat">
+            <dt>72%</dt>
+            <dd>Visible-minority population — among Toronto's most diverse wards</dd>
+          </div>
+          <div class="ward-stat">
+            <dt>79.1<span style="font-size:0.55em;">km²</span></dt>
+            <dd>Rouge National Urban Park — Canada's first urban national park</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMMUNITY GALLERY ========== -->
+<section class="section section-warm" id="community">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">04 — Shawn in the Community</div>
+      <h2 class="display-l">Showing up.</h2>
+      <p class="body-lead">From small-business main streets to seniors' centres to construction sites and school halls — representing this community starts with being in it.</p>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-item gallery-item--lg" role="img"
+           aria-label="With Mayor Olivia Chow and the campaign team"
+           style="background-image:url('images/01-mayor-chow.jpg'); background-position: center 30%;"
+           data-label="With Mayor Olivia Chow &amp; the campaign team"></div>
+      <div class="gallery-item gallery-item--lg" role="img"
+           aria-label="Remembrance Day, honouring veterans"
+           style="background-image:url('images/02-remembrance-day.jpg'); background-position: center 25%;"
+           data-label="Remembrance Day — honouring our veterans"></div>
+      <div class="gallery-item gallery-item--sm" role="img"
+           aria-label="At Tamil community celebrations"
+           style="background-image:url('images/03-tamil-festival.jpg'); background-position: center top;"
+           data-label="Tamil community celebrations"></div>
+      <div class="gallery-item gallery-item--sm" role="img"
+           aria-label="On site at local road infrastructure"
+           style="background-image:url('images/04-road-infrastructure.jpg'); background-position: 30% center;"
+           data-label="On site — local road infrastructure"></div>
+      <div class="gallery-item gallery-item--sm" role="img"
+           aria-label="Visiting local farmers and small businesses"
+           style="background-image:url('images/05-farmers-market.jpg'); background-position: center 30%;"
+           data-label="Local farmers &amp; small businesses"></div>
+      <div class="gallery-item gallery-item--sm" role="img"
+           aria-label="Door to door across the ward"
+           style="background-image:url('images/06-community-listening.jpg'); background-position: center;"
+           data-label="Door to door across the ward"></div>
+      <div class="gallery-item gallery-item--wide" role="img"
+           aria-label="With students at Neil McNeil High"
+           style="background-image:url('images/07-students-mcneil.jpg'); background-position: center 25%;"
+           data-label="With students at Neil McNeil High"></div>
+    </div>
+
+    <p style="font-family: var(--mono); font-size: 12px; color: var(--ink-muted); margin-top: 24px; letter-spacing: 0.05em;">
+      All photos © Shawn Allen Campaign · Ward 25 Scarborough–Rouge Park
+    </p>
+  </div>
+</section>
+
+<!-- ========== PRESS ========== -->
+<section class="section" id="press">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">05 — In the News</div>
+      <h2 class="display-l">Press coverage.</h2>
+      <p class="body-lead">A snapshot of Shawn's 2025 coverage — on local transit, on protecting Rouge Beach, and on standing among a crowded field of candidates for Ward 25.</p>
+    </div>
+
+    <div class="press-grid">
+      <article class="press-card">
+        <div class="press-outlet">CP24</div>
+        <div class="press-date">August 10, 2025</div>
+        <h3 class="press-headline">Rouge Beach unsafe for swimming — one council hopeful wants to change that.</h3>
+        <p class="press-excerpt">Rouge Beach is not part of the City's daily E. coli testing program — leaving residents in the dark about whether the water is safe. Shawn appeared on CP24 calling for daily testing, federal–municipal coordination with Parks Canada, and lifeguard services for safer swimming.</p>
+        <a href="https://www.cp24.com/video/2025/08/10/rouge-beach-unsafe-for-swimming/" class="press-link" target="_blank" rel="noopener">
+          Watch on CP24
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </a>
+      </article>
+
+      <article class="press-card">
+        <div class="press-outlet">CBC News Toronto</div>
+        <div class="press-date">September 2, 2025</div>
+        <h3 class="press-headline">Crowded field vies for open council seat in Scarborough–Rouge Park.</h3>
+        <p class="press-excerpt">CBC's Lane Harrison profiles the by-election candidates. Shawn brought a hockey stick to a Morningside Avenue red bus lane to make his point on Scarborough congestion: "It's about moving people. It's about eliminating congestion. It's not about cars. It's about traffic."</p>
+        <a href="https://www.cbc.ca/news/canada/toronto/scarborough-rouge-park-byelection-1.7621668" class="press-link" target="_blank" rel="noopener">
+          Read on CBC News
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </a>
+      </article>
+
+      <article class="press-card">
+        <div class="press-outlet">The Local</div>
+        <div class="press-date">September 29, 2025</div>
+        <h3 class="press-headline">Scarborough–Rouge Park by-election: the fact-checked candidates.</h3>
+        <p class="press-excerpt">The Local's award-winning local journalism produced fact-checked biographies and platform summaries for every candidate in the Ward 25 by-election. Shawn's profile highlights his Matrix Mortgage Global background, his work with the Scarborough Business Association, and his platform priorities.</p>
+        <a href="https://thelocal.to/srp2025/" class="press-link" target="_blank" rel="noopener">
+          Read on The Local
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMMIT TO VOTE ========== -->
+<section class="section" id="commit">
+  <div class="container">
+    <div class="commit">
+      <div class="commit-inner">
+        <div class="kicker" style="margin-bottom: 24px;">06 — Commit to Vote</div>
+        <h2 class="display-l" style="margin-bottom: 16px;">Make it count.</h2>
+        <p class="commit-lead">Tell us you're voting on October 26 and we'll send you your voting location, advance-poll dates, and reminders so the day doesn't sneak up on you. That's all — no spam.</p>
+
+        <form class="commit-form" id="commitForm" onsubmit="return submitCommit(event)">
+          <div class="field">
+            <label for="commit-first">First Name</label>
+            <input type="text" id="commit-first" required>
+          </div>
+          <div class="field">
+            <label for="commit-last">Last Name</label>
+            <input type="text" id="commit-last" required>
+          </div>
+          <div class="field">
+            <label for="commit-email">Email</label>
+            <input type="email" id="commit-email" required>
+          </div>
+          <div class="field">
+            <label for="commit-phone">Phone (Optional)</label>
+            <input type="tel" id="commit-phone" placeholder="(416) 555-0100">
+          </div>
+          <div class="field">
+            <label for="commit-address">Street Address</label>
+            <input type="text" id="commit-address" required placeholder="123 Lawrence Ave E">
+          </div>
+          <div class="field">
+            <label for="commit-postal">Postal Code</label>
+            <input type="text" id="commit-postal" required pattern="[A-Za-z][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]" placeholder="M1B 0A0">
+          </div>
+          <div class="field full">
+            <div class="checkbox-row">
+              <input type="checkbox" id="commit-volunteer">
+              <label for="commit-volunteer">I'd like to volunteer with the campaign (canvassing, phones, sign delivery, election-day support).</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="commit-sign">
+              <label for="commit-sign">I'd like a lawn sign at my address.</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="commit-consent" required>
+              <label for="commit-consent">I consent to the Shawn Allen Campaign contacting me by email and (if provided) phone about this election. I can unsubscribe at any time.</label>
+            </div>
+          </div>
+          <div class="full">
+            <button type="submit" class="btn-primary" style="width: auto;">
+              I'm in. Count me.
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VOLUNTEER ========== -->
+<section class="section" id="volunteer">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">07 — Volunteer</div>
+      <h2 class="display-l">Join the team.</h2>
+      <p class="body-lead">Campaigns are won at the doorstep, on the phone, and in the hours between dinner and 9 p.m. If you can give us an evening a week, a weekend, or just election day — we'll put you to work.</p>
+    </div>
+
+    <div class="volunteer-grid">
+      <div class="volunteer-intro">
+        <h3>Where we need help.</h3>
+        <p>Every volunteer is briefed, paired with experienced organizers, and matched to a role that fits their schedule and comfort level. No experience required.</p>
+
+        <ul class="volunteer-roles">
+          <li>
+            <span class="volunteer-role-num">01</span>
+            <div>
+              <strong>Door-to-door canvassing</strong>
+              <span>Weekends and weeknight evenings across all 35 polls in the ward. The single highest-impact activity.</span>
+            </div>
+          </li>
+          <li>
+            <span class="volunteer-role-num">02</span>
+            <div>
+              <strong>Phone banking</strong>
+              <span>From home or HQ. Scripts and lists provided. Ideal for evenings, accessible for those who can't door-knock.</span>
+            </div>
+          </li>
+          <li>
+            <span class="volunteer-role-num">03</span>
+            <div>
+              <strong>Sign installation &amp; repair</strong>
+              <span>Lawn-sign installs and repairs across the ward. Driver's licence and access to a vehicle preferred.</span>
+            </div>
+          </li>
+          <li>
+            <span class="volunteer-role-num">04</span>
+            <div>
+              <strong>Literature drops</strong>
+              <span>Walking routes through targeted polls. Great for fitness; manageable for couples and families.</span>
+            </div>
+          </li>
+          <li>
+            <span class="volunteer-role-num">05</span>
+            <div>
+              <strong>Data &amp; digital</strong>
+              <span>Entering canvass results, social media posting, design work, video editing. Remote-friendly.</span>
+            </div>
+          </li>
+          <li>
+            <span class="volunteer-role-num">06</span>
+            <div>
+              <strong>Election day GOTV</strong>
+              <span>Driving voters to polls, scrutineering, lit drops, phone banking. The all-hands-on-deck day.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <form class="volunteer-form" id="volunteerForm" onsubmit="return submitVolunteer(event)">
+        <h3>Sign up to volunteer</h3>
+        <p class="volunteer-form-sub">Takes under two minutes · Campaign organizer follows up within 48 hours</p>
+
+        <div class="volunteer-form-fields">
+          <div class="field">
+            <label for="v-first">First Name</label>
+            <input type="text" id="v-first" required autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="v-last">Last Name</label>
+            <input type="text" id="v-last" required autocomplete="family-name">
+          </div>
+          <div class="field">
+            <label for="v-email">Email</label>
+            <input type="email" id="v-email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="v-phone">Phone</label>
+            <input type="tel" id="v-phone" required autocomplete="tel">
+          </div>
+          <div class="field v-full">
+            <label for="v-address">Street Address</label>
+            <input type="text" id="v-address" autocomplete="street-address">
+          </div>
+          <div class="field">
+            <label for="v-neighbourhood">Neighbourhood</label>
+            <select id="v-neighbourhood">
+              <option value="">Select your area</option>
+              <option>Centennial</option>
+              <option>Highland Creek</option>
+              <option>Malvern</option>
+              <option>Morningside Heights</option>
+              <option>Port Union</option>
+              <option>Rouge / Staines</option>
+              <option>West Hill</option>
+              <option>West Rouge</option>
+              <option>Outside Ward 25</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="v-postal">Postal Code</label>
+            <input type="text" id="v-postal" pattern="[A-Za-z][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]" autocomplete="postal-code">
+          </div>
+        </div>
+
+        <div class="volunteer-form-group-label">How can you help? Check all that apply.</div>
+        <div class="checkbox-grid">
+          <div class="checkbox-row"><input type="checkbox" id="v-canvass"><label for="v-canvass">Door-to-door canvassing</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-phone-bank"><label for="v-phone-bank">Phone banking</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-signs"><label for="v-signs">Sign install / repair</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-lit"><label for="v-lit">Literature drops</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-digital"><label for="v-digital">Data / digital / social</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-gotv"><label for="v-gotv">Election day (GOTV)</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-events"><label for="v-events">Events &amp; community presence</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-driver"><label for="v-driver">Drive voters / supplies</label></div>
+        </div>
+
+        <div class="volunteer-form-group-label" style="margin-top: 28px;">When are you usually available?</div>
+        <div class="checkbox-grid">
+          <div class="checkbox-row"><input type="checkbox" id="v-weekday-eve"><label for="v-weekday-eve">Weekday evenings</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-weekend-am"><label for="v-weekend-am">Weekend mornings</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-weekend-pm"><label for="v-weekend-pm">Weekend afternoons</label></div>
+          <div class="checkbox-row"><input type="checkbox" id="v-eday"><label for="v-eday">Election day only (Oct 26)</label></div>
+        </div>
+
+        <div class="field v-full" style="margin-top: 28px;">
+          <label for="v-languages">Languages you speak (besides English)</label>
+          <input type="text" id="v-languages" placeholder="e.g. Tamil, Mandarin, Urdu, French">
+        </div>
+
+        <div class="field v-full" style="margin-top: 16px;">
+          <label for="v-notes">Anything else we should know? (Optional)</label>
+          <textarea id="v-notes" rows="3" placeholder="Prior campaign experience, accessibility needs, specific availability, etc."></textarea>
+        </div>
+
+        <div class="checkbox-row" style="margin-top: 24px;">
+          <input type="checkbox" id="v-consent" required>
+          <label for="v-consent">I consent to the Shawn Allen Campaign contacting me by email and phone about volunteer opportunities.</label>
+        </div>
+
+        <button type="submit" class="btn-submit" id="volunteerBtn" style="margin-top: 24px;">
+          Sign me up
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DONATE ========== -->
+<section class="section section-warm" id="donate">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">08 — Support the Campaign</div>
+      <h2 class="display-l">Donate.</h2>
+      <p class="body-lead">Toronto residents who contribute to a registered municipal candidate are eligible for a <strong>rebate of up to $641.67</strong> from the City of Toronto. A meaningful contribution costs less than you think.</p>
+    </div>
+
+    <div class="donate-grid">
+      <!-- LEFT: Rebate schedule -->
+      <div class="rebate-schedule">
+        <h3>City of Toronto Contribution Rebate</h3>
+        <p class="rebate-schedule-lead">Under Toronto Municipal Code Chapter 53, Toronto residents who contribute to a registered candidate are eligible for a rebate on a sliding scale.</p>
+
+        <table class="rebate-table">
+          <thead>
+            <tr>
+              <th>Contribution</th>
+              <th>Rebate</th>
+              <th>Net Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$100</td><td>$75.00</td><td>$25.00</td></tr>
+            <tr><td>$250</td><td>$187.50</td><td>$62.50</td></tr>
+            <tr><td>$300</td><td>$225.00</td><td>$75.00</td></tr>
+            <tr><td>$500</td><td>$325.00</td><td>$175.00</td></tr>
+            <tr><td>$1,000</td><td>$575.00</td><td>$425.00</td></tr>
+            <tr><td>$1,200 (max)</td><td>$641.67</td><td>$558.33</td></tr>
+          </tbody>
+        </table>
+
+        <p class="rebate-note">
+          <strong>How it works:</strong> 75% on the first $300, 50% on amounts from $300.01 to $1,000, and 33⅓% on amounts from $1,000.01 to $1,200. Minimum contribution to qualify: $25. To claim the rebate, you must be a Toronto resident and submit your contribution receipt to the City after the election.
+        </p>
+      </div>
+
+      <!-- RIGHT: Donation form -->
+      <form class="donate-form" id="donateForm" onsubmit="return submitDonation(event)">
+        <h3>Contribute Now</h3>
+        <p class="donate-form-sub">Secure payment via Square · Receipt issued by the CFO</p>
+
+        <div class="amount-chips">
+          <button type="button" class="amount-chip" data-amount="50">$50</button>
+          <button type="button" class="amount-chip" data-amount="100">$100</button>
+          <button type="button" class="amount-chip active" data-amount="300">$300</button>
+          <button type="button" class="amount-chip" data-amount="1200">$1,200</button>
+        </div>
+
+        <div class="amount-custom">
+          <span class="amount-custom-prefix">$</span>
+          <input type="number" id="amount" value="300" min="25" max="1200" step="1" oninput="updateRebate()">
+        </div>
+
+        <div class="rebate-preview">
+          <div class="rebate-preview-row">
+            <span class="rebate-preview-label">Your contribution</span>
+            <span class="rebate-preview-value" id="display-amount">$300.00</span>
+          </div>
+          <div class="rebate-preview-row">
+            <span class="rebate-preview-label">Estimated City rebate</span>
+            <span class="rebate-preview-value highlight" id="display-rebate">$225.00</span>
+          </div>
+          <div class="rebate-preview-row">
+            <span class="rebate-preview-label">Effective net cost</span>
+            <span class="rebate-preview-value" id="display-net">$75.00</span>
+          </div>
+          <p class="rebate-preview-note">Rebate is paid by the City of Toronto to eligible residents after the election upon submission of the official receipt. Estimate only — actual rebate is subject to City verification.</p>
+        </div>
+
+        <div class="donate-fields">
+          <div class="field">
+            <label for="d-name">Full Name</label>
+            <input type="text" id="d-name" required>
+          </div>
+          <div class="field">
+            <label for="d-email">Email</label>
+            <input type="email" id="d-email" required>
+          </div>
+          <div class="field full-w">
+            <label for="d-address">Street Address</label>
+            <input type="text" id="d-address" required>
+          </div>
+          <div class="field">
+            <label for="d-city">City</label>
+            <input type="text" id="d-city" value="Toronto" required>
+          </div>
+          <div class="field">
+            <label for="d-postal">Postal Code</label>
+            <input type="text" id="d-postal" required pattern="[A-Za-z][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]">
+          </div>
+          <div class="field full-w">
+            <label for="d-phone">Phone (Optional)</label>
+            <input type="tel" id="d-phone">
+          </div>
+        </div>
+
+        <div class="attestations">
+          <div class="attestations-title">Required Attestations · Municipal Elections Act, 1996</div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="att-individual" required>
+            <label for="att-individual">I am an individual (not a corporation or trade union) making this contribution.</label>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="att-resident" required>
+            <label for="att-resident">I am normally resident in Ontario.</label>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="att-personal-funds" required>
+            <label for="att-personal-funds">The funds I am contributing are my own personal funds, and I am not being reimbursed by any other person, corporation, or trade union.</label>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="att-aggregate" required>
+            <label for="att-aggregate">I have not exceeded, and this contribution will not cause me to exceed, $1,200 to this candidate or $5,000 in aggregate to candidates for Toronto City Council in this election.</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="donateBtn">
+          Contribute Securely
+        </button>
+
+        <a href="https://checkout.square.site/merchant/MLPW03M7GNWNN/checkout/WFIG6ZYKBJ6PCVOVDM3B7RIU" target="_blank" rel="noopener" class="btn-square" id="squarePayBtn">
+          Pay with Square
+        </a>
+
+        <p class="donate-fineprint">
+          Contributions are not tax deductible. Toronto residents may claim a municipal rebate (above). Contributions of more than $100 are public information under the <em>Municipal Elections Act, 1996</em> and will appear on the financial statement filed with the City Clerk. Payment processed by Square; the campaign does not store your card details.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MODAL ========== -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Thank you.</h3>
+    <p id="modal-body"></p>
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Shawn <span class="red">Allen</span></div>
+        <p class="footer-tag">Born here. Built here. All in for Scarborough–Rouge Park.</p>
+        <p style="margin-top: 24px;">
+          <a href="mailto:info@electshawnallen.ca">info@electshawnallen.ca</a><br>
+          <a href="tel:+16479998929">(647) 999-8929</a>
+        </p>
+      </div>
+      <div>
+        <h4>Get Involved</h4>
+        <ul>
+          <li><a href="#commit">Commit to Vote</a></li>
+          <li><a href="#commit">Volunteer</a></li>
+          <li><a href="#commit">Request a Sign</a></li>
+          <li><a href="#donate">Donate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://instagram.com/Official_ShawnAllen" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://twitter.com/Official_ShawnAllen" target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="#meet">About</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <p><strong>Authorized by the Chief Financial Officer of the Shawn Allen Campaign.</strong></p>
+      <p>Contributions to municipal campaigns in Ontario are governed by the <em>Municipal Elections Act, 1996</em>. Only individuals normally resident in Ontario may contribute. Corporations and trade unions are prohibited from contributing. The maximum contribution to a single candidate is $1,200; the maximum aggregate contribution to candidates for Toronto City Council is $5,000. Contributions of more than $100 are publicly disclosed in the financial statement filed with the City Clerk after the election. Contributions are not tax deductible.</p>
+      <p>Toronto residents who contribute may be eligible for a rebate from the City of Toronto under <em>Toronto Municipal Code, Chapter 53</em>. The official rebate is determined by the City after the election and may differ from estimates shown on this site.</p>
+      <div class="footer-meta">
+        <span>© 2026 Shawn Allen Campaign</span>
+        <span>Ward 25 · Scarborough–Rouge Park · Toronto</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============================================================
+  // CONFIG — set these before launch
+  // ============================================================
+  const CONFIG = {
+    STRIPE_PUBLISHABLE_KEY: '',   // e.g. 'pk_live_...'
+    BACKEND_URL:            '',   // e.g. 'https://electshawnallen.ca/api/create-checkout-session'
+    COMMIT_ENDPOINT:        'https://db.electshawnallen.ca/api/commit-to-vote',
+    VOLUNTEER_ENDPOINT:     'https://db.electshawnallen.ca/api/volunteer-signup',
+    ELECTION_DATE: '2026-10-26T10:00:00-04:00',
+  };
+
+  // ============================================================
+  // COUNTDOWN
+  // ============================================================
+  function updateCountdown() {
+    const target = new Date(CONFIG.ELECTION_DATE);
+    const now = new Date();
+    const diff = target - now;
+    const el = document.getElementById('countdown');
+    if (!el) return;
+    if (diff <= 0) { el.textContent = 'Polls are open today.'; return; }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    el.textContent = `${days} days · ${hours} hours`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // ============================================================
+  // REBATE CALCULATOR — Toronto Municipal Code, Chapter 53
+  // ============================================================
+  // Rate schedule:
+  //   $25       –> $300       : 75% rebate
+  //   $300.01   –> $1,000     : $225 + 50% on amount over $300
+  //   $1,000.01 –> $1,200     : $575 + 33.33% on amount over $1,000
+  //   Max contribution: $1,200 → max rebate ~$641.67
+  function calcRebate(amount) {
+    if (amount < 25) return 0;
+    if (amount <= 300) return amount * 0.75;
+    if (amount <= 1000) return 225 + (amount - 300) * 0.50;
+    if (amount <= 1200) return 575 + (amount - 1000) * (1/3);
+    return 641.67;
+  }
+  function updateRebate() {
+    const input = document.getElementById('amount');
+    let amount = parseFloat(input.value) || 0;
+    if (amount > 1200) { amount = 1200; input.value = 1200; }
+    if (amount < 0)   { amount = 0;   input.value = 0; }
+    const rebate = calcRebate(amount);
+    const net = Math.max(0, amount - rebate);
+    document.getElementById('display-amount').textContent = '$' + amount.toFixed(2);
+    document.getElementById('display-rebate').textContent = '$' + rebate.toFixed(2);
+    document.getElementById('display-net').textContent    = '$' + net.toFixed(2);
+
+    // Sync amount chips
+    document.querySelectorAll('.amount-chip').forEach(chip => {
+      chip.classList.toggle('active', parseInt(chip.dataset.amount, 10) === amount);
+    });
+  }
+  document.querySelectorAll('.amount-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.getElementById('amount').value = chip.dataset.amount;
+      updateRebate();
+    });
+  });
+  updateRebate();
+
+  // ============================================================
+  // MODAL
+  // ============================================================
+  function showModal(title, body) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-body').innerHTML = body;
+    document.getElementById('modal').classList.add('show');
+  }
+
+  // ============================================================
+  // COMMIT-TO-VOTE SUBMIT
+  // ============================================================
+  async function submitCommit(e) {
+    e.preventDefault();
+    const data = {
+      first:    document.getElementById('commit-first').value,
+      last:     document.getElementById('commit-last').value,
+      email:    document.getElementById('commit-email').value,
+      phone:    document.getElementById('commit-phone').value,
+      address:  document.getElementById('commit-address').value,
+      postal:   document.getElementById('commit-postal').value.toUpperCase().replace(/\s/g, ''),
+      volunteer:document.getElementById('commit-volunteer').checked,
+      sign:     document.getElementById('commit-sign').checked,
+    };
+
+    if (!CONFIG.COMMIT_ENDPOINT) {
+      console.log('[DEMO MODE] Commit-to-vote submission:', data);
+      showModal(
+        'Thank you, ' + data.first + '.',
+        `We've recorded your commitment to vote on October 26.<br><br>` +
+        `<strong>What's next:</strong><br>` +
+        `· Your polling location will be sent to ${data.email} closer to election day.<br>` +
+        (data.volunteer ? '· A campaign organizer will reach out about volunteer opportunities.<br>' : '') +
+        (data.sign      ? '· A sign install will be scheduled at your address.<br>' : '') +
+        `<br><em style="color:#888;font-size:13px;">[Demo mode — set CONFIG.COMMIT_ENDPOINT to enable live submissions.]</em>`
+      );
+      document.getElementById('commitForm').reset();
+      return false;
+    }
+
+    try {
+      const res = await fetch(CONFIG.COMMIT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      showModal('Thank you, ' + data.first + '.', 'Your commitment has been recorded. Watch your inbox for your polling location.');
+      document.getElementById('commitForm').reset();
+    } catch (err) {
+      showModal('Something went wrong.', 'Please try again or email <a href="mailto:info@electshawnallen.ca">info@electshawnallen.ca</a>.');
+    }
+    return false;
+  }
+
+  // ============================================================
+  // DONATION SUBMIT
+  // ============================================================
+  async function submitDonation(e) {
+    e.preventDefault();
+    const btn = document.getElementById('donateBtn');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    const amount = parseFloat(document.getElementById('amount').value);
+    if (amount < 25 || amount > 1200) {
+      showModal('Amount out of range.', 'Contributions must be between $25 and $1,200 (the legal maximum per candidate under the Municipal Elections Act).');
+      btn.disabled = false;
+      btn.textContent = 'Contribute Securely';
+      return false;
+    }
+
+    const data = {
+      amount,
+      donor: {
+        name:    document.getElementById('d-name').value,
+        email:   document.getElementById('d-email').value,
+        address: document.getElementById('d-address').value,
+        city:    document.getElementById('d-city').value,
+        postal:  document.getElementById('d-postal').value.toUpperCase().replace(/\s/g, ''),
+        phone:   document.getElementById('d-phone').value,
+      },
+      attestations: {
+        individual:       document.getElementById('att-individual').checked,
+        ontarioResident:  document.getElementById('att-resident').checked,
+        notCorporateFunds:document.getElementById('att-personal-funds').checked,
+        withinAggregate:  document.getElementById('att-aggregate').checked,
+      },
+    };
+
+    if (!CONFIG.STRIPE_PUBLISHABLE_KEY || !CONFIG.BACKEND_URL) {
+      console.log('[SQUARE PAYMENT LINK] Donation submission:', data);
+      const rebate = calcRebate(data.amount);
+      showModal(
+        'Redirecting to Square…',
+        `You're being redirected to Square to complete your secure contribution of <strong>$${data.amount.toFixed(2)}</strong>.<br><br>` +
+        `<strong>Contribution:</strong> $${data.amount.toFixed(2)}<br>` +
+        `<strong>Estimated rebate:</strong> $${rebate.toFixed(2)}<br>` +
+        `<strong>Effective net cost:</strong> $${(data.amount - rebate).toFixed(2)}<br><br>` +
+        `<a href="https://checkout.square.site/merchant/MLPW03M7GNWNN/checkout/WFIG6ZYKBJ6PCVOVDM3B7RIU" target="_blank" rel="noopener" style="display:inline-block;padding:12px 22px;background:#D71920;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;">Pay with Square →</a>`
+      );
+      window.open('https://checkout.square.site/merchant/MLPW03M7GNWNN/checkout/WFIG6ZYKBJ6PCVOVDM3B7RIU', '_blank', 'noopener');
+      btn.disabled = false;
+      btn.textContent = 'Contribute Securely';
+      return false;
+    }
+
+    try {
+      const res = await fetch(CONFIG.BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.url) throw new Error(json.error || 'Failed to create checkout session');
+      window.location.href = json.url;
+    } catch (err) {
+      showModal('Contribution could not be processed.', err.message + '<br><br>Please try again or email <a href="mailto:info@electshawnallen.ca">info@electshawnallen.ca</a>.');
+      btn.disabled = false;
+      btn.textContent = 'Contribute Securely';
+    }
+    return false;
+  }
+
+  // ============================================================
+  // VOLUNTEER SUBMIT
+  // ============================================================
+  async function submitVolunteer(e) {
+    e.preventDefault();
+    const btn = document.getElementById('volunteerBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const data = {
+      first:    document.getElementById('v-first').value,
+      last:     document.getElementById('v-last').value,
+      email:    document.getElementById('v-email').value,
+      phone:    document.getElementById('v-phone').value,
+      address:  document.getElementById('v-address').value,
+      neighbourhood: document.getElementById('v-neighbourhood').value,
+      postal:   document.getElementById('v-postal').value.toUpperCase().replace(/\s/g, ''),
+      languages:document.getElementById('v-languages').value,
+      notes:    document.getElementById('v-notes').value,
+      roles: {
+        canvass:    document.getElementById('v-canvass').checked,
+        phoneBank:  document.getElementById('v-phone-bank').checked,
+        signs:      document.getElementById('v-signs').checked,
+        lit:        document.getElementById('v-lit').checked,
+        digital:    document.getElementById('v-digital').checked,
+        gotv:       document.getElementById('v-gotv').checked,
+        events:     document.getElementById('v-events').checked,
+        driver:     document.getElementById('v-driver').checked,
+      },
+      availability: {
+        weekdayEve: document.getElementById('v-weekday-eve').checked,
+        weekendAm:  document.getElementById('v-weekend-am').checked,
+        weekendPm:  document.getElementById('v-weekend-pm').checked,
+        eDay:       document.getElementById('v-eday').checked,
+      },
+    };
+
+    if (!CONFIG.VOLUNTEER_ENDPOINT) {
+      console.log('[DEMO MODE] Volunteer submission:', data);
+      const roles = Object.entries(data.roles).filter(([_, v]) => v).map(([k]) => k);
+      showModal(
+        'Welcome to the team, ' + data.first + '.',
+        `A campaign organizer will be in touch within 48 hours to get you connected.<br><br>` +
+        (roles.length ? `<strong>You signed up for:</strong> ${roles.length} role${roles.length > 1 ? 's' : ''}.<br>` : '') +
+        `<strong>Contact:</strong> ${data.email}<br><br>` +
+        `<em style="color:#888;font-size:13px;">[Demo mode — set CONFIG.VOLUNTEER_ENDPOINT to enable live submissions.]</em>`
+      );
+      document.getElementById('volunteerForm').reset();
+      btn.disabled = false;
+      btn.textContent = 'Sign me up';
+      return false;
+    }
+
+    try {
+      const res = await fetch(CONFIG.VOLUNTEER_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      showModal('Welcome to the team, ' + data.first + '.', 'A campaign organizer will be in touch within 48 hours.');
+      document.getElementById('volunteerForm').reset();
+    } catch (err) {
+      showModal('Something went wrong.', 'Please try again or email <a href="mailto:info@electshawnallen.ca">info@electshawnallen.ca</a>.');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Sign me up';
+    return false;
+  }
+
+  // ============================================================
+  // SCROLL REVEAL
+  // ============================================================
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.section-head, .pillar, .meet-portrait, .meet-copy, .gallery-item, .press-card, .commit, .volunteer-intro, .volunteer-form, .donate-form, .rebate-schedule')
+    .forEach(el => { el.classList.add('scroll-reveal'); observer.observe(el); });
+
+  // ============================================================
+  // CLOSE MOBILE NAV ON LINK CLICK
+  // ============================================================
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('nav').classList.remove('is-open'));
+  });
+</script>
+
+</body>
+</html>

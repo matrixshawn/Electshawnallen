@@ -1,0 +1,347 @@
+{
+  "election": "2025 Councillor Ward 25 By-Election",
+  "total_votes": 19260,
+  "candidates": [
+    {
+      "name": "Shan Neethan",
+      "votes": 5174
+    },
+    {
+      "name": "Sriskandarajah Anu",
+      "votes": 3374
+    },
+    {
+      "name": "Allen Shawn",
+      "votes": 2934
+    },
+    {
+      "name": "Khoshdel Reza",
+      "votes": 1834
+    },
+    {
+      "name": "Patel Zakir",
+      "votes": 1521
+    },
+    {
+      "name": "Sinnarajah Shean",
+      "votes": 1441
+    },
+    {
+      "name": "Brown Darrell",
+      "votes": 601
+    },
+    {
+      "name": "Anandarajan Anita",
+      "votes": 507
+    },
+    {
+      "name": "Matthews Brian",
+      "votes": 397
+    },
+    {
+      "name": "Robinson Dianna",
+      "votes": 377
+    },
+    {
+      "name": "Choudhary Zia",
+      "votes": 295
+    },
+    {
+      "name": "Fernando Ashan",
+      "votes": 182
+    },
+    {
+      "name": "Kerr Jamil",
+      "votes": 176
+    },
+    {
+      "name": "Moreno Garcia Jose",
+      "votes": 154
+    },
+    {
+      "name": "Alvarez-Bardales Walter",
+      "votes": 101
+    },
+    {
+      "name": "LaRush Donna",
+      "votes": 59
+    },
+    {
+      "name": "Shirley Shemar",
+      "votes": 40
+    },
+    {
+      "name": "Lieu Huy",
+      "votes": 35
+    },
+    {
+      "name": "Rodriguez Gregory",
+      "votes": 35
+    },
+    {
+      "name": "Cheatley Kevin",
+      "votes": 23
+    }
+  ],
+  "polls": {
+    "1": {
+      "total_votes": 792,
+      "allen_votes": 23,
+      "winner": "Neethan",
+      "winner_votes": 359,
+      "allen_rank": 6
+    },
+    "2": {
+      "total_votes": 254,
+      "allen_votes": 11,
+      "winner": "Neethan",
+      "winner_votes": 102,
+      "allen_rank": 5
+    },
+    "5": {
+      "total_votes": 71,
+      "allen_votes": 3,
+      "winner": "Neethan",
+      "winner_votes": 24,
+      "allen_rank": 5
+    },
+    "6": {
+      "total_votes": 72,
+      "allen_votes": 6,
+      "winner": "Neethan",
+      "winner_votes": 19,
+      "allen_rank": 4
+    },
+    "7": {
+      "total_votes": 117,
+      "allen_votes": 22,
+      "winner": "Neethan",
+      "winner_votes": 40,
+      "allen_rank": 2
+    },
+    "8": {
+      "total_votes": 602,
+      "allen_votes": 82,
+      "winner": "Neethan",
+      "winner_votes": 251,
+      "allen_rank": 3
+    },
+    "10": {
+      "total_votes": 563,
+      "allen_votes": 29,
+      "winner": "Neethan",
+      "winner_votes": 252,
+      "allen_rank": 5
+    },
+    "11": {
+      "total_votes": 648,
+      "allen_votes": 77,
+      "winner": "Neethan",
+      "winner_votes": 283,
+      "allen_rank": 3
+    },
+    "13": {
+      "total_votes": 367,
+      "allen_votes": 74,
+      "winner": "Neethan",
+      "winner_votes": 124,
+      "allen_rank": 2
+    },
+    "15": {
+      "total_votes": 236,
+      "allen_votes": 36,
+      "winner": "Neethan",
+      "winner_votes": 77,
+      "allen_rank": 3
+    },
+    "16": {
+      "total_votes": 319,
+      "allen_votes": 43,
+      "winner": "Neethan",
+      "winner_votes": 138,
+      "allen_rank": 3
+    },
+    "17": {
+      "total_votes": 252,
+      "allen_votes": 35,
+      "winner": "Neethan",
+      "winner_votes": 100,
+      "allen_rank": 2
+    },
+    "18": {
+      "total_votes": 720,
+      "allen_votes": 42,
+      "winner": "Neethan",
+      "winner_votes": 368,
+      "allen_rank": 4
+    },
+    "21": {
+      "total_votes": 690,
+      "allen_votes": 166,
+      "winner": "Neethan",
+      "winner_votes": 198,
+      "allen_rank": 2
+    },
+    "25": {
+      "total_votes": 545,
+      "allen_votes": 176,
+      "winner": "Shawn",
+      "winner_votes": 176,
+      "allen_rank": 1
+    },
+    "26": {
+      "total_votes": 431,
+      "allen_votes": 98,
+      "winner": "Neethan",
+      "winner_votes": 101,
+      "allen_rank": 2
+    },
+    "28": {
+      "total_votes": 487,
+      "allen_votes": 71,
+      "winner": "Reza",
+      "winner_votes": 140,
+      "allen_rank": 3
+    },
+    "29": {
+      "total_votes": 583,
+      "allen_votes": 100,
+      "winner": "Reza",
+      "winner_votes": 175,
+      "allen_rank": 3
+    },
+    "30": {
+      "total_votes": 860,
+      "allen_votes": 87,
+      "winner": "Reza",
+      "winner_votes": 242,
+      "allen_rank": 4
+    },
+    "32": {
+      "total_votes": 751,
+      "allen_votes": 96,
+      "winner": "Anu",
+      "winner_votes": 174,
+      "allen_rank": 4
+    },
+    "35": {
+      "total_votes": 747,
+      "allen_votes": 117,
+      "winner": "Reza",
+      "winner_votes": 239,
+      "allen_rank": 3
+    },
+    "36": {
+      "total_votes": 356,
+      "allen_votes": 41,
+      "winner": "Reza",
+      "winner_votes": 80,
+      "allen_rank": 4
+    },
+    "38": {
+      "total_votes": 338,
+      "allen_votes": 52,
+      "winner": "Reza",
+      "winner_votes": 85,
+      "allen_rank": 3
+    },
+    "39": {
+      "total_votes": 669,
+      "allen_votes": 99,
+      "winner": "Neethan",
+      "winner_votes": 230,
+      "allen_rank": 2
+    },
+    "41": {
+      "total_votes": 695,
+      "allen_votes": 165,
+      "winner": "Neethan",
+      "winner_votes": 186,
+      "allen_rank": 2
+    },
+    "42": {
+      "total_votes": 565,
+      "allen_votes": 135,
+      "winner": "Neethan",
+      "winner_votes": 154,
+      "allen_rank": 2
+    },
+    "43": {
+      "total_votes": 457,
+      "allen_votes": 92,
+      "winner": "Shawn",
+      "winner_votes": 92,
+      "allen_rank": 1
+    },
+    "44": {
+      "total_votes": 46,
+      "allen_votes": 7,
+      "winner": "Anu",
+      "winner_votes": 18,
+      "allen_rank": 2
+    },
+    "46": {
+      "total_votes": 201,
+      "allen_votes": 50,
+      "winner": "Shawn",
+      "winner_votes": 50,
+      "allen_rank": 1
+    },
+    "48": {
+      "total_votes": 456,
+      "allen_votes": 118,
+      "winner": "Shawn",
+      "winner_votes": 118,
+      "allen_rank": 1
+    },
+    "49": {
+      "total_votes": 564,
+      "allen_votes": 75,
+      "winner": "Neethan",
+      "winner_votes": 108,
+      "allen_rank": 4
+    },
+    "52": {
+      "total_votes": 48,
+      "allen_votes": 4,
+      "winner": "Neethan",
+      "winner_votes": 9,
+      "allen_rank": 4
+    },
+    "53": {
+      "total_votes": 294,
+      "allen_votes": 82,
+      "winner": "Shawn",
+      "winner_votes": 82,
+      "allen_rank": 1
+    },
+    "96": {
+      "total_votes": 35,
+      "allen_votes": 3,
+      "winner": "Donna",
+      "winner_votes": 5,
+      "allen_rank": 3
+    },
+    "97": {
+      "total_votes": 53,
+      "allen_votes": 8,
+      "winner": "Reza",
+      "winner_votes": 11,
+      "allen_rank": 3
+    },
+    "98": {
+      "total_votes": 2056,
+      "allen_votes": 219,
+      "winner": "Neethan",
+      "winner_votes": 873,
+      "allen_rank": 4
+    },
+    "99": {
+      "total_votes": 2320,
+      "allen_votes": 390,
+      "winner": "Anu",
+      "winner_votes": 499,
+      "allen_rank": 2
+    }
+  }
+}

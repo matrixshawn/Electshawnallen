@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--red:#dc2626;--red-dark:#b91c1c;--blue:#1e3a5f;--blue-light:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;--white:#fff;--green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb}
+:root{--red:#dc2626;--red-dark:#b91c1c;--blue:#1e3a5f;--blue-light:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;--white:#fff;--green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--grid-gap:var(--space-4);--container-max:1100px;--container-pad:var(--space-4)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.5;min-height:100vh}
-.top-bar{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);line-height:1.5;min-height:100vh;overflow-x:hidden;padding-top:var(--top-bar-h,150px)}
+.top-bar{background:linear-gradient(135deg,var(--blue) 0%,#0f2440 100%);color:white;padding:var(--space-3) var(--space-4);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);position:fixed;top:0;left:0;right:0;width:100%;z-index:300;box-shadow:0 2px 8px rgba(0,0,0,0.15);transform:translateZ(0)}
 .top-bar h1{font-size:1em;font-weight:700;letter-spacing:-0.02em}
 .top-bar .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:0.65em;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
 .top-bar .stats{font-size:0.85em;opacity:0.95;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
@@ -26,25 +26,25 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .top-bar .top-search input:focus{background:rgba(255,255,255,0.25);box-shadow:0 0 0 2px rgba(255,255,255,0.2)}
 .top-bar .top-search .spinner{display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite}
 @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
-.container{max-width:900px;margin:0 auto;padding:16px}
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
 
 /* ── Results ── */
 .results-info{display:flex;justify-content:space-between;align-items:center;margin:12px 0 8px;font-size:0.85em;color:var(--gray-500)}
-.supporter-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:8px;transition:all 0.15s;cursor:pointer}
+.supporter-card{background:white;border:1px solid var(--gray-200);border-radius:12px;padding:var(--space-4);margin-bottom:var(--space-2);transition:all 0.15s;cursor:pointer}
 .supporter-card:hover{border-color:var(--gray-300);box-shadow:0 2px 8px rgba(0,0,0,0.04)}
 .supporter-card.original{border-left:4px solid var(--green);background:linear-gradient(90deg,#f0fdf4 0%,white 40px)}
 .supporter-card.selected{border-color:var(--red);box-shadow:0 2px 12px rgba(220,38,38,0.1)}
 .supporter-card.editing{border-color:var(--amber);box-shadow:0 2px 12px rgba(217,119,6,0.1)}
 .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
 .card-header .name{font-weight:700;font-size:1.05em}
-.card-header .address-line{font-size:0.85em;color:var(--gray-500)}
+.card-header .address-line{font-size:0.85em;color:var(--gray-500);word-break:break-word;line-height:1.6}
 .support-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:0.7em;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
 .badge-supporter{background:#dcfce7;color:#166534}
 .badge-neutral{background:var(--gray-100);color:var(--gray-500)}
 .badge-nonsupporter{background:#fee2e2;color:#991b1b}
 .badge-refused{background:#fef3c7;color:#92400e}
 .badge-unknown{background:var(--gray-100);color:var(--gray-400)}
-.card-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.card-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--space-2)}
 .field-row{display:flex;align-items:center;gap:4px;padding:2px 0}
 .field-label{font-size:0.68em;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.04em;min-width:48px;flex-shrink:0}
 .field-value{font-size:0.85em;color:var(--gray-700);flex:1;cursor:text;padding:2px 4px;border-radius:4px;word-break:break-word}
@@ -104,6 +104,18 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .btn-submit{display:block;width:100%;padding:14px;background:var(--red);color:white;border:none;border-radius:10px;font-size:1.05em;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:8px}
 .btn-submit:hover{background:var(--red-dark)}
 .btn-submit:disabled{opacity:0.5}
+/* ── Table Wrap ── */
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-wrap table{width:100%;border-collapse:collapse}
+.table-wrap th{background:var(--gray-100);padding:8px 6px;text-align:left;font-size:0.75em;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;color:var(--gray-500);position:sticky;top:0;z-index:1}
+.table-wrap td{padding:6px;font-size:0.82em;border-bottom:1px solid var(--gray-100);word-break:break-word}
+.route-row{cursor:pointer;transition:background 0.1s}
+.route-row:hover{background:#eef2ff!important;outline:1px solid var(--blue-light)}
+.route-row:hover .sticky-addr{background:#eef2ff!important}
+/* Toggle extra columns */
+.extra-col{display:none}
+.show-extras .extra-col{display:table-cell}
+/* ── Misc ── */
 .ev-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:12px;background:var(--gray-50);border-radius:10px;border:1px solid var(--gray-200)}
 .ev-row input[type="number"]{width:65px;text-align:center;font-size:1.1em;font-weight:700;padding:6px;border:1px solid var(--gray-200);border-radius:8px}
 .survey-header-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:10px 14px;background:var(--green-bg);border-radius:8px;font-size:0.82em}
@@ -116,6 +128,7 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .pagination button{padding:6px 12px;border:1px solid var(--gray-200);background:white;border-radius:6px;cursor:pointer;font-size:0.82em}
 .pagination button.active{background:var(--red);color:white;border-color:var(--red)}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gray-900);color:white;padding:10px 20px;border-radius:8px;font-size:0.85em;z-index:200;opacity:0;transition:opacity 0.3s;pointer-events:none}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
 .toast.show{opacity:1}
 .toast.success{background:var(--green)}
 .toast.error{background:var(--red)}
@@ -123,7 +136,13 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 .filter-chip{padding:5px 14px;border-radius:20px;border:1.5px solid var(--gray-200);background:white;font-size:0.78em;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:inherit;color:var(--gray-700);white-space:nowrap}
 .filter-chip:hover{border-color:var(--red);color:var(--red)}
 .filter-chip.active{background:var(--red);color:white;border-color:var(--red)}
-@media(max-width:600px){.top-bar h1{font-size:1em}.search-box input{font-size:1em;padding:14px}.supporter-card{padding:12px}.card-fields{grid-template-columns:1fr}.survey-form{padding:16px}.filter-chip{font-size:0.7em;padding:4px 10px}}
+@media(max-width:600px){.top-bar h1{font-size:1em}.search-box input{font-size:1em;padding:14px}.supporter-card{padding:12px}.card-fields{grid-template-columns:1fr}.survey-form{padding:16px}.filter-chip{font-size:0.7em;padding:4px 10px}#canvassRouteWrap table{font-size:0.7em}#canvassRouteWrap th,#canvassRouteWrap td{padding:4px 2px}#canvassRouteSummary{font-size:0.68em}#canvassMapCol{flex:1 1 100%!important;max-height:250px}}
+/* Poll color badges */
+.poll-green{background:#16a34a !important}
+.poll-yellow{background:#d97706 !important}
+.poll-blue{background:#2563eb !important}
+.poll-orange{background:#ea580c !important}
+.poll-purple{background:#7c3aed !important}
 </style>
 </head>
 <body>
@@ -133,9 +152,38 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 <div style="background:white;border-radius:16px;padding:32px;width:340px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)">
   <h2 style="margin-bottom:16px">🗳️ Ward 25 Canvassing</h2>
   <p style="font-size:0.85em;color:var(--gray-500);margin-bottom:16px">Sign in to begin</p>
-  <div style="margin-bottom:10px"><input type="text" id="loginUser" placeholder="Username" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit" autofocus></div>
-  <div style="margin-bottom:14px"><input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
-  <button onclick="doLogin()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer">Sign In</button>
+  <!-- Login form -->
+  <div id="loginForm" style="display:block">
+    <div style="margin-bottom:10px"><input type="text" id="loginUser" placeholder="Username" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit" autofocus></div>
+    <div style="margin-bottom:14px"><input type="password" id="loginPass" placeholder="Password" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <button onclick="doLogin()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer">Sign In</button>
+    <p style="margin-top:12px;font-size:0.85em"><a href="#" onclick="showForgotPassword();return false" style="color:var(--blue-light);text-decoration:none;font-weight:600">Forgot your password?</a></p>
+    <p style="margin-top:12px;font-size:0.85em;color:var(--gray-500)">No account? <a href="#" onclick="showRegister();return false" style="color:var(--blue-light);text-decoration:none;font-weight:600">Register</a></p>
+  </div>
+  <!-- Registration form -->
+  <div id="registerForm" style="display:none">
+    <div style="margin-bottom:10px"><input type="text" id="regUser" placeholder="Choose a username" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <div style="margin-bottom:10px"><input type="text" id="regName" placeholder="Display name (optional)" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <div style="margin-bottom:10px"><input type="email" id="regEmail" placeholder="Email for password recovery" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <div style="margin-bottom:14px"><input type="password" id="regPass" placeholder="Password (8+ characters)" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <button onclick="doRegister()" style="width:100%;padding:12px;background:var(--blue-light);color:white;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer">Create Account</button>
+    <p style="margin-top:12px;font-size:0.85em;color:var(--gray-500)">Already registered? <a href="#" onclick="showLogin();return false" style="color:var(--blue-light);text-decoration:none;font-weight:600">Sign In</a></p>
+  </div>
+  <!-- Password reset request form -->
+  <div id="forgotForm" style="display:none">
+    <p style="font-size:0.85em;color:var(--gray-500);margin-bottom:14px">Enter your username or registered email. We’ll email you a one-hour reset link.</p>
+    <div style="margin-bottom:14px"><input type="text" id="resetIdentifier" placeholder="Username or email" autocomplete="username" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <button onclick="doPasswordResetRequest()" style="width:100%;padding:12px;background:var(--blue-light);color:white;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer">Email Reset Link</button>
+    <p style="margin-top:12px;font-size:0.85em"><a href="#" onclick="showLogin();return false" style="color:var(--blue-light);text-decoration:none;font-weight:600">Back to Sign In</a></p>
+  </div>
+  <!-- Password reset confirmation form -->
+  <div id="resetForm" style="display:none">
+    <p style="font-size:0.85em;color:var(--gray-500);margin-bottom:14px">Choose a new password for your canvassing account.</p>
+    <div style="margin-bottom:10px"><input type="password" id="resetPass" placeholder="New password (8+ characters)" autocomplete="new-password" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <div style="margin-bottom:14px"><input type="password" id="resetPassConfirm" placeholder="Confirm new password" autocomplete="new-password" style="width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.95em;text-align:center;font-family:inherit"></div>
+    <button onclick="doPasswordResetConfirm()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer">Reset Password</button>
+    <p style="margin-top:12px;font-size:0.85em"><a href="#" onclick="showLogin();return false" style="color:var(--blue-light);text-decoration:none;font-weight:600">Back to Sign In</a></p>
+  </div>
   <p id="loginError" style="color:var(--red);margin-top:10px;font-size:0.85em;display:none"></p>
 </div></div>
 
@@ -162,10 +210,97 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 </div>
 
 <div class="container">
+  <!-- 🚶 My Assigned Walks -->
+  <div id="myWalksSection" style="display:none;margin-bottom:16px;padding:12px;background:var(--gray-50);border-radius:10px;border:2px solid #7c3aed">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong style="font-size:0.9em;color:#7c3aed">🚶 My Assigned Walks</strong>
+      <button onclick="document.getElementById('myWalksSection').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:1.2em">✕</button>
+    </div>
+    <div id="myWalksList" style="font-size:0.85em">Loading...</div>
+  </div>
+
+  <!-- 📜 Walk History (completed) -->
+  <div id="walkHistorySection" style="display:none;margin-bottom:16px;padding:12px;background:var(--green-bg);border-radius:10px;border:2px solid var(--green)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong style="font-size:0.9em;color:var(--green)">📜 Completed Walks</strong>
+      <button onclick="document.getElementById('walkHistorySection').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:1.2em">✕</button>
+    </div>
+    <div id="walkHistoryList" style="font-size:0.85em">Loading...</div>
+  </div>
+
   <div class="results-info" id="resultsInfo" style="display:none">
     <span id="resultsCount"></span>
     <span id="resultsQuery"></span>
   </div>
+  <div class="results-info" id="pollLegend" style="display:none;flex-wrap:wrap;gap:4px;align-items:center;font-size:0.7em;padding:4px 0">
+    <span style="font-weight:600;margin-right:2px">🎨 Polls:</span>
+    <span class="loading">Loading...</span>
+  </div>
+  <div class="results-info" id="rankSummary" style="display:none;flex-wrap:wrap;gap:8px;align-items:center;font-size:0.72em;padding:2px 0 6px;color:var(--gray-500)">
+    <span style="font-weight:600;margin-right:2px">🏆 Your Ranks:</span>
+    <span style="font-size:0.85em;opacity:0.5">Loading...</span>
+  </div>
+  <div id="electionRankDetails" style="display:none;margin:0 0 12px;padding:10px;background:white;border:1px solid var(--gray-200);border-radius:10px;font-size:0.82em"></div>
+
+  <!-- Name sub-filter for results — hidden until results load -->
+  <div id="nameFilterRow" style="display:none;margin-bottom:8px;text-align:center">
+    <input type="text" id="nameSubFilter" placeholder="🔍 Filter these results by name..." style="max-width:320px;padding:8px 14px;border:2px solid var(--blue);border-radius:8px;font-size:0.85em;font-family:inherit" oninput="filterResultsByName()">
+    <span id="nameFilterCount" style="font-size:0.78em;color:var(--gray-500);margin-left:6px"></span>
+  </div>
+
+  <!-- Add New Record button + form (always available) -->
+  <div style="text-align:center;margin-bottom:10px">
+    <button class="btn btn-edit" onclick="toggleAddForm()" id="btnAddNew" style="font-size:0.9em;padding:10px 20px">➕ Add New Record</button>
+  </div>
+
+  <!-- 🚶 Canvass by Poll Route -->
+  <div style="background:white;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:16px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <span style="font-weight:700;font-size:0.95em">🚶 Canvass Route</span>
+      <select id="canvassRoutePoll" onchange="showPollMap()" style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit;min-width:200px">
+        <option value="">— Select Poll —</option>
+      </select>
+      <button onclick="loadCanvassRoute()" style="padding:8px 18px;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.85em;font-weight:600;cursor:pointer;font-family:inherit">📋 Load Route</button>
+      <input type="text" id="canvassRouteFilter" placeholder="🔍 Filter by street..." style="padding:8px 12px;border:2px solid var(--gray-200);border-radius:8px;font-size:0.85em;font-family:inherit;min-width:180px;display:none" oninput="filterCanvassRoute()">
+      <span id="canvassRouteSummary" style="font-size:0.78em;color:var(--gray-500)"></span>
+    </div>
+    <div id="canvassRouteWrap" hidden>
+      <div id="canvassMapDataRow" style="display:flex;gap:16px;flex-wrap:wrap">
+        <div id="canvassMapCol" style="flex:0 0 280px;min-width:200px;max-width:100%;text-align:center;overflow:hidden">
+          <a id="canvassMapLink" href="#" target="_blank">
+            <img id="canvassMapImg" src="" style="width:100%;max-height:350px;object-fit:contain;border-radius:8px;border:2px solid var(--gray-200)" alt="Poll map">
+          </a>
+          <div style="font-size:0.65em;color:var(--gray-400);margin-top:2px">🗺️ Click map to enlarge</div>
+        </div>
+        <div id="canvassTableCol" style="flex:1;min-width:280px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <button id="toggleExtraCols" onclick="toggleExtraColumns()" style="font-size:0.72em;padding:3px 10px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px;cursor:pointer;font-family:inherit;display:none">🔽 Show All Fields</button>
+          </div>
+          <div class="table-wrap" style="max-height:50vh;overflow-x:auto;overflow-y:auto">
+            <table style="width:100%;min-width:550px;font-size:0.82em"><thead><tr><th style="width:28px">#</th><th style="width:160px;position:sticky;left:0;background:var(--gray-100);z-index:5;box-shadow:2px 0 4px rgba(0,0,0,0.06)">Address</th><th>Name</th><th class="extra-col" style="min-width:100px">Phone</th><th class="extra-col" style="min-width:90px">Support</th><th class="extra-col" style="min-width:60px">Sign</th><th class="extra-col" style="min-width:70px">Notes</th></tr></thead>
+            <tbody id="canvassRouteBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="addNewForm" style="display:none;background:white;border:2px solid var(--green);border-radius:14px;padding:20px;margin-bottom:16px">
+    <h3 style="margin-bottom:12px">➕ Add New Supporter</h3>
+    <div class="form-row"><div class="form-group" style="flex:1.5">
+      <label>📍 Address <span style="color:var(--red)">*</span></label>
+      <input type="text" id="addNewAddress" placeholder="123 Main St, Toronto, ON">
+    </div></div>
+    <div class="form-row"><div class="form-group" style="flex:1.5"><label>Full Name</label><input type="text" id="addNewFullName" placeholder="e.g. John Smith"></div>
+    <div class="form-group"><label>Phone</label><input type="tel" id="addNewPhone" placeholder="416-555-XXXX"></div></div>
+    <div class="form-row"><div class="form-group"><label>Email</label><input type="email" id="addNewEmail" placeholder="email@example.com"></div>
+    <div class="form-group"><label>Support Level</label><select id="addNewSupport"><option value="Supporter">Supporter</option><option value="Neutral">Neutral</option><option value="Non-Supporter">Non-Supporter</option><option value="Unknown">Unknown</option></select></div></div>
+    <div class="form-group"><label>Notes</label><input type="text" id="addNewNotes" placeholder="Any notes..."></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn btn-save" style="font-size:0.9em;padding:10px 20px" onclick="addNewRecord()">💾 Save</button>
+      <button class="btn btn-cancel" style="font-size:0.9em;padding:10px 20px" onclick="toggleAddForm()">Cancel</button>
+    </div>
+  </div>
+
   <div id="results"></div>
   <div class="pagination" id="pagination" style="display:none"></div>
 
@@ -313,11 +448,82 @@ body{font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-9
 
 <script>
 const API = '';
-let currentPage = 1, PAGE_SIZE = 25, debounceTimer, currentQuery = '', editingCard = null;
+const PAGE_SIZE = 25;
+const POLL_COLORS = ['green','yellow','blue','orange','purple'];
+const RANK_COLORS = {green:'#16a34a', yellow:'#d97706', blue:'#2563eb', orange:'#ea580c', purple:'#7c3aed'};
+var pollOrder = [];  // loaded from /api/polls
+var electionPollRanks = {};  // poll_num -> allen_rank (1-5)
+var electionPollsByPosition = {};  // rank -> [{poll, allen_votes, winner, winner_votes, total_votes}]
+
+function getPollColorClass(pollNum) {
+  // Use election rank if available
+  if (electionPollRanks[pollNum]) {
+    var r = electionPollRanks[pollNum];
+    return 'poll-' + POLL_COLORS[(r-1) % POLL_COLORS.length];
+  }
+  // Fallback: street index order
+  var idx = pollOrder.indexOf(String(pollNum));
+  if (idx < 0) return '';
+  return 'poll-' + POLL_COLORS[idx % POLL_COLORS.length];
+}
+
+function showElectionPositionPolls(pos) {
+  var box = document.getElementById('electionRankDetails');
+  if (!box) return;
+  var rows = (electionPollsByPosition && electionPollsByPosition[String(pos)]) || [];
+  if (!rows.length) {
+    box.innerHTML = '<strong>No polls found for that position.</strong>';
+    box.style.display = 'block';
+    return;
+  }
+  var label = rows[0].label || (pos + getOrdinal(pos));
+  var totalVotes = rows.reduce(function(sum, r){ return sum + (parseInt(r.allen_votes || 0, 10) || 0); }, 0);
+  var pollNums = rows.map(function(r){ return r.poll; }).join(', ');
+  var html = '<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:8px">' +
+    '<div><strong style="color:var(--blue);font-size:1.05em">🗳️ Shawn placed '+label+' in '+rows.length+' poll'+(rows.length!==1?'s':'')+'</strong>' +
+    '<div style="color:var(--gray-500);font-size:0.9em;margin-top:2px">Polls: '+pollNums+' · Shawn votes: '+totalVotes.toLocaleString()+'</div></div>' +
+    '<button onclick="document.getElementById(\'electionRankDetails\').style.display=\'none\'" style="background:none;border:none;font-size:1.2em;cursor:pointer;color:var(--gray-500)">✕</button></div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">';
+  html += rows.map(function(r) {
+    var winnerLine = (pos === 1)
+      ? 'Won with '+(r.allen_votes || 0)+' votes'
+      : 'Winner: '+(r.winner || '—')+' '+(r.winner_votes || '');
+    var gap = (pos > 1 && r.winner_votes && r.allen_votes) ? ' · gap '+(parseInt(r.winner_votes,10)-parseInt(r.allen_votes,10)) : '';
+    var safePoll = String(r.poll).replace(/'/g,'');
+    return '<button onclick="loadRouteForPoll(\''+safePoll+'\')" title="Load canvass route for Poll '+safePoll+'" style="text-align:left;background:#f8fafc;border:1px solid var(--gray-200);border-radius:9px;padding:8px;cursor:pointer;font-family:inherit">' +
+      '<div style="font-weight:800;color:var(--blue);font-size:1.05em">Poll '+r.poll+'</div>' +
+      '<div style="font-size:0.85em;color:var(--gray-700)">'+winnerLine+gap+'</div>' +
+      '<div style="font-size:0.78em;color:var(--gray-500)">'+(r.total_votes || 0)+' total ballots · click to load</div>' +
+      '</button>';
+  }).join('');
+  html += '</div>';
+  box.innerHTML = html;
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function loadRouteForPoll(poll) {
+  var sel = document.getElementById('canvassRoutePoll');
+  if (sel) sel.value = poll;
+  if (typeof showPollMap === 'function') showPollMap();
+  if (typeof loadCanvassRoute === 'function') loadCanvassRoute();
+}
+let currentPage = 1, debounceTimer, currentQuery = '', editingCard = null;
 let selectedSupporter = null;
 let currentFilter = '', currentFilterValue = ''; // 'support_level' or 'sign_request'
 var authToken = '';
 var currentUser = null;
+var pageResetToken = new URLSearchParams(window.location.search).get('reset_token') || '';
+
+// ── Fixed header offset ──
+function updateTopBarOffset() {
+  var bar = document.querySelector('.top-bar');
+  if (!bar) return;
+  var h = Math.ceil(bar.getBoundingClientRect().height || bar.offsetHeight || 0);
+  if (h > 0) document.documentElement.style.setProperty('--top-bar-h', h + 'px');
+}
+window.addEventListener('resize', updateTopBarOffset);
+window.addEventListener('orientationchange', function(){ setTimeout(updateTopBarOffset, 250); });
 
 // ── Auth ──
 function doLogin() {
@@ -336,6 +542,8 @@ function doLogin() {
       document.getElementById('loginOverlay').style.display = 'none';
       document.getElementById('loggedInUser').textContent = '👤 '+d.user.display_name;
       loadMyStats();
+      loadMyWalks();
+      loadWalkHistory();
     } else {
       err.textContent = '❌ '+(d.error||'Login failed');
       err.style.display = 'block';
@@ -362,6 +570,102 @@ function authHeaders() {
 
 // Enter key on login form
 document.getElementById('loginPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+// Enter key on register form
+document.getElementById('regPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doRegister(); });
+document.getElementById('resetIdentifier').addEventListener('keydown', function(e){ if(e.key==='Enter') doPasswordResetRequest(); });
+document.getElementById('resetPassConfirm').addEventListener('keydown', function(e){ if(e.key==='Enter') doPasswordResetConfirm(); });
+
+// ── Registration ──
+function showRegister() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('forgotForm').style.display = 'none';
+  document.getElementById('resetForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'block';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('regUser').focus();
+}
+function showLogin() {
+  document.getElementById('registerForm').style.display = 'none';
+  document.getElementById('forgotForm').style.display = 'none';
+  document.getElementById('resetForm').style.display = 'none';
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('loginUser').focus();
+}
+function showForgotPassword() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'none';
+  document.getElementById('resetForm').style.display = 'none';
+  document.getElementById('forgotForm').style.display = 'block';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('resetIdentifier').focus();
+}
+function showResetPassword() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'none';
+  document.getElementById('forgotForm').style.display = 'none';
+  document.getElementById('resetForm').style.display = 'block';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('resetPass').focus();
+}
+function showAuthMessage(message, success) {
+  var err = document.getElementById('loginError');
+  err.style.color = success ? '#16a34a' : 'var(--red)';
+  err.textContent = (success ? '✅ ' : '❌ ') + message;
+  err.style.display = 'block';
+}
+function doPasswordResetRequest() {
+  var identifier = document.getElementById('resetIdentifier').value.trim();
+  if (!identifier) { showAuthMessage('Enter your username or email', false); return; }
+  fetch('/api/auth/password-reset/request', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({identifier:identifier})
+  }).then(function(r){ return r.json(); }).then(function(d){
+    showAuthMessage(d.message || 'If that account has a registered email, a reset link has been sent.', true);
+  }).catch(function(){ showAuthMessage('Network error', false); });
+}
+function doPasswordResetConfirm() {
+  var password = document.getElementById('resetPass').value;
+  var confirmPassword = document.getElementById('resetPassConfirm').value;
+  if (password.length < 8) { showAuthMessage('Password must be at least 8 characters', false); return; }
+  if (password !== confirmPassword) { showAuthMessage('Passwords do not match', false); return; }
+  fetch('/api/auth/password-reset/confirm', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:pageResetToken, password:password})
+  }).then(function(r){ return r.json().then(function(d){ return {ok:r.ok, data:d}; }); }).then(function(result){
+    if (!result.ok) { showAuthMessage(result.data.error || 'Reset failed', false); return; }
+    pageResetToken = '';
+    history.replaceState({}, document.title, window.location.pathname);
+    showLogin();
+    showAuthMessage(result.data.message, true);
+  }).catch(function(){ showAuthMessage('Network error', false); });
+}
+function doRegister() {
+  var u = document.getElementById('regUser').value.trim();
+  var n = document.getElementById('regName').value.trim();
+  var e = document.getElementById('regEmail').value.trim();
+  var p = document.getElementById('regPass').value;
+  var err = document.getElementById('loginError');
+  err.style.display = 'none';
+  if (!u || !e || !p) { err.textContent = 'Please fill all required fields'; err.style.display = 'block'; return; }
+  fetch('/api/auth/register', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username:u, email:e, password:p, display_name:n})
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.success) {
+      err.style.color = '#16a34a';
+      err.textContent = '✅ ' + d.message;
+      err.style.display = 'block';
+      showLogin();
+      document.getElementById('loginUser').value = u;
+      document.getElementById('loginPass').focus();
+    } else {
+      err.style.color = 'var(--red)';
+      err.textContent = '❌ ' + (d.error || 'Registration failed');
+      err.style.display = 'block';
+    }
+  }).catch(function(){ err.textContent = '❌ Network error'; err.style.display = 'block'; });
+}
 
 // ── Stats ──
 async function loadMyStats() {
@@ -377,10 +681,501 @@ async function loadMyStats() {
     document.getElementById('mySignsToday').textContent = d.signs_today || 0;
     document.getElementById('mySigns').textContent = d.signs_completed || 0;
     document.getElementById('myStatsDisplay').style.display = 'inline';
+    setTimeout(updateTopBarOffset, 0);
   } catch(e) {}
 }
 
+function getOrdinal(n) {
+  var s = ['th','st','nd','rd'];
+  var v = n % 100;
+  return s[(v-20)%10] || s[v] || s[0];
+}
+
+async function loadMyWalks() {
+  if (!authToken) return;
+  try {
+    var r = await fetch(API + '/api/canvass/my-assignments', {
+      headers: {'Authorization': 'Bearer ' + authToken}
+    });
+    var d = await r.json();
+    var assignments = d.assignments || [];
+    var section = document.getElementById('myWalksSection');
+    var list = document.getElementById('myWalksList');
+    
+    if (assignments.length === 0) {
+      section.style.display = 'none';
+    } else {
+      section.style.display = 'block';
+    }
+    
+    list.innerHTML = assignments.map(function(a) {
+      var statusIcon, statusColor, actions = '';
+      if (a.status === 'assigned') {
+        statusIcon = '📋'; statusColor = '#7c3aed';
+        actions = '<button onclick="event.stopPropagation();acceptWalk('+a.id+')" style="padding:4px 12px;background:#7c3aed;color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.8em;font-weight:600">✅ Accept Walk</button>';
+      } else if (a.status === 'accepted') {
+        statusIcon = '⏳'; statusColor = '#d97706';
+        actions = '<button onclick="event.stopPropagation();viewWalk('+a.id+')" style="padding:4px 12px;background:var(--blue);color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.8em">📋 View</button>' +
+          '<button onclick="event.stopPropagation();completeWalk('+a.id+')" style="padding:4px 12px;background:var(--green);color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.8em">✅ Done</button>';
+      } else {
+        statusIcon = '✅'; statusColor = 'var(--green)';
+      }
+      
+      var acceptedInfo = a.accepted_at ? ' · Accepted: '+formatDate(a.accepted_at) : '';
+      
+      return '<div onclick="loadWalkPoll(\''+esc(a.poll)+'\')" style="padding:8px;margin-bottom:4px;background:white;border-radius:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.background=\'#f5f3ff\';this.style.borderLeft=\'4px solid #7c3aed\'" onmouseout="this.style.background=\'white\';this.style.borderLeft=\'4px solid transparent\'">'+
+        '<div>'+
+          '<strong>Poll '+esc(a.poll)+'</strong> — '+
+          '<span>'+esc(a.count)+' addresses</span> '+
+          '<span style="color:'+statusColor+';font-weight:600">'+statusIcon+' '+esc(a.status)+'</span>'+
+          '<span style="font-size:0.75em;color:var(--gray-400)">'+acceptedInfo+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:6px">'+actions+'</div>'+
+        '</div>';
+    }).join('');
+  } catch(e) { console.error('loadMyWalks:', e); }
+}
+
+async function loadWalkPoll(pollNum) {
+  // Load an assigned walk's poll into the main canvass view
+  document.getElementById('myWalksSection').style.display = 'none';
+  document.getElementById('walkHistorySection').style.display = 'none';
+  var pollSelect = document.getElementById('canvassRoutePoll');
+  pollSelect.value = pollNum;
+  showPollMap();
+  await loadCanvassRoute();
+  // Scroll to the route table so canvasser sees it
+  document.getElementById('canvassRouteWrap').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+function viewWalk(id) {
+  fetch(API + '/api/canvass/assignment-records?id=' + id, {
+    headers: {'Authorization': 'Bearer ' + authToken}
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (!d.records) return;
+    
+    // Cache records so openRouteRecord works
+    window._canvassRouteData = d.records;
+    
+    var html = '<div style="margin-top:8px"><strong>Poll '+esc(d.poll)+' — '+esc(d.count)+' addresses · click any row to view</strong></div>';
+    html += '<table style="width:100%;font-size:0.85em;margin-top:4px;border-collapse:collapse">';
+    html += '<tr style="background:var(--gray-100)"><th>#</th><th>Address</th><th>Name</th></tr>';
+    d.records.forEach(function(s, i){
+      var addr = [s.street_number, s.street].filter(Boolean).join(' ');
+      var rowStyle = s.sign_request === 'Requested' ? 'background:#fef3c7' : '';
+      html += '<tr class="route-row" style="'+rowStyle+';cursor:pointer;border-bottom:1px solid var(--gray-100)" onclick="openRouteRecord('+s.id+')" title="Click to view/edit">'+
+        '<td style="font-size:0.75em;color:var(--gray-400)">'+(i+1)+'</td>'+
+        '<td><strong>'+esc(addr)+'</strong></td><td>'+esc(s.full_name||'—')+'</td></tr>';
+    });
+    html += '</table>';
+    html += '<button onclick="loadMyWalks()" style="margin-top:6px;padding:4px 10px;background:var(--gray-200);border:none;border-radius:4px;cursor:pointer;font-size:0.8em">⬅ Back</button>';
+    var section = document.getElementById('myWalksList');
+    section.innerHTML = html;
+  }).catch(function(e){ console.error('viewWalk:', e); });
+}
+
+async function completeWalk(id) {
+  if (!confirm('Mark this walk as complete?')) return;
+  try {
+    var r = await fetch(API + '/api/canvass/complete', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken},
+      body: JSON.stringify({assignment_id: String(id)})
+    });
+    var d = await r.json();
+    if (d.success) {
+      loadMyWalks();
+      loadWalkHistory();
+      loadMyStats();
+    }
+  } catch(e) { console.error('completeWalk:', e); }
+}
+
+async function acceptWalk(id) {
+  if (!confirm('Accept this walk? You will be responsible for canvassing these addresses.')) return;
+  try {
+    var r = await fetch(API + '/api/canvass/accept', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken},
+      body: JSON.stringify({assignment_id: String(id)})
+    });
+    var d = await r.json();
+    if (d.success) {
+      showToast('✅ Walk accepted!', 'success');
+      loadMyWalks();
+    } else {
+      showToast('❌ '+(d.error||'Failed to accept'), 'error');
+    }
+  } catch(e) { showToast('❌ Error', 'error'); }
+}
+
+async function loadWalkHistory() {
+  if (!authToken) return;
+  try {
+    var r = await fetch(API + '/api/canvass/my-history', {
+      headers: {'Authorization': 'Bearer ' + authToken}
+    });
+    var d = await r.json();
+    var history = d.history || [];
+    var section = document.getElementById('walkHistorySection');
+    var list = document.getElementById('walkHistoryList');
+    
+    if (history.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+    
+    section.style.display = 'block';
+    list.innerHTML = history.map(function(h) {
+      var completedDate = h.completed_at ? formatDate(h.completed_at) : '—';
+      var createdDate = h.created_at ? formatDate(h.created_at) : '—';
+      return '<div onclick="loadWalkPoll(\''+esc(h.poll)+'\')" style="padding:8px;margin-bottom:4px;background:white;border-radius:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;cursor:pointer;transition:all 0.15s" onmouseover="this.style.background=\'#f0fdf4\';this.style.borderLeft=\'4px solid #16a34a\'" onmouseout="this.style.background=\'white\';this.style.borderLeft=\'4px solid transparent\'">'+
+        '<div>'+
+          '<strong>Poll '+esc(h.poll)+'</strong> '+
+          '<span style="color:var(--green);font-weight:600">✅ Completed</span>'+
+          '<span style="font-size:0.75em;color:var(--gray-400)"> · '+completedDate+'</span>'+
+        '</div>'+
+        '<span style="font-size:0.75em;color:var(--gray-400)">Assigned: '+createdDate+'</span>'+
+        '</div>';
+    }).join('');
+  } catch(e) { console.error('loadWalkHistory:', e); }
+}
+
+async function loadRankSummary() {
+  try {
+    var r = await fetch(API + '/api/polls');
+    var d = await r.json();
+    // Populate poll order for color coding (still needed for card badges)
+    if (d.polls) pollOrder = d.polls.map(function(p){ return p.poll; });
+    // Populate election poll ranks for badge coloring
+    if (d.election && d.election.poll_ranks) {
+      electionPollRanks = d.election.poll_ranks;
+    }
+    if (d.election && d.election.polls_by_position) {
+      electionPollsByPosition = d.election.polls_by_position;
+    }
+    
+    // ── Poll Legend: use election results when available ──
+    var pLeg = document.getElementById('pollLegend');
+    if (pLeg) {
+      if (d.election && d.election.available && d.election.allen_position_summary) {
+        // Election-based: green=1st, yellow=2nd, blue=3rd, orange=4th, purple=5th
+        var posLabels = {1:'1st', 2:'2nd', 3:'3rd', 4:'4th', 5:'5th'};
+        pLeg.innerHTML = '<span style="font-weight:600;margin-right:2px">🎨 Your Position:</span> ' +
+          d.election.allen_position_summary.map(function(p) {
+            var ec = {'1':'#16a34a','2':'#d97706','3':'#2563eb','4':'#ea580c','5':'#7c3aed'}[p.position] || '#6b7280';
+            return '<button onclick="showElectionPositionPolls('+p.position+')" style="background:'+ec+';color:white;padding:3px 9px;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:1em;'+(p.count===0?'opacity:0.4':'')+'">'+posLabels[p.position]+' — '+p.count+' poll'+(p.count!==1?'s':'')+'</button>';
+          }).join(' ');
+      } else {
+        // Fallback: street index order
+        pLeg.innerHTML = '<span style="font-weight:600;margin-right:2px">🎨 Polls:</span> ' +
+          d.rank_summary.map(function(r) {
+            return '<span style="background:'+RANK_COLORS[r.color]+';color:white;padding:1px 8px;border-radius:8px;font-weight:600">'+r.polls[0]+'</span>';
+          }).join(' ') + ' <span>(every 5)</span>';
+      }
+    }
+    
+    // ── Rank Summary ──
+    var el = document.getElementById('rankSummary');
+    if (!el || !d.rank_summary) return;
+    var html = '';
+    if (d.election && d.election.available && d.election.allen_position_summary) {
+      html = '<span style="font-weight:600;margin-right:2px">🏆 Canvass Color Key:</span> ' +
+        d.election.allen_position_summary.map(function(p) {
+          var ec = {'1':'#16a34a','2':'#d97706','3':'#2563eb','4':'#ea580c','5':'#7c3aed'}[p.position] || '#6b7280';
+          var colorName = {1:'Green',2:'Yellow',3:'Blue',4:'Orange',5:'Purple'}[p.position]||'';
+          return '<button onclick="showElectionPositionPolls('+p.position+')" style="background:'+ec+';color:white;padding:4px 10px;border:0;border-radius:10px;font-weight:700;white-space:nowrap;cursor:pointer;font-family:inherit;font-size:1em;'+(p.count===0?'opacity:0.4':'')+'">'+colorName+' = '+p.label+' ('+p.count+')</button>';
+        }).join(' ');
+    } else {
+      html = '<span style="font-weight:600;margin-right:2px">🏆 Your Ranks:</span>' +
+        d.rank_summary.map(function(r) {
+          return '<span style="background:'+RANK_COLORS[r.color]+';color:white;padding:2px 10px;border-radius:10px;font-weight:600;white-space:nowrap">'+
+            r.rank + getOrdinal(r.rank) + ' — ' + r.count + ' poll' + (r.count !== 1 ? 's' : '') +
+            '</span>';
+        }).join(' ');
+    }
+    el.innerHTML = html;
+    el.style.display = 'flex';
+    
+    // Populate canvass route poll dropdown
+    var routeSelect = document.getElementById('canvassRoutePoll');
+    if (routeSelect && d.polls) {
+      routeSelect.innerHTML = '<option value=\"\">— Select Poll —</option>';
+      d.polls.forEach(function(p) {
+        routeSelect.innerHTML += '<option value=\"'+p.poll+'\">Poll '+p.poll+' ('+p.total+' records)</option>';
+      });
+    }
+  } catch(e) { console.error('rank summary:', e); }
+}
+
+// ── Canvass Route ──
+function getSupportBadgeLabel(level) {
+  var l = (level||'').toLowerCase();
+  if (l === 'supporter') return '✓ Supporter';
+  if (l === 'neutral') return 'Neutral';
+  if (l === 'non-supporter' || l === 'non supporter') return '✗ Non-Supporter';
+  return level || '—';
+}
+
+function showPollMap() {
+  var poll = document.getElementById('canvassRoutePoll').value;
+  var wrap = document.getElementById('canvassRouteWrap');
+  var mapCol = document.getElementById('canvassMapCol');
+  var mapImg = document.getElementById('canvassMapImg');
+  var mapLink = document.getElementById('canvassMapLink');
+  var tbody = document.getElementById('canvassRouteBody');
+  var filter = document.getElementById('canvassRouteFilter');
+  var summary = document.getElementById('canvassRouteSummary');
+  
+  if (!poll) {
+    wrap.hidden = true;
+    filter.style.display = 'none';
+    filter.value = '';
+    summary.textContent = '';
+    document.getElementById('toggleExtraCols').style.display = 'none';
+    var tbl = document.querySelector('#canvassRouteWrap table');
+    if (tbl) tbl.classList.remove('show-extras');
+    return;
+  }
+  
+  var mapUrl = '/poll_maps/normalized/poll_'+poll+'.png';
+  mapImg.src = mapUrl;
+  mapLink.href = mapUrl;
+  mapImg.onerror = function() { mapCol.style.display = 'none'; };
+  mapImg.onload = function() { mapCol.style.display = 'block'; };
+  
+  wrap.hidden = false;
+  filter.style.display = 'none';
+  filter.value = '';
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:20px">Click <strong>Load Route</strong> to see addresses</td></tr>';
+  summary.textContent = '';
+}
+
+async function loadCanvassRoute() {
+  var poll = document.getElementById('canvassRoutePoll').value;
+  if (!poll) return;
+  
+  var wrap = document.getElementById('canvassRouteWrap');
+  var tbody = document.getElementById('canvassRouteBody');
+  var mapCol = document.getElementById('canvassMapCol');
+  var mapImg = document.getElementById('canvassMapImg');
+  var mapLink = document.getElementById('canvassMapLink');
+  if (wrap) wrap.hidden = false;
+  if (mapImg && mapLink) {
+    var mapUrl = '/poll_maps/normalized/poll_'+poll+'.png';
+    if (mapImg.getAttribute('src') !== mapUrl) mapImg.src = mapUrl;
+    mapLink.href = mapUrl;
+    if (mapCol) mapCol.style.display = 'block';
+    mapImg.onerror = function() { if (mapCol) mapCol.style.display = 'none'; };
+    mapImg.onload = function() { if (mapCol) mapCol.style.display = 'block'; };
+  }
+  tbody.innerHTML = '<tr><td colspan="7" class="loading" style="text-align:center;padding:20px">Loading route...</td></tr>';
+  document.getElementById('canvassRouteFilter').style.display = 'inline-block';
+  document.getElementById('canvassRouteFilter').value = '';
+  
+  try {
+    var r = await fetch('/api/poll-canvass?poll='+encodeURIComponent(poll));
+    var d = await r.json();
+    
+    if (d.records && d.records.length > 0) {
+      // Store route data for click handling
+      window._canvassRouteData = d.records;
+      tbody.innerHTML = d.records.map(function(s, i){
+        var addr = [s.street_number, s.street].filter(Boolean).join(' ');
+        if (s.apartment) addr += ' Apt '+s.apartment;
+        var rowStyle = s.sign_request === 'Requested' ? 'background:#fef3c7' : '';
+        var stickyBg = s.sign_request === 'Requested' ? '#fef3c7' : 'white';
+        return '<tr class="route-row" style="'+rowStyle+'" onclick="openRouteRecord('+s.id+')" title="Click to view/edit details">'+
+          '<td style="font-size:0.75em;color:var(--gray-400)">'+(i+1)+'</td>'+
+          '<td class="sticky-addr" style="position:sticky;left:0;background:'+stickyBg+';z-index:2;box-shadow:2px 0 4px rgba(0,0,0,0.06)"><strong>'+escHtml(addr)+'</strong></td>'+
+          '<td>'+escHtml(s.full_name||'—')+'</td>'+
+          '<td class="extra-col" style="white-space:nowrap">'+escHtml(s.phone||'—')+'</td>'+
+          '<td class="extra-col">'+getSupportBadgeLabel(s.support_level)+'</td>'+
+          '<td class="extra-col">'+escHtml(s.sign_request||'—')+'</td>'+
+          '<td class="extra-col" style="font-size:0.8em;max-width:180px">'+escHtml(s.notes||'')+'</td>'+
+          '</tr>';
+      }).join('');
+      document.getElementById('canvassRouteSummary').textContent = d.count + ' addresses · sorted by street · click any row to view';
+      // Show toggle button
+      document.getElementById('toggleExtraCols').style.display = 'inline-block';
+    } else {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:16px">No records for Poll '+poll+'</td></tr>';
+      document.getElementById('canvassRouteSummary').textContent = '';
+    }
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--red);padding:16px">Error loading route</td></tr>';
+  }
+}
+
+function openRouteRecord(id) {
+  // Find the record in the cached route data
+  var rec = null, recIdx = -1;
+  if (window._canvassRouteData) {
+    for (var i = 0; i < window._canvassRouteData.length; i++) {
+      if (window._canvassRouteData[i].id === id) {
+        rec = window._canvassRouteData[i];
+        recIdx = i;
+        break;
+      }
+    }
+  }
+  if (!rec) return;
+
+  // Build full address key to find all residents at same address
+  var addrKey = [rec.street_number, rec.street].filter(Boolean).join(' ').toLowerCase();
+  if (rec.apartment) addrKey += ' apt ' + rec.apartment.toLowerCase();
+
+  // Find all records at the same address (same street_number + street, ignore apartment)
+  var baseAddr = [rec.street_number, rec.street].filter(Boolean).join(' ').toLowerCase();
+  var siblings = [];
+  if (window._canvassRouteData) {
+    for (var j = 0; j < window._canvassRouteData.length; j++) {
+      var s = window._canvassRouteData[j];
+      var sa = [s.street_number, s.street].filter(Boolean).join(' ').toLowerCase();
+      if (sa === baseAddr) siblings.push(s);
+    }
+  }
+
+  // Find current position in siblings
+  var sibIdx = -1;
+  for (var k = 0; k < siblings.length; k++) {
+    if (siblings[k].id === id) { sibIdx = k; break; }
+  }
+
+  // Store siblings + index for navigation
+  window._routeOverlaySiblings = siblings;
+  window._routeOverlayIdx = sibIdx;
+
+  renderRouteOverlay();
+}
+
+function renderRouteOverlay() {
+  var siblings = window._routeOverlaySiblings || [];
+  var idx = window._routeOverlayIdx || 0;
+  var rec = siblings[idx];
+  if (!rec) return;
+
+  var addr = [rec.street_number, rec.street].filter(Boolean).join(' ');
+  if (rec.apartment) addr += ' Apt ' + rec.apartment;
+  var badge = getSupportBadge(rec.support_level);
+
+  var overlay = document.getElementById('routeDetailOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'routeDetailOverlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center';
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+    document.body.appendChild(overlay);
+  }
+
+  // Build nav row if multiple residents
+  var navHtml = '';
+  if (siblings.length > 1) {
+    navHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;background:var(--gray-50);padding:8px;border-radius:8px">'+
+      '<button onclick="navRouteOverlay(-1)" style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.85em;font-family:inherit;color:var(--gray-700)" '+(idx===0?'disabled':'')+'>◀ Prev</button>'+
+      '<span style="font-size:0.8em;font-weight:600;color:var(--gray-500)">'+(idx+1)+' of '+siblings.length+'</span>'+
+      '<button onclick="navRouteOverlay(1)" style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.85em;font-family:inherit;color:var(--gray-700)" '+(idx===siblings.length-1?'disabled':'')+'>Next ▶</button>'+
+      '</div>';
+  }
+
+  overlay.innerHTML = 
+    '<div style="background:white;border-radius:14px;padding:24px;max-width:480px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.3);animation:fadeIn 0.2s">'+
+      navHtml +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">'+
+        '<div>'+
+          '<div style="font-weight:800;font-size:1.1em;margin-bottom:2px">'+escHtml(rec.full_name||'Unknown')+'</div>'+
+          '<div style="font-size:0.85em;color:var(--gray-500)">📍 '+escHtml(addr)+'</div>'+
+        '</div>'+
+        '<button onclick="document.getElementById(\'routeDetailOverlay\').remove()" style="background:none;border:none;font-size:1.3em;cursor:pointer;color:var(--gray-400);padding:0;line-height:1">✕</button>'+
+      '</div>'+
+      '<span class="support-badge '+badge.class+'" style="display:inline-block;margin-bottom:12px">'+badge.label+'</span>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">'+
+        '<div><span style="font-size:0.7em;color:var(--gray-400)">📞 Phone</span><div style="font-weight:500">'+escHtml(rec.phone||'—')+'</div></div>'+
+        '<div><span style="font-size:0.7em;color:var(--gray-400)">🪧 Sign</span><div style="font-weight:500">'+escHtml(rec.sign_request||'—')+'</div></div>'+
+        '<div><span style="font-size:0.7em;color:var(--gray-400)">🗳 Poll</span><div style="font-weight:500">'+(rec.poll||'—')+'</div></div>'+
+        '<div><span style="font-size:0.7em;color:var(--gray-400)">🏠 Apt</span><div style="font-weight:500">'+escHtml(rec.apartment||'—')+'</div></div>'+
+      '</div>'+
+      (rec.notes ? '<div style="font-size:0.8em;color:var(--gray-600);background:var(--gray-50);padding:10px;border-radius:8px;margin-bottom:12px">💬 '+escHtml(rec.notes)+'</div>' : '')+
+      '<div style="display:flex;gap:8px">'+
+        '<button onclick="openRouteSurvey('+rec.id+',\''+escHtml(addr)+'\')" style="flex:1;padding:10px;background:var(--red);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-family:inherit">📋 Fill Survey</button>'+
+        '<button onclick="document.getElementById(\'routeDetailOverlay\').remove(); searchFullRecord('+rec.id+')" style="padding:10px 16px;background:var(--gray-100);color:var(--gray-700);border:1px solid var(--gray-200);border-radius:8px;font-weight:600;cursor:pointer;font-family:inherit">✏️ Edit All</button>'+
+      '</div>'+
+    '</div>';
+}
+
+function navRouteOverlay(delta) {
+  var idx = (window._routeOverlayIdx || 0) + delta;
+  var siblings = window._routeOverlaySiblings || [];
+  if (idx < 0 || idx >= siblings.length) return;
+  window._routeOverlayIdx = idx;
+  renderRouteOverlay();
+}
+
+function openRouteSurvey(id, addr) {
+  const overlay = document.getElementById('routeDetailOverlay');
+  if (overlay) overlay.remove();
+
+  // Look up name/phone/email from cached route data
+  var rec = null;
+  if (window._canvassRouteData) {
+    for (var i = 0; i < window._canvassRouteData.length; i++) {
+      if (window._canvassRouteData[i].id === id) { rec = window._canvassRouteData[i]; break; }
+    }
+  }
+
+  // Open the survey for this record
+  selectedSupporter = {id: id, addr: addr};
+  document.getElementById('voterName').value = rec ? (rec.full_name || '') : '';
+  document.getElementById('voterPhone').value = rec ? (rec.phone || '') : '';
+  document.getElementById('voterEmail').value = rec ? (rec.email || '') : '';
+  document.getElementById('surveyAddress').value = addr;
+  document.getElementById('surveySection').classList.add('active');
+  document.getElementById('surveyForm').classList.remove('completed');
+  document.getElementById('surveySection').scrollIntoView({behavior:'smooth'});
+  touchRecord(id);
+}
+
+async function searchFullRecord(id) {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchSpinner').style.display = 'block';
+  await search('id:'+id);
+  // Scroll to results so user sees the edit card
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function filterCanvassRoute() {
+  var filter = (document.getElementById('canvassRouteFilter').value || '').toLowerCase();
+  var rows = document.querySelectorAll('#canvassRouteBody tr');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var addr = (row.cells[1] && row.cells[1].textContent || '').toLowerCase();
+    var name = (row.cells[2] && row.cells[2].textContent || '').toLowerCase();
+    if (!filter || addr.indexOf(filter) !== -1 || name.indexOf(filter) !== -1) {
+      row.style.display = '';
+      visible++;
+    } else {
+      row.style.display = 'none';
+    }
+  });
+  document.getElementById('canvassRouteSummary').textContent = 
+    visible + ' of ' + rows.length + ' addresses · sorted by street · click any row to view';
+}
+
+function toggleExtraColumns() {
+  var tbl = document.querySelector('#canvassRouteWrap table');
+  var btn = document.getElementById('toggleExtraCols');
+  if (tbl.classList.contains('show-extras')) {
+    tbl.classList.remove('show-extras');
+    btn.textContent = '🔽 Show All Fields';
+  } else {
+    tbl.classList.add('show-extras');
+    btn.textContent = '🔼 Hide Extra Fields';
+  }
+}
+
 // ── Search ──
+var _lastResults = [];
+
 document.getElementById('searchInput').addEventListener('input', function() {
   clearTimeout(debounceTimer);
   const q = this.value.trim();
@@ -388,6 +1183,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
   if (q.length < 2 && !currentFilter) {
     document.getElementById('results').innerHTML = q.length===0 ? '' : '<div class="no-results"><p>Type 2+ characters to search</p></div>';
     document.getElementById('resultsInfo').style.display='none';
+    document.getElementById('pollLegend').style.display='none';
     document.getElementById('pagination').style.display='none';
     return;
   }
@@ -403,6 +1199,12 @@ async function search(q, page=1) {
   try {
     const r = await fetch(url);
     const d = await r.json();
+    _lastResults = d.results || [];
+    // Show name sub-filter
+    document.getElementById('nameSubFilter').value = '';
+    document.getElementById('nameFilterCount').textContent = '';
+    var nfRow = document.getElementById('nameFilterRow');
+    nfRow.style.display = (d.results && d.results.length > 0) ? 'block' : 'none';
     document.getElementById('searchSpinner').style.display='none';
     renderResults(d, page);
   } catch(e) {
@@ -431,7 +1233,14 @@ async function exportSearch() {
     var downloadUrl = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = downloadUrl;
-    a.download = 'ward25_search_export.csv';
+    var today = new Date().toISOString().slice(0,10);
+    var nameParts = [];
+    if (currentFilter === 'poll') nameParts.push('Poll' + currentFilterValue);
+    if (currentFilter === 'support_level') nameParts.push(currentFilterValue.replace(/\s+/g,''));
+    if (currentFilter === 'sign_request') nameParts.push(currentFilterValue);
+    if (currentQuery) nameParts.push(currentQuery.replace(/[^a-zA-Z0-9]/g,'_').substring(0,20));
+    if (nameParts.length === 0 && !currentQuery) nameParts.push('AllPolls_AllSupport_AllSign');
+    a.download = 'Ward25_' + nameParts.join('_') + '_' + today + '.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -445,6 +1254,31 @@ async function exportSearch() {
     exportBtn.textContent = '📥 Download CSV';
     exportBtn.disabled = false;
   }
+}
+
+// ── Name sub-filter: filter canvass results client-side ──
+function filterResultsByName() {
+  var q = document.getElementById('nameSubFilter').value.trim().toLowerCase();
+  var allResults = _lastResults || [];
+  var countEl = document.getElementById('nameFilterCount');
+
+  if (!q) {
+    var d = {results: allResults, total: allResults.length, query: currentQuery};
+    renderResults(d, currentPage);
+    countEl.textContent = '';
+    return;
+  }
+
+  var filtered = allResults.filter(function(s) {
+    var name = (s.full_name || '').toLowerCase();
+    var first = (s.first_name || '').toLowerCase();
+    var last = (s.last_name || '').toLowerCase();
+    return name.indexOf(q) > -1 || first.indexOf(q) > -1 || last.indexOf(q) > -1;
+  });
+
+  countEl.textContent = filtered.length + ' of ' + allResults.length + ' match "' + document.getElementById('nameSubFilter').value.trim() + '"';
+  var d = {results: filtered, total: filtered.length, query: currentQuery + ' (filtered by name)'};
+  renderResults(d, 1);
 }
 
 function setFilter(type, value) {
@@ -479,6 +1313,7 @@ function renderResults(d, page) {
 
   if (!d.results||d.results.length===0) {
     info.style.display='block';
+  document.getElementById('pollLegend').style.display='flex';
     document.getElementById('resultsCount').textContent='No results';
     document.getElementById('resultsQuery').textContent='for "'+d.query+'"';
     container.innerHTML='<div class="no-results" style="padding:30px;text-align:center">'+
@@ -501,6 +1336,7 @@ function renderResults(d, page) {
     return;
   }
   info.style.display='block';
+  document.getElementById('pollLegend').style.display='flex';
   document.getElementById('resultsCount').innerHTML='<strong>'+d.total+'</strong> results';
   document.getElementById('resultsQuery').textContent='for "'+d.query+'"';
   container.innerHTML = d.results.map(s => renderCard(s)).join('');
@@ -524,7 +1360,8 @@ function renderCard(s) {
   return '<div class="supporter-card'+(s.is_original?' original':'')+'" id="card-'+s.id+'">'+
     '<div class="card-header"><div>'+
     '<div class="name" id="fv-'+s.id+'-full_name" ondblclick="startEdit(\''+s.id+'\',\'full_name\')" title="Double-click to edit name">'+escHtml(s.full_name||'Unknown')+'</div>'+
-    '<div class="address-line">📍 '+escHtml(addr)+(cityPc?' · '+escHtml(cityPc):'')+
+    '<div class="address-line">📍 '+escHtml(addr)+(s.apartment?', Apt '+escHtml(s.apartment):'')+(cityPc?' · '+escHtml(cityPc):'')+'</div>'+
+    (s.poll?'  <span class="'+getPollColorClass(s.poll)+'" style="color:white;padding:1px 8px;border-radius:8px;font-size:0.75em;font-weight:700;white-space:nowrap">🗺 <a href="/poll_maps/normalized/poll_'+escHtml(s.poll)+'.png" target="_blank" style="color:white;text-decoration:none" onclick="event.stopPropagation()" title="View Poll '+escHtml(s.poll)+' map">Poll '+escHtml(s.poll)+'</a></span>':'')+
     (s.is_original?' <span style="background:#dcfce7;color:#166534;font-size:0.7em;padding:1px 6px;border-radius:4px;font-weight:600">✓ Original</span>':'')+'</div></div>'+
     '<span class="support-badge '+badge.class+'">'+badge.label+'</span></div>'+
     '<div class="card-fields">'+
@@ -544,8 +1381,39 @@ function renderCard(s) {
     '<button class="btn btn-edit" onclick="editCard('+s.id+')">✏️ Edit All</button>'+
     '<button class="btn btn-save" onclick="saveCard('+s.id+')">💾 Save</button>'+
     '<button class="btn btn-history" onclick="toggleHistory('+s.id+')">📜 History</button>'+
+    '<button class="btn btn-task" onclick="showCanvassTask('+s.id+')" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc">📋 Task</button>'+
+    '<button class="btn btn-add-resident" onclick="showCanvassAddResident('+s.id+')" style="background:#dcfce7;color:#166534;border:1px solid #bbf7d0">➕ Add Resident</button>'+
     '<span style="font-size:0.7em;color:var(--gray-400);margin-left:auto">ID:'+s.id+'</span></div>'+
     '<div class="change-log" id="history-'+s.id+'"></div>'+
+    '<div id="ctaskform-'+s.id+'" style="display:none;margin-top:8px;padding:10px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px">'+
+      '<div style="font-weight:600;font-size:0.85em;margin-bottom:6px;color:#0369a1">📋 Set Task & Reminder</div>'+
+      '<input type="text" id="ctask-desc-'+s.id+'" placeholder="What needs to be done?" style="width:100%;padding:6px 10px;border:1px solid #bae6fd;border-radius:6px;font-size:0.85em;font-family:inherit;margin-bottom:6px;box-sizing:border-box">'+
+      '<div style="display:flex;gap:8px;align-items:center">'+
+        '<input type="date" id="ctask-due-'+s.id+'" style="flex:1;padding:6px 10px;border:1px solid #bae6fd;border-radius:6px;font-size:0.85em;font-family:inherit">'+
+        '<button class="btn btn-task" onclick="setCanvassTask('+s.id+')" style="background:#0284c7;color:white;border:1px solid #0284c7;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-family:inherit">✅ Set Task</button>'+
+        '<button class="btn" onclick="document.getElementById(\'ctaskform-'+s.id+'\').style.display=\'none\'" style="padding:6px 10px;font-size:0.85em">✕</button>'+
+      '</div>'+
+      '<div id="ctaskstatus-'+s.id+'" style="font-size:0.78em;margin-top:4px;color:var(--gray-500)"></div>'+
+    '</div>'+
+    '<div id="caresform-'+s.id+'" style="display:none;margin-top:8px;padding:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px" '+
+      'data-street-number="'+escHtml(s.street_number||'')+'" data-street="'+escHtml(s.street||'')+'" data-city="'+escHtml(s.city||'')+'" data-postal-code="'+escHtml(s.postal_code||'')+'" data-poll="'+escHtml(s.poll||'')+'">'+
+      '<div style="font-weight:600;font-size:0.85em;margin-bottom:6px;color:#166534">➕ Add Resident at Same Address</div>'+
+      '<input type="text" id="cares-first-'+s.id+'" placeholder="First Name" style="width:100%;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;margin-bottom:6px;box-sizing:border-box">'+
+      '<input type="text" id="cares-last-'+s.id+'" placeholder="Last Name" style="width:100%;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;margin-bottom:6px;box-sizing:border-box">'+
+      '<div style="display:flex;gap:8px;margin-bottom:6px">'+
+        '<input type="text" id="cares-phone-'+s.id+'" placeholder="Phone" style="flex:1;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;box-sizing:border-box">'+
+        '<input type="text" id="cares-email-'+s.id+'" placeholder="Email" style="flex:1;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;box-sizing:border-box">'+
+      '</div>'+
+      '<div style="display:flex;gap:8px;margin-bottom:6px">'+
+        '<input type="text" id="cares-apt-'+s.id+'" placeholder="Apt/Unit (optional)" style="flex:1;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;box-sizing:border-box">'+
+        '<select id="cares-support-'+s.id+'" style="flex:1;padding:6px 10px;border:1px solid #bbf7d0;border-radius:6px;font-size:0.85em;font-family:inherit;box-sizing:border-box"><option value="">Support Level</option><option>Supporter</option><option>Neutral</option><option>Non-Supporter</option><option>Unknown</option><option>Survey Refused</option></select>'+
+      '</div>'+
+      '<div style="display:flex;gap:8px;align-items:center">'+
+        '<button class="btn" onclick="addCanvassResident('+s.id+')" style="background:#166534;color:white;border:1px solid #166534;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-family:inherit">➕ Add</button>'+
+        '<button class="btn" onclick="document.getElementById(\'caresform-'+s.id+'\').style.display=\'none\'" style="padding:6px 10px;font-size:0.85em">✕ Cancel</button>'+
+      '</div>'+
+      '<div id="caresstatus-'+s.id+'" style="font-size:0.78em;margin-top:4px;color:var(--gray-500)"></div>'+
+    '</div>'+
     '<div class="card-actions" id="edit-actions-'+s.id+'" style="display:none">'+
     '<button class="btn btn-cancel" onclick="cancelEdit('+s.id+')">Cancel</button>'+
     '<span style="font-size:0.75em;color:var(--amber);margin-left:auto" id="edit-status-'+s.id+'"></span></div></div>';
@@ -569,14 +1437,23 @@ function getSupportBadge(l) {
 function formatDate(d) {
   if(!d) return '—';
   try {
-    // Handle "YYYY-MM-DD HH:MM:SS" → replace space with T
     var iso = String(d).trim();
     if (iso.indexOf(' ') > -1 && iso.indexOf('T') === -1) iso = iso.replace(' ','T');
     if (iso.indexOf('T') === -1) iso += 'T00:00:00';
     return new Date(iso).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'});
   } catch(e) { return String(d); }
 }
+function formatDateTime(d) {
+  if(!d) return '—';
+  try {
+    var iso = String(d).trim();
+    if (iso.indexOf(' ') > -1 && iso.indexOf('T') === -1) iso = iso.replace(' ','T');
+    if (iso.indexOf('T') === -1) iso += 'T00:00:00';
+    return new Date(iso).toLocaleString('en-CA',{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  } catch(e) { return String(d); }
+}
 function escHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ── Survey Integration ──
 function openSurvey(id, addr) {
@@ -648,6 +1525,63 @@ async function addSupporter(query) {
       await search(query);
       setTimeout(() => openSurvey(d.supporter.id, [data.street_number, data.street].filter(Boolean).join(' ')), 500);
       loadMyStats();
+    } else {
+      showToast('❌ Failed to add','error');
+    }
+  } catch(e) {
+    showToast('❌ Network error','error');
+  }
+}
+
+// ── Add New Record (standalone, always available) ──
+function toggleAddForm() {
+  const form = document.getElementById('addNewForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  if (form.style.display === 'block') form.scrollIntoView({behavior:'smooth'});
+}
+
+async function addNewRecord() {
+  const addr = document.getElementById('addNewAddress').value.trim();
+  const name = document.getElementById('addNewFullName').value.trim();
+  if (!addr) { showToast('Please enter an address','error'); return; }
+
+  // Parse address
+  const parts = addr.match(/^(\\d+[A-Za-z]?)\\s+(.+)/);
+  const street_number = parts ? parts[1] : '';
+  const street = parts ? parts[2] : addr;
+
+  const data = {
+    full_name: name,
+    first_name: name ? name.split(' ')[0] : '',
+    last_name: name ? name.split(' ').slice(1).join(' ') : '',
+    street_number, street,
+    phone: document.getElementById('addNewPhone').value.trim(),
+    email: document.getElementById('addNewEmail').value.trim(),
+    support_level: document.getElementById('addNewSupport').value,
+    notes: document.getElementById('addNewNotes').value.trim(),
+    city: 'SCARBOROUGH'
+  };
+
+  try {
+    const r = await fetch(API+'/api/supporter', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+    const d = await r.json();
+    if (d.success && d.supporter) {
+      showToast('✅ Added! ID: '+d.supporter.id,'success');
+      // Clear form
+      document.getElementById('addNewAddress').value = '';
+      document.getElementById('addNewFullName').value = '';
+      document.getElementById('addNewPhone').value = '';
+      document.getElementById('addNewEmail').value = '';
+      document.getElementById('addNewNotes').value = '';
+      document.getElementById('addNewForm').style.display = 'none';
+      loadMyStats();
+      // Search for the new address
+      document.getElementById('searchInput').value = addr;
+      search(addr);
     } else {
       showToast('❌ Failed to add','error');
     }
@@ -764,6 +1698,7 @@ function resetSurvey() {
   document.getElementById('searchInput').value = '';
   document.getElementById('results').innerHTML = '';
   document.getElementById('resultsInfo').style.display = 'none';
+  document.getElementById('pollLegend').style.display = 'none';
   document.getElementById('pagination').style.display = 'none';
   closeSurvey();
   document.getElementById('searchInput').focus();
@@ -904,11 +1839,99 @@ async function toggleHistory(id) {
   try {
     const r=await fetch(API+'/api/supporter/'+id+'/history');const d=await r.json();
     if(!d.history||d.history.length===0){el.innerHTML='<div style="color:var(--gray-400);padding:8px">No changes yet.</div>';return;}
-    el.innerHTML=d.history.map(h=>'<div class="log-entry"><span class="log-field">'+escHtml(h.field_name)+'</span>: <span class="log-old">'+escHtml(h.old_value||'(empty)')+'</span> → <span class="log-new">'+escHtml(h.new_value||'(empty)')+'</span><span class="log-date"> · '+formatDate(h.changed_at)+'</span></div>').join('');
+    el.innerHTML=d.history.map(h=>'<div class="log-entry"><span class="log-field">'+escHtml(h.field_name)+'</span>: <span class="log-old">'+escHtml(h.old_value||'(empty)')+'</span> → <span class="log-new">'+escHtml(h.new_value||'(empty)')+'</span><div class="log-date">'+formatDateTime(h.changed_at)+' by '+escHtml(h.changed_by||'unknown')+'</div></div>').join('');
   }catch(e){el.innerHTML='<div style="color:var(--red);padding:8px">Failed to load.</div>';}
 }
 
+// ── Task / Reminder (canvass) ──
+function showCanvassTask(id) {
+  document.getElementById('ctaskform-'+id).style.display = 'block';
+  document.getElementById('ctaskform-'+id).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+async function setCanvassTask(id) {
+  var task = document.getElementById('ctask-desc-'+id).value.trim();
+  if (!task) { showToast('❌ Enter a task description','error'); return; }
+  var due = document.getElementById('ctask-due-'+id).value || '';
+  var el = document.getElementById('ctaskstatus-'+id);
+  el.textContent = '⏳ Creating task...';
+  try {
+    var r = await fetch('/api/supporter/'+id+'/task', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({task:task, due_date:due})
+    });
+    var d = await r.json();
+    if (d.success) {
+      el.innerHTML = '✅ Task set' + (d.email_sent ? ' & emailed to info@electshawnallen.ca 📧' : '');
+      document.getElementById('ctask-desc-'+id).value = '';
+      document.getElementById('ctask-due-'+id).value = '';
+      showToast('✅ Task created' + (d.email_sent ? ' + email sent' : ''),'success');
+    } else {
+      el.textContent = '❌ ' + (d.error || 'Failed');
+    }
+  } catch(e) {
+    el.textContent = '❌ Network error';
+  }
+}
+
 function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.className='toast',2500);}
+
+// ── Add Resident at Same Address ──
+function showCanvassAddResident(id) {
+  var form = document.getElementById('caresform-'+id);
+  form.style.display = (form.style.display === 'none' || !form.style.display) ? 'block' : 'none';
+  if (form.style.display === 'block') {
+    form.scrollIntoView({behavior:'smooth',block:'nearest'});
+    document.getElementById('cares-first-'+id).focus();
+  }
+}
+async function addCanvassResident(id) {
+  var first = document.getElementById('cares-first-'+id).value.trim();
+  var last = document.getElementById('cares-last-'+id).value.trim();
+  var fullName = (first + ' ' + last).trim();
+  if (!fullName) { showToast('❌ Enter at least a first or last name','error'); return; }
+  var statusEl = document.getElementById('caresstatus-'+id);
+  statusEl.textContent = '⏳ Adding resident...';
+
+  var form = document.getElementById('caresform-'+id);
+  var body = {
+    full_name: fullName,
+    first_name: first,
+    last_name: last,
+    street_number: form.getAttribute('data-street-number') || '',
+    street: form.getAttribute('data-street') || '',
+    city: form.getAttribute('data-city') || '',
+    postal_code: form.getAttribute('data-postal-code') || '',
+    phone: document.getElementById('cares-phone-'+id).value.trim(),
+    email: document.getElementById('cares-email-'+id).value.trim(),
+    apartment: document.getElementById('cares-apt-'+id).value.trim(),
+    support_level: document.getElementById('cares-support-'+id).value,
+    poll: form.getAttribute('data-poll') || '',
+  };
+
+  try {
+    var r = await fetch('/api/supporter', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    var d = await r.json();
+    if (d.success) {
+      statusEl.innerHTML = '✅ Added <b>'+esc(fullName)+'</b> (ID:'+d.supporter.id+')';
+      document.getElementById('cares-first-'+id).value = '';
+      document.getElementById('cares-last-'+id).value = '';
+      document.getElementById('cares-phone-'+id).value = '';
+      document.getElementById('cares-email-'+id).value = '';
+      document.getElementById('cares-apt-'+id).value = '';
+      document.getElementById('cares-support-'+id).value = '';
+      showToast('✅ Added '+fullName,'success');
+    } else {
+      statusEl.textContent = '❌ ' + (d.error || 'Failed');
+    }
+  } catch(e) {
+    statusEl.textContent = '❌ Network error';
+  }
+}
 
 // ── Canada Post Address Lookup (survey address field) ──
 var addrLookupTimer;
@@ -956,7 +1979,11 @@ document.querySelectorAll('.option-group label.opt').forEach(label=>{
 });
 
 // ── Init ──
+updateTopBarOffset();
+setTimeout(updateTopBarOffset, 250);
+if (pageResetToken) showResetPassword();
 loadMyStats();
+loadRankSummary();
 document.getElementById('searchInput').addEventListener('keydown',function(e){
   if(e.key==='Enter'&&this.value.trim().length>=2){clearTimeout(debounceTimer);document.getElementById('searchSpinner').style.display='block';search(this.value.trim());}
 });

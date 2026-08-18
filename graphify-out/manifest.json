@@ -1,0 +1,92 @@
+{
+  "backup.sh": {
+    "mtime": 1783135719.4432316,
+    "ast_hash": "f508789289ba8025effe18d20a8b307a",
+    "semantic_hash": "f508789289ba8025effe18d20a8b307a"
+  },
+  "canvass_walks.json": {
+    "mtime": 1785334595.2912095,
+    "ast_hash": "47bc28f3487d6735874b5432adcbe932",
+    "semantic_hash": "47bc28f3487d6735874b5432adcbe932"
+  },
+  "daily_survey_report.py": {
+    "mtime": 1783140651.972824,
+    "ast_hash": "3211be0ca8acd5387d35cc3b0c834533",
+    "semantic_hash": "3211be0ca8acd5387d35cc3b0c834533"
+  },
+  "deploy.sh": {
+    "mtime": 1783178758.5024633,
+    "ast_hash": "50922748b00acb82c656b3bd443b1e8f",
+    "semantic_hash": "50922748b00acb82c656b3bd443b1e8f"
+  },
+  "election_results.json": {
+    "mtime": 1783308657.406975,
+    "ast_hash": "80ffd372165fcbc5f3d1b9dcd6b4b959",
+    "semantic_hash": "80ffd372165fcbc5f3d1b9dcd6b4b959"
+  },
+  "server.py": {
+    "mtime": 1785377952.8325222,
+    "ast_hash": "547ed435d504e965db7b37a5055c529c",
+    "semantic_hash": "547ed435d504e965db7b37a5055c529c"
+  },
+  "start-prod.sh": {
+    "mtime": 1783178630.8203473,
+    "ast_hash": "0e4dc319c3ef750ade0025ee825899bf",
+    "semantic_hash": "0e4dc319c3ef750ade0025ee825899bf"
+  },
+  "street_index.py": {
+    "mtime": 1783306804.039034,
+    "ast_hash": "e436ecc9523b294e3da3f8a5d6883b18",
+    "semantic_hash": "e436ecc9523b294e3da3f8a5d6883b18"
+  },
+  "survey_export.py": {
+    "mtime": 1783142083.8756409,
+    "ast_hash": "30d92135f890699941b0d834b6ba8c37",
+    "semantic_hash": "30d92135f890699941b0d834b6ba8c37"
+  },
+  "test_password_reset.py": {
+    "mtime": 1784564569.0239959,
+    "ast_hash": "43ef1edccaea2516bf226786e5e13af5",
+    "semantic_hash": "43ef1edccaea2516bf226786e5e13af5"
+  },
+  "PRODUCTION.md": {
+    "mtime": 1783178762.6444674,
+    "ast_hash": "d50427714888075bfb98661157fd3cff",
+    "semantic_hash": "d50427714888075bfb98661157fd3cff"
+  },
+  "admin.html": {
+    "mtime": 1785379635.7317398,
+    "ast_hash": "a4305c8d458a408f0f4fa76a9c54af0e",
+    "semantic_hash": "a4305c8d458a408f0f4fa76a9c54af0e"
+  },
+  "calendar.html": {
+    "mtime": 1783821343.9186563,
+    "ast_hash": "9f0cb68c0e28407f5ed77dc129ea2c18",
+    "semantic_hash": "9f0cb68c0e28407f5ed77dc129ea2c18"
+  },
+  "commitments.html": {
+    "mtime": 1785086530.2128196,
+    "ast_hash": "3b42f5232f086b75b48794593f3ee57e",
+    "semantic_hash": "3b42f5232f086b75b48794593f3ee57e"
+  },
+  "electshawnallen_index.html": {
+    "mtime": 1785813224.2371457,
+    "ast_hash": "2c71b5c3633d1034d110c2cfd12b3e62",
+    "semantic_hash": "2c71b5c3633d1034d110c2cfd12b3e62"
+  },
+  "index.html": {
+    "mtime": 1785379861.4925349,
+    "ast_hash": "c4f47dc79a46fc7e16f77bd5a4f5a1de",
+    "semantic_hash": "c4f47dc79a46fc7e16f77bd5a4f5a1de"
+  },
+  "shawn-allen-campaign-calendar.pdf": {
+    "mtime": 1783382319.3933024,
+    "ast_hash": "2fe4285c9dad7474a184686652f86686",
+    "semantic_hash": "2fe4285c9dad7474a184686652f86686"
+  },
+  "www/shawn-allen-campaign-calendar.pdf": {
+    "mtime": 1783382263.0202773,
+    "ast_hash": "ea488e1ded8090bf0113c58e341574c9",
+    "semantic_hash": "ea488e1ded8090bf0113c58e341574c9"
+  }
+}

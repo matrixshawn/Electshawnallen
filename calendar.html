@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign Events — Shawn Allen for Ward 25</title>
+
+<!-- Fonts: match electshawnallen.ca exactly -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ========== RESET & TOKENS ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { -webkit-font-smoothing: antialiased; }
+  img, svg { display: block; max-width: 100%; }
+
+  :root {
+    --navy:       #003F7F;
+    --navy-deep:  #002A55;
+    --navy-soft:  #1F5598;
+    --red:        #D71920;
+    --red-deep:   #B01218;
+    --red-soft:   rgba(215, 25, 32, 0.08);
+    --cream:      #FAF6EE;
+    --cream-warm: #F3EEE3;
+    --paper:      #FFFFFF;
+    --ink:        #1A1A1A;
+    --ink-muted:  #4A4A4A;
+    --rule:       #003F7F;
+    --rule-soft:  rgba(0, 63, 127, 0.14);
+
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans:  'IBM Plex Sans', system-ui, sans-serif;
+    --mono:  'IBM Plex Mono', ui-monospace, monospace;
+
+    --gutter: clamp(20px, 4vw, 56px);
+
+    /* Spacing scale (4px base) */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+    --space-4: 16px; --space-5: 20px; --space-6: 24px;
+    --space-8: 32px; --space-10: 40px;
+    --grid-gap: var(--space-4);
+    --container-max: 1100px;
+    --container-pad: var(--space-4);
+  }
+
+  /* ========== BASE ========== */
+  body {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+  }
+
+  /* ========== NAV ========== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .nav-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 16px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.01em;
+  }
+  .nav-brand span {
+    color: var(--red);
+  }
+  .nav-spacer { height: 72px; }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "2026";
+    position: absolute;
+    right: -2vw;
+    bottom: -3vw;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(180px, 28vw, 400px);
+    line-height: 0.85;
+    color: var(--cream);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .hero-kicker::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--ink-muted);
+  }
+
+  .hero-title {
+    margin-bottom: 16px;
+  }
+  .hero-title .elect {
+    display: block;
+    font-family: var(--mono);
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .hero-title .name {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(48px, 9vw, 120px);
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .hero-title .name .first { color: var(--red); }
+  .hero-title .name .last  { color: var(--navy); }
+
+  .hero-tag {
+    font-family: var(--serif);
+    font-size: clamp(18px, 1.8vw, 24px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hero-tag em { color: var(--red); font-style: italic; }
+
+  /* ========== SECTION ========== */
+  .section {
+    padding: 80px 0;
+  }
+  .section-cream {
+    background: var(--cream);
+  }
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .section-kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .section-kicker::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--red);
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--navy);
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: clamp(17px, 1.5vw, 20px);
+    color: var(--ink-muted);
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  /* ========== COUNTDOWN ========== */
+  .countdown {
+    background: var(--red);
+    color: white;
+    padding: 40px var(--gutter);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .countdown::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.08) 100%);
+  }
+  .countdown-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+  .countdown-event {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .countdown-days {
+    font-family: var(--serif);
+    font-size: clamp(64px, 12vw, 140px);
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .countdown-suffix {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  /* ========== EVENTS ========== */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .event-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--rule-soft);
+    padding: 24px 0;
+    transition: background 0.2s;
+  }
+  .event-row:hover {
+    background: var(--red-soft);
+  }
+  .event-date {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .event-date .day {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--navy);
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .event-date .month {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ink-muted);
+  }
+  .event-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .event-name {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+  }
+  .event-meta {
+    display: flex;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+  }
+  .event-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    border-top: 1px solid var(--rule-soft);
+    padding: 48px 0;
+    background: var(--paper);
+  }
+  .footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-brand {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-brand span { color: var(--red); }
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .footer-links a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--red); }
+  .footer-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rule-soft);
+    width: 100%;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .event-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 20px 0;
+    }
+    .event-date { display: flex; align-items: baseline; gap: 8px; }
+    .event-date .day { font-size: 32px; }
+    .event-info { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .footer .container { flex-direction: column; text-align: center; }
+  }
+
+  /* ========== PRINT / PDF — single page ========== */
+  @media print {
+    @page { size: letter; margin: 0.3in 0.4in; }
+    body { font-size: 12px; }
+    .nav, .nav-spacer { display: none; }
+    .hero { padding: 0 0 8px; }
+    .hero::before { font-size: 160px; right: -10px; bottom: -10px; opacity: 0.5; }
+    .hero-kicker { font-size: 9px; margin-bottom: 4px; }
+    .hero-kicker::before { width: 24px; }
+    .hero-title { margin-bottom: 4px; }
+    .hero-title .elect { font-size: 12px; letter-spacing: 0.14em; margin-bottom: 0; }
+    .hero-title .name { font-size: 52px; }
+    .hero-tag { font-size: 14px; margin-bottom: 0; }
+    .countdown { padding: 8px var(--gutter); }
+    .countdown-label { font-size: 8px; margin-bottom: 2px; }
+    .countdown-event { font-size: 16px; margin-bottom: 2px; }
+    .countdown-days { font-size: 48px; }
+    .countdown-suffix { font-size: 9px; margin-top: 0; }
+    .section { padding: 10px 0 6px; }
+    .section-kicker { font-size: 9px; margin-bottom: 6px; }
+    .section-kicker::before { width: 20px; }
+    .section-title { font-size: 28px; margin-bottom: 2px; }
+    .section-sub { font-size: 12px; margin-bottom: 10px; }
+    .event-row { padding: 6px 0; grid-template-columns: 90px 1fr; }
+    .event-date { font-size: 10px; }
+    .event-date .day { font-size: 26px; }
+    .event-date .month { font-size: 9px; }
+    .event-name { font-size: 15px; }
+    .event-meta { font-size: 9px; gap: 12px; }
+    .footer { padding: 8px 0 0; border-top: 1px solid var(--rule-soft); }
+    .footer-brand { font-size: 14px; }
+    .footer-links { font-size: 9px; gap: 18px; }
+    .footer-tag { font-size: 8px; margin-top: 6px; }
+    .container { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Shawn <span>Allen</span> · Ward 25</div>
+  </div>
+</nav>
+<div class="nav-spacer"></div>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-kicker">Campaign Events</div>
+    <div class="hero-title">
+      <span class="elect">ELECT</span>
+      <span class="name"><span class="first">Shawn</span> <span class="last">Allen.</span></span>
+    </div>
+    <div class="hero-tag">A <em>neighbour</em>, not a stranger.</div>
+  </div>
+</header>
+
+<!-- ====== COUNTDOWN ====== -->
+<div class="countdown" id="countdown">
+  <div class="countdown-inner">
+    <div class="countdown-label">Next Event</div>
+    <div class="countdown-event" id="countdown-next">—</div>
+    <div class="countdown-days" id="countdown-days">—</div>
+    <div class="countdown-suffix" id="countdown-suffix">days away</div>
+  </div>
+</div>
+
+<!-- ====== EVENTS SECTION ====== -->
+<section class="section">
+  <div class="container">
+    <div class="section-kicker">Summer 2026</div>
+    <h2 class="section-title">Campaign Calendar</h2>
+    <p class="section-sub">All in for Scarborough–Rouge Park. Join us.</p>
+
+    <div class="events-list">
+
+      <!-- Jul 13 -->
+      <div class="event-row" data-date="2026-07-13">
+        <div class="event-date">
+          <div class="day">13–14</div>
+          <div class="month">July · Mon–Tue</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Campaign Canvass &amp; Tech Review</div>
+          <div class="event-meta">
+            <span>Virtual Call</span>
+            <span>TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 15 -->
+      <div class="event-row" data-date="2026-07-15">
+        <div class="event-date">
+          <div class="day">15</div>
+          <div class="month">July · Wednesday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">T-Shirt &amp; Merch Collection</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 18 -->
+      <div class="event-row" data-date="2026-07-18">
+        <div class="event-date">
+          <div class="day">18</div>
+          <div class="month">July · Saturday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Kiddies Carnival Super Canvass</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 19 -->
+      <div class="event-row" data-date="2026-07-19">
+        <div class="event-date">
+          <div class="day">19</div>
+          <div class="month">July · Sunday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">FIFA &amp; World Cup Soft Launch</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 22 -->
+      <div class="event-row" data-date="2026-07-22">
+        <div class="event-date">
+          <div class="day">22</div>
+          <div class="month">July · Wednesday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Yacht Week Fundraiser</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jul 29 -->
+      <div class="event-row" data-date="2026-07-29">
+        <div class="event-date">
+          <div class="day">29</div>
+          <div class="month">July · Wednesday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Golf Fundraiser</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aug 5 -->
+      <div class="event-row" data-date="2026-08-05">
+        <div class="event-date">
+          <div class="day">5</div>
+          <div class="month">August · Wednesday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Campaign Office Launch</div>
+          <div class="event-meta">
+            <span>📍 TBA</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aug 8 -->
+      <div class="event-row" data-date="2026-08-08">
+        <div class="event-date">
+          <div class="day">8</div>
+          <div class="month">August · Saturday</div>
+        </div>
+        <div class="event-info">
+          <div class="event-name">Super Canvass Day</div>
+          <div class="event-meta">
+            <span>📍 Across Ward 25</span>
+            <span>🕐 TBA</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">Shawn <span>Allen</span> · Ward 25</div>
+    <div class="footer-links">
+      <a href="https://electshawnallen.ca">electshawnallen.ca</a>
+      <a href="https://teamshawnallen.ca">teamshawnallen.ca</a>
+      <a href="https://matrixshawn.github.io/Electshawnallen/">Ward 25 Survey</a>
+    </div>
+    <div class="footer-tag">Scarborough–Rouge Park &nbsp;·&nbsp; City Council 2026 &nbsp;·&nbsp; Election Day October 26</div>
+  </div>
+</footer>
+
+<script>
+const events = [
+  { date: '2026-07-13', title: 'Campaign Canvass & Tech Review' },
+  { date: '2026-07-15', title: 'T-Shirt & Merch Collection' },
+  { date: '2026-07-18', title: 'Kiddies Carnival Super Canvass' },
+  { date: '2026-07-19', title: 'FIFA & World Cup Soft Launch' },
+  { date: '2026-07-22', title: 'Yacht Week Fundraiser' },
+  { date: '2026-07-29', title: 'Golf Fundraiser' },
+  { date: '2026-08-05', title: 'Campaign Office Launch' },
+  { date: '2026-08-08', title: 'Super Canvass Day' },
+];
+
+function updateCountdown() {
+  const now = new Date();
+  let nextEvent = null, nextDate = null;
+
+  for (const e of events) {
+    const d = new Date(e.date + 'T00:00:00-04:00');
+    if (d > now) { nextEvent = e; nextDate = d; break; }
+  }
+
+  if (!nextEvent) {
+    document.getElementById('countdown-next').textContent = 'All events complete';
+    document.getElementById('countdown-days').textContent = '—';
+    document.getElementById('countdown-suffix').textContent = '';
+    return;
+  }
+
+  const diffDays = Math.ceil((nextDate - now) / (1000 * 60 * 60 * 24));
+  document.getElementById('countdown-next').textContent = nextEvent.title;
+  document.getElementById('countdown-days').textContent = diffDays;
+  document.getElementById('countdown-suffix').textContent = diffDays === 1 ? 'day away' : 'days away';
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
+</body>
+</html>
